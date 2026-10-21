@@ -41,4 +41,4 @@ Object.keys(N).forEach(function(k){var b=document.createElement('button');b.data
 document.querySelectorAll('.pick').forEach(function(b){b.onclick=function(){tier=b.closest('.t').dataset.tier;upd();$('pay').scrollIntoView({behavior:'smooth'})}});
 document.querySelectorAll('[data-c]').forEach(function(b){b.onclick=function(){var t=$(b.dataset.c).textContent;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='✅'},function(){b.textContent='⚠️'});setTimeout(function(){b.textContent='📋'},1500)}});
 $('em').oninput=upd;var q=new URLSearchParams(location.search).get('tier');if(q=='maxi')tier='Maxi Ghost SI';if(q=='open')tier='Ghost Open SI';setL(cur);
-</script><script src="js/dragon-sales-bot.js?v=1"></script></body></html>
+</script><script src="js/dragon-sales-bot.js?v=2"></script></body></html>
