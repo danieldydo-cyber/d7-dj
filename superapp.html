@@ -68,6 +68,7 @@ form{display:flex;gap:6px;margin-top:9px}input,select{background:#0e0606;border:
 <div id="mk-g" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:64px;pointer-events:none">🐲</div>
 <button class="btn" id="mk-start" style="position:absolute;left:50%;top:70%;transform:translateX(-50%)">▶ Start radio + wizualizacja</button></div>
 <div class="row" style="margin-top:6px"><button class="g tool on" id="mk-7">777 auto (15 s)</button><button class="g tool" id="mk-r">🎲 Losowy</button><button class="g tool" id="mk-x">⏭ Następny</button><button class="g tool" id="mk-f">⛶ Pełny ekran</button><button class="g tool" id="mk-mic">🎤 Mikrofon</button></div></div>
+<div class="c" id="store"><h2>🛒 Sklep / Store</h2><div class="k" style="margin-bottom:6px"><a href="/store.html">Otwórz pełny sklep →</a></div><div id="d7-store">⏳</div></div>
 <div class="c" id="builder"><h2>🛠 App Builder — Super G zbuduje Ci apkę</h2>
 <form id="bf"><input id="bq" style="flex:1" placeholder="np. licznik BPM z przyciskiem TAP, lista zakupów, quiz o techno…" autocomplete="off"><button class="btn" id="bb">Zbuduj 🐲</button></form>
 <div class="k" id="bs" style="margin:6px 0">AI generuje jeden plik HTML; podgląd w bezpiecznym sandboxie (bez dostępu do tej strony).</div>
@@ -155,5 +156,5 @@ fetch('/api/build',{method:'POST',headers:{'Content-Type':'application/json'},bo
 $('bdl').onclick=()=>{var n='super-g-app-'+Date.now()+'.html';if(window.D7App&&D7App.saveHtml){D7App.saveHtml(n,HT);return}var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([HT],{type:'text/html'}));a.download=n;a.click()};
 $('bsrc').onclick=()=>{var c=$('bcode');c.style.display=c.style.display=='none'?'block':'none'};})();
 </script>
-<script src="js/d7-stations.js"></script><script src="js/butterchurn.min.js"></script><script src="js/butterchurnPresets.min.js"></script><script src="js/butterchurnPresetsExtra.min.js"></script><script src="js/sg-milk777.js"></script>
+<script src="js/d7-stations.js"></script><script src="js/butterchurn.min.js"></script><script src="js/butterchurnPresets.min.js"></script><script src="js/butterchurnPresetsExtra.min.js"></script><script src="js/sg-milk777.js"></script><script src="js/d7-store.js"></script>
 </body></html>

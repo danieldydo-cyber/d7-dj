@@ -1,5 +1,5 @@
 // D7 Super G SW v3: precache shell, stale-while-revalidate for static, network-only for /api and APK
-const C='d7-superapp-v5',A=['/','/superapp.html','/js/d7-token.js','/js/d7-stations.js','/js/butterchurn.min.js','/js/butterchurnPresets.min.js','/js/butterchurnPresetsExtra.min.js','/js/sg-milk777.js','/superapp.webmanifest','/icons/icon-192.png','/icons/icon-512.png'];
+const C='d7-superapp-v6',A=['/','/superapp.html','/js/d7-token.js','/js/d7-stations.js','/js/butterchurn.min.js','/js/butterchurnPresets.min.js','/js/butterchurnPresetsExtra.min.js','/js/sg-milk777.js','/js/d7-store.js','/store.html','/superapp.webmanifest','/icons/icon-192.png','/icons/icon-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(A)).catch(()=>{}));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x.startsWith('d7-superapp')&&x!==C).map(x=>caches.delete(x)))));self.clients.claim()});
 self.addEventListener('fetch',e=>{const r=e.request,u=new URL(r.url);
