@@ -6,6 +6,11 @@
 (function(){if(window.__gxbg)return;window.__gxbg=1;
 var ctxs=[],AC=window.AudioContext||window.webkitAudioContext;
 if(AC){var W=function(a,b){var c=b!==undefined?new AC(a,b):(a!==undefined?new AC(a):new AC());ctxs.push(c);return c};W.prototype=AC.prototype;try{Object.setPrototypeOf(W,AC)}catch(e){}window.AudioContext=W;if(window.webkitAudioContext)window.webkitAudioContext=W}
+// v77 beat tap: every node connected to a destination also feeds a per-context analyser (for 👽 cosmic layer / Mix Visuals 778)
+if(window.AudioNode&&!AudioNode.prototype.__gxc){var oc=AudioNode.prototype.connect;AudioNode.prototype.__gxc=1;AudioNode.prototype.connect=function(d){var r=oc.apply(this,arguments);try{if(d&&d instanceof AudioDestinationNode){var c=this.context;if(!c.__gxAn){c.__gxAn=c.createAnalyser();c.__gxAn.fftSize=512;c.__gxAn.smoothingTimeConstant=0.6}if(this!==c.__gxAn)oc.call(this,c.__gxAn)}}catch(e){}return r}}
+window.GXAudio={extra:[],analysers:function(){return ctxs.filter(function(c){return c.__gxAn&&c.state==='running'}).map(function(c){return c.__gxAn}).concat(this.extra)},
+ _avg:0,_last:0,level:function(){var an=this.analysers(),e=0,n=0;an.forEach(function(a){var b=new Uint8Array(a.frequencyBinCount);a.getByteFrequencyData(b);for(var i=1;i<8;i++){e+=b[i];n++}});
+  var lv=n?e/n/255:0,now=performance.now(),beat=false;if(!n){var bpm=window.GXFakeBpm||120,ph=(now/ (60000/bpm))%1;lv=Math.max(0,1-ph*3)*0.7;beat=ph<0.05&&now-this._last>200}else{beat=lv>this._avg*1.35&&lv>0.25&&now-this._last>180;this._avg=this._avg*0.95+lv*0.05}if(beat)this._last=now;return {level:lv,beat:beat,real:!!n}}};
 try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
 function media(){return Array.prototype.slice.call(document.querySelectorAll('audio,video'))}
 function playing(){return media().some(function(m){return !m.paused&&!m.muted&&m.readyState>1})||ctxs.some(function(c){return c.state==='running'})}

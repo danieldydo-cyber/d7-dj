@@ -1,5 +1,5 @@
 <!doctype html><html lang="pl"><head><script src="js/d7-token.js"></script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>7D · Super G 🐲</title><link rel="manifest" href="/superapp.webmanifest"><meta name="theme-color" content="#ff2a00"><link rel="icon" href="/icons/icon-192.png"><link rel="apple-touch-icon" href="/icons/icon-180.png">
+<title>7D · Super G 🐲</title><link rel="preload" as="script" href="js/sg-milk777.js"><link rel="manifest" href="/superapp.webmanifest"><meta name="theme-color" content="#ff2a00"><link rel="icon" href="/icons/icon-192.png"><link rel="apple-touch-icon" href="/icons/icon-180.png">
 <style>
 :root{--bg:#070405;--p:#140a0cdd;--f:#ff4d00;--r:#ff1744;--y:#ffc400;--n:#00f0ff;--g:#39ff88;--t:#f1e3df}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#3a0606,var(--bg) 60%);color:var(--t);font:15px/1.45 'Segoe UI',system-ui,sans-serif;min-height:100vh}
@@ -62,12 +62,13 @@ form{display:flex;gap:6px;margin-top:9px}input,select{background:#0e0606;border:
 <div class="c" id="kali"><h2>📻 Kali Radio · 🌀 MilkDrop x 777</h2>
 <div class="row"><button class="btn" id="kr-p">▶</button><button class="g tool" id="kr-n">⏭</button><select id="kr-l" class="g" style="flex:1;min-width:160px"></select><label class="k">🔊 <input type="range" id="kr-v" min="0" max="1" step="0.01" style="width:90px;padding:0"></label></div>
 <div class="k" id="kr-s" style="margin:4px 0">Wybierz stację i naciśnij ▶</div><audio id="kr-a"></audio>
-<div id="mk-w" style="position:relative;width:100%;height:340px;border-radius:12px;overflow:hidden;background:#000">
-<canvas id="mk-c" style="width:100%;height:100%;display:block"></canvas>
+<div id="mk-w" style="position:relative;width:100%;height:340px;contain:strict;border-radius:12px;overflow:hidden;background:#000">
+<canvas id="mk-c" style="width:100%;height:100%;display:block"></canvas><canvas id="mk-o" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></canvas><div id="mk-q" style="position:absolute;right:8px;top:6px;font-size:10px;color:#9fffc8;text-shadow:0 0 3px #000;pointer-events:none"></div>
 <div id="mk-n" style="position:absolute;left:8px;bottom:6px;font-size:11px;color:#ffc400;text-shadow:0 0 4px #000;pointer-events:none">777 · naciśnij Start</div>
 <div id="mk-g" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:64px;pointer-events:none">🐲</div>
 <button class="btn" id="mk-start" style="position:absolute;left:50%;top:70%;transform:translateX(-50%)">▶ Start radio + wizualizacja</button></div>
-<div class="row" style="margin-top:6px"><button class="g tool on" id="mk-7">777 auto (15 s)</button><button class="g tool" id="mk-r">🎲 Losowy</button><button class="g tool" id="mk-x">⏭ Następny</button><button class="g tool" id="mk-f">⛶ Pełny ekran</button><button class="g tool" id="mk-mic">🎤 Mikrofon</button></div></div>
+<div class="row" style="margin-top:6px"><button class="g tool on" id="mk-7">777 auto (15 s)</button><button class="g tool" id="mk-r">🎲 Losowy</button><button class="g tool" id="mk-x">⏭ Następny</button><button class="g tool" id="mk-f">⛶ Pełny ekran</button><button class="g tool" id="mk-mic">🎤 Mikrofon</button></div>
+<div class="row" style="margin-top:6px"><span class="k">Motyw:</span><button class="g tool" data-th="shark">🦈 Rekiny</button><button class="g tool" data-th="diablo">😈 Diablo</button><button class="g tool" data-th="alien">👽 Alien</button><button class="g tool" data-th="mix">777 mix</button><button class="g tool" data-th="none">czysty</button><span class="k" style="margin-left:8px">Jakość:</span><button class="g tool" data-q="auto">Auto</button><button class="g tool" data-q="ultra">Ultra</button><button class="g tool" data-q="eco">Eco</button></div></div>
 <div class="c" id="store"><h2>🛒 Sklep / Store</h2><div class="k" style="margin-bottom:6px"><a href="/store.html">Otwórz pełny sklep →</a></div><div id="d7-store">⏳</div></div>
 <div class="c" id="builder"><h2>🛠 App Builder — Super G zbuduje Ci apkę</h2>
 <form id="bf"><input id="bq" style="flex:1" placeholder="np. licznik BPM z przyciskiem TAP, lista zakupów, quiz o techno…" autocomplete="off"><button class="btn" id="bb">Zbuduj 🐲</button></form>
@@ -147,7 +148,7 @@ function startViz(){var V=$('viz'),vx=V.getContext('2d'),last=0;function fr(t){r
  vx.fillStyle='#07040522';vx.fillRect(0,0,V.width,V.height);var cx=V.width/2,cy=V.height*.35;
  for(var i=0;i<36;i++){var a=i/36*Math.PI*2+t/5000,r=100+k*170+(an?data[i%data.length]/2:Math.sin(t/300+i)*18);vx.strokeStyle=i%2?'#ff4d0044':'#ffc40033';vx.lineWidth=2+k*4;vx.beginPath();vx.moveTo(cx+Math.cos(a)*70,cy+Math.sin(a)*70);vx.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);vx.stroke()}}requestAnimationFrame(fr)}
 if('serviceWorker' in navigator)navigator.serviceWorker.register('/superapp-sw.js').catch(()=>{});var dp;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;$('inst').style.display=''});$('inst').onclick=()=>dp&&dp.prompt();
-</script><script src="js/d7-pay.js?v=2"></script>
+</script><script defer src="js/d7-pay.js?v=2"></script>
 <script>
 (function(){var $=id=>document.getElementById(id),HT='';
 document.querySelectorAll('[data-cp]').forEach(b=>b.onclick=()=>{var v=b.dataset.cp,ok=()=>{b.textContent='✅ Skopiowano';setTimeout(()=>b.textContent='📋 Kopiuj',1500)};(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(ok).catch(()=>{var t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();ok()})});
@@ -156,5 +157,5 @@ fetch('/api/build',{method:'POST',headers:{'Content-Type':'application/json'},bo
 $('bdl').onclick=()=>{var n='super-g-app-'+Date.now()+'.html';if(window.D7App&&D7App.saveHtml){D7App.saveHtml(n,HT);return}var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([HT],{type:'text/html'}));a.download=n;a.click()};
 $('bsrc').onclick=()=>{var c=$('bcode');c.style.display=c.style.display=='none'?'block':'none'};})();
 </script>
-<script src="js/d7-stations.js"></script><script src="js/butterchurn.min.js"></script><script src="js/butterchurnPresets.min.js"></script><script src="js/butterchurnPresetsExtra.min.js"></script><script src="js/sg-milk777.js"></script><script src="js/d7-store.js"></script>
+<script defer src="js/d7-stations.js"></script><script defer src="js/sg-milk777.js"></script><script defer src="js/d7-store.js"></script>
 </body></html>
