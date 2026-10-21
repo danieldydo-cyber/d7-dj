@@ -18,6 +18,7 @@
       '<a class="wa" href="'+WA+'" target="_blank" rel="noopener">💬 WhatsApp 730 377 357</a>'+
       '<a class="wa" style="background:#00f0ff" href="'+base+'pay.html">🔗 Strona płatności</a>'+
       '<a class="wa" style="background:#ff2d7a;color:#fff" href="'+base+'prezent.html">🎁 Prezent</a>'+
+      '<a class="wa" style="background:linear-gradient(90deg,#00ffd5,#ff00e6);color:#000" href="'+base+'sklep.html">🛒 Sklep</a>'+
       '<div class="soon">💳 Płatności kartą (Stripe) — <b>wkrótce</b>.</div></div>';
     document.body.appendChild(b);document.body.appendChild(m);
     var loaded=false;
