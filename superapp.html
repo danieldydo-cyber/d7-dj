@@ -59,6 +59,15 @@ form{display:flex;gap:6px;margin-top:9px}input,select{background:#0e0606;border:
 <div id="log" style="margin-top:10px"></div><div id="grid"></div>
 <form id="f"><button type="button" class="g" id="mic" title="Mów">🎤</button><input id="q" placeholder="Napisz do Super G… (pomoc = komendy)" autocomplete="off"><button class="btn">Wyślij 🔥</button></form>
 <div class="row" style="margin-top:6px"><button class="g tool" id="exp">⬇ Eksport czatu</button><button class="g tool" id="clr">🗑 Wyczyść</button></div></div>
+<div class="c" id="kali"><h2>📻 Kali Radio · 🌀 MilkDrop x 777</h2>
+<div class="row"><button class="btn" id="kr-p">▶</button><button class="g tool" id="kr-n">⏭</button><select id="kr-l" class="g" style="flex:1;min-width:160px"></select><label class="k">🔊 <input type="range" id="kr-v" min="0" max="1" step="0.01" style="width:90px;padding:0"></label></div>
+<div class="k" id="kr-s" style="margin:4px 0">Wybierz stację i naciśnij ▶</div><audio id="kr-a"></audio>
+<div id="mk-w" style="position:relative;width:100%;height:340px;border-radius:12px;overflow:hidden;background:#000">
+<canvas id="mk-c" style="width:100%;height:100%;display:block"></canvas>
+<div id="mk-n" style="position:absolute;left:8px;bottom:6px;font-size:11px;color:#ffc400;text-shadow:0 0 4px #000;pointer-events:none">777 · naciśnij Start</div>
+<div id="mk-g" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:64px;pointer-events:none">🐲</div>
+<button class="btn" id="mk-start" style="position:absolute;left:50%;top:70%;transform:translateX(-50%)">▶ Start radio + wizualizacja</button></div>
+<div class="row" style="margin-top:6px"><button class="g tool on" id="mk-7">777 auto (15 s)</button><button class="g tool" id="mk-r">🎲 Losowy</button><button class="g tool" id="mk-x">⏭ Następny</button><button class="g tool" id="mk-f">⛶ Pełny ekran</button><button class="g tool" id="mk-mic">🎤 Mikrofon</button></div></div>
 <div class="c" id="builder"><h2>🛠 App Builder — Super G zbuduje Ci apkę</h2>
 <form id="bf"><input id="bq" style="flex:1" placeholder="np. licznik BPM z przyciskiem TAP, lista zakupów, quiz o techno…" autocomplete="off"><button class="btn" id="bb">Zbuduj 🐲</button></form>
 <div class="k" id="bs" style="margin:6px 0">AI generuje jeden plik HTML; podgląd w bezpiecznym sandboxie (bez dostępu do tej strony).</div>
@@ -146,4 +155,5 @@ fetch('/api/build',{method:'POST',headers:{'Content-Type':'application/json'},bo
 $('bdl').onclick=()=>{var n='super-g-app-'+Date.now()+'.html';if(window.D7App&&D7App.saveHtml){D7App.saveHtml(n,HT);return}var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([HT],{type:'text/html'}));a.download=n;a.click()};
 $('bsrc').onclick=()=>{var c=$('bcode');c.style.display=c.style.display=='none'?'block':'none'};})();
 </script>
+<script src="js/d7-stations.js"></script><script src="js/butterchurn.min.js"></script><script src="js/butterchurnPresets.min.js"></script><script src="js/butterchurnPresetsExtra.min.js"></script><script src="js/sg-milk777.js"></script>
 </body></html>
