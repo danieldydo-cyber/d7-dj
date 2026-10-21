@@ -244,4 +244,4 @@ $('mbMic').onclick=()=>{if(!SR)return say('b','Rozpoznawanie mowy niedostępne (
 rec.onresult=e=>handle(e.results[e.results.length-1][0].transcript);rec.onend=()=>{rec=null;$('mbMic').classList.remove('on');};rec.onerror=e=>say('b','Mikrofon: '+e.error);rec.start();$('mbMic').classList.add('on');say('b','Słucham… 🎤');};
 window.gdj.chat=handle;
 say('b','Cześć! Tu Multibot G. Napisz "pomoc" żeby zobaczyć komendy.');
-</script><script src="js/d7-dock.js?v=1"></script></body></html>
+</script><script src="js/d7-dock.js?v=2"></script><script src="js/d7-pay.js?v=2"></script><script src="js/d7-sync.js?v=1"></script></body></html>

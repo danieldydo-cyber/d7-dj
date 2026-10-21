@@ -33,6 +33,9 @@ input{flex:1;min-width:120px}button{background:linear-gradient(90deg,var(--acc),
 <section id="s-bots" class="on">
 <div class="card"><h2>Boty <span id="st"></span></h2><div id="bots"></div>
 <div class="row"><button class="g" onclick="selAll(1)">Zaznacz wszystkie</button><button class="g" onclick="selAll(0)">Tylko D</button></div></div>
+<div class="card" id="botBuilder"><h2>🛠 Bot builder</h2><div class="row"><input id="nbName" placeholder="Nazwa bota"><input id="nbIcon" placeholder="🤖" style="max-width:70px;flex:0"></div>
+<div class="row"><input id="nbRole" placeholder="Rola (np. kierownik setu techno)"></div><div class="row"><textarea id="nbPrompt" rows="4" style="width:100%;background:#0a0c1e;color:inherit;border:1px solid #2a2d55;border-radius:10px;padding:8px" placeholder="Prompt systemowy: jak bot ma się zachowywać…"></textarea></div>
+<div class="row"><button id="nbSave" type="button">💾 Zapisz bota</button><span id="nbSt" class="info"></span></div></div>
 <div class="card"><h2>Czat <span id="mode"></span></h2><div id="log" class="log"></div>
 <div class="row"><input id="msg" placeholder="Napisz do botów…" autocomplete="off"><button id="send" onclick="send()">Wyślij</button></div></div>
 <div class="card"><h2>Szybkie akcje</h2><div class="qa">
@@ -91,8 +94,9 @@ const pv=$('pBot').value;$('pBot').innerHTML=BOTS.map(b=>'<option value="'+esc(b
 function selAll(a){SEL=new Set(a?BOTS.map(b=>b.id):['d']);render()}
 async function j(p,o){const r=await fetch(API+p,Object.assign({cache:'no-store'},o||{}));if(!r.ok)throw new Error(r.status);return r.json()}
 async function init(){try{const [b,s]=await Promise.all([j('/api/bots'),j('/api/status').catch(()=>({}))]);const on=new Set(s.online||[]);
-BOTS=(b.bots||[]).map(x=>({id:x.id,name:x.name,role:x.role,on:on.has(x.id)}));LS('list',BOTS);$('off').style.display='none'}
+BOTS=(b.bots||[]).map(x=>({id:x.id,name:(x.icon?x.icon+' ':'')+x.name,role:x.role,on:on.has(x.id)||!!x.source}));LS('list',BOTS);$('off').style.display='none'}
 catch(e){BOTS=LS('list')||FALLBACK.map(x=>Object.assign({},x));BOTS.forEach(b=>b.on=false);$('off').style.display='block'}
+(window.D7CustomBots?D7CustomBots():[]).forEach(c=>{if(!BOTS.some(b=>b.id===c.id))BOTS.push({id:c.id,name:(c.icon||'🤖')+' '+c.name,role:c.role||'custom',on:true})});
 if(!BOTS.some(b=>b.id==='d'))BOTS.unshift({id:'d',name:'D',role:'główny hub D7 DJ',on:false});render()}
 function add(log,cls,who,t){const d=document.createElement('div');d.className='m '+cls;d.innerHTML=(who?'<i>'+esc(who)+'</i>':'')+'<span>'+esc(t)+'</span>';$(log).appendChild(d);$(log).scrollTop=1e9;return d}
 async function ask(bot,message){const r=await j('/api/brain',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({bot,message,lang:'pl'})});return r.answer||r.reply||JSON.stringify(r)}
@@ -169,4 +173,7 @@ async function psend(){const t=$('pMsg').value.trim();if(!t)return;if(!SUB){rend
  try{d.lastChild.textContent=await ask(SUB.bot,pref+t)}catch(e){d.lastChild.textContent='❌ Brak połączenia ('+e.message+')'}}
 $('pMsg').addEventListener('keydown',e=>{if(e.key==='Enter')psend()});
 init().then(renderSubs);setInterval(init,60000);
-</script><script src="js/d7-dock.js?v=1"></script></body></html>
+</script><script src="js/d7-dock.js?v=2"></script><script src="js/d7-pay.js?v=2"></script><script src="js/d7-sync.js?v=1"></script><script>(function(){var $=function(i){return document.getElementById(i)};function ls(v){try{if(v===undefined)return JSON.parse(localStorage.getItem('d7.customBots')||'[]');localStorage.setItem('d7.customBots',JSON.stringify(v))}catch(e){return[]}}
+window.D7CustomBots=ls;$('nbSave').onclick=async function(){var b={name:$('nbName').value.trim(),icon:$('nbIcon').value.trim()||'🤖',role:$('nbRole').value.trim(),prompt:$('nbPrompt').value.trim()};if(!b.name){$('nbSt').textContent='Podaj nazwę';return}
+b.id=b.name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'')||('bot'+Date.now());var srv='';try{var r=await fetch('/api/bots/custom',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});var j=await r.json();if(j.ok){b.id=j.bot.id;srv=' + serwer'}}catch(e){}
+var l=ls().filter(function(x){return x.id!==b.id});l.push(b);ls(l);$('nbSt').textContent='✓ Zapisano '+b.name+' (localStorage'+srv+')';if(window.D7BotsReload)window.D7BotsReload();}})();</script><script>window.D7BotsReload=function(){init()}</script></body></html>
