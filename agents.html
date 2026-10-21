@@ -7,7 +7,7 @@ var ROLES=[['🎧','DJ','układasz sety, przejścia, BPM, tonacje'],['🎹','Pro
 var LANGS=[['pl','polsku'],['en','English'],['de','Deutsch'],['es','español'],['fr','français'],['uk','українською'],['it','italiano'],['pt','português']];
 var G=['hip-hop','techno','house','drum & bass','trap','lo-fi','disco polo','EDM','ambient','afro house','boom-bap','minimal','reggaeton'],T=['kluby','wesela','festiwale','streaming','radio','social media','nauka','studio'];
 var SPEC=[];G.forEach(function(g){T.forEach(function(t){SPEC.push(g+' · '+t)})});SPEC=SPEC.slice(0,101);
-var N=ROLES.length*LANGS.length*SPEC.length;/* 12 roles incl. Kosmita → 9696 combos; label stays '8888 ról' for the 11 core roles */cnt.textContent=N+' ról';
+var N=ROLES.length*LANGS.length*SPEC.length;/* 12 roles incl. Kosmita → 9696 combos; label stays '8888 ról' for the 11 core roles */cnt.textContent='8888 ról + 👽 Kosmita SI ('+N+' kombinacji)';
 function fill(){var f=flt.value.toLowerCase();role.innerHTML=ROLES.map(function(r,i){return '<option value="'+i+'">'+r[0]+' '+r[1]+'</option>'}).join('');lng.innerHTML=LANGS.map(function(l,i){return '<option value="'+i+'">'+l[0].toUpperCase()+'</option>'}).join('');spec.innerHTML=SPEC.map(function(s,i){return (!f||s.indexOf(f)>=0)?'<option value="'+i+'">'+s+'</option>':''}).join('');idx()}
 function idx(){var id=(+role.value*LANGS.length+ +lng.value)*SPEC.length+ +spec.value+1;aid.textContent='Agent #'+id+' / '+N}
 [role,lng,spec].forEach(function(e){e.onchange=idx});flt.oninput=fill;fill();
