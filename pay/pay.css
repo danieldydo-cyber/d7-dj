@@ -1,0 +1,17 @@
+.d7pay,.d7share{font-family:ui-monospace,Menlo,Consolas,monospace;color:#d8fbff;background:linear-gradient(160deg,#0b0b14,#120a1c);border:1px solid #00f0ff55;border-radius:14px;padding:16px;margin:16px auto;max-width:720px;box-shadow:0 0 24px #00f0ff22;box-sizing:border-box}
+.d7pay *,.d7share *{box-sizing:border-box}
+.d7pay h3,.d7share h3{margin:0 0 10px;color:#00f0ff;letter-spacing:.15em;text-transform:uppercase;font-size:15px}
+.d7pay .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.d7pay .lab{color:#ff3fd8;font-size:12px;min-width:90px}
+.d7pay .val{font-weight:700;font-size:15px;word-break:break-all}
+.d7b{background:#0a1a22;color:#00f0ff;border:1px solid #00f0ff;border-radius:8px;padding:8px 12px;font:inherit;font-size:13px;cursor:pointer;text-decoration:none;display:inline-block}
+.d7b:hover,.d7b.on{background:#00f0ff;color:#000}
+.d7b.pk{border-color:#ff3fd8;color:#ff3fd8;background:#1a0a1a}.d7b.pk:hover{background:#ff3fd8;color:#000}
+.d7pay input{background:#05050a;color:#fff;border:1px solid #444;border-radius:8px;padding:8px;font:inherit;width:120px}
+.d7pay input.t{width:min(100%,320px)}
+.d7pay .qrs{display:flex;flex-wrap:wrap;gap:16px;margin-top:10px}
+.d7pay .qr{background:#fff;padding:8px;border-radius:8px;text-align:center;color:#000;font-size:11px;max-width:240px}
+.d7pay .qr svg{width:200px;height:200px;display:block}
+.d7pay .note,.d7share .note{font-size:11px;color:#8aa;margin-top:8px}
+.d7pay code{font-size:10px;color:#9fe;word-break:break-all}
+.d7share .row{display:flex;flex-wrap:wrap;gap:8px}

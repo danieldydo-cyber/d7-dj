@@ -1,0 +1,110 @@
+/* v68 · WeDJ PRO add-on: 🎼 CC library (2000 streaming tracks, search + genre), 🔁 27 loop slots (18 on-device + 9 CC slices, synced to clock),
+   ⏱ master BPM clock (auto/tap/sync decks+loops+generator+viz), 🤖 AI DJ Auto Mega Set (7-brain chain → offline fallback). */
+(function(){'use strict';var $=function(s,r){return(r||document).querySelector(s)},W=function(){return window.WeDJ},TEST=!!window.__D7_TEST__;
+function P(){try{return window.parent!==window?window.parent:null}catch(e){return null}}
+var css=document.createElement('style');css.textContent=
+'#pro{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:6px 8px;background:#0c0c16;border-top:1px solid #23233a}#pro .bpmc{font:bold 20px monospace;color:#00e5ff;min-width:74px;text-align:center}#pro .beat{width:12px;height:12px;border-radius:50%;background:#333}#pro .beat.on{background:#00e5ff;box-shadow:0 0 10px #00e5ff}'+
+'#protabs{display:flex;gap:4px;padding:4px 8px 0}#protabs button.on{background:#7b2cff;border-color:#b388ff;color:#fff}.pp{display:none;padding:6px 8px}.pp.on{display:block}'+
+'#libl{max-height:34vh;overflow:auto;border:1px solid #23233a;border-radius:8px}#libl .tr{display:flex;gap:6px;align-items:center;padding:4px 6px;border-bottom:1px solid #16162a}#libl .tr:hover{background:#151528}#libl .tr b{flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-weight:600}#libl .tr i{color:#889;font-style:normal;font-size:11px;max-width:30%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}#libl .tr a{color:#6af;font-size:10px}'+
+'#lpg{display:grid;grid-template-columns:repeat(9,1fr);gap:4px}#lpg button{height:44px;font-size:10.5px;line-height:1.1;padding:2px}#lpg button.on{background:#00c853;color:#000}#lpg button.cc{border-color:#ff9100}#lpg button.ld{opacity:.5}'+
+'#mega .st{color:#ffd23f}@media (max-width:820px){#lpg{grid-template-columns:repeat(3,1fr)}}';document.head.appendChild(css);
+/* ---------- UI ---------- */
+var box=document.createElement('div');box.id='prowrap';box.innerHTML=
+'<div id="pro"><b style="color:#b388ff">⏱ PRO zegar</b><span class="beat" id="pbeat"></span><span class="bpmc" id="pbpm">124.0</span><span class="small" id="psrc">ręcznie</span>'+
+'<button id="ptap">TAP</button><button id="pdn">−</button><button id="pup">+</button><button id="pauto" class="on">AUTO BPM</button><button id="psync" class="on">🔗 SYNC wszystko</button><button id="pgen">🎛 Generator za zegarem</button>'+
+'<span style="flex:1"></span><button id="megab">🤖 AI DJ Auto Mega Set ▶</button></div>'+
+'<div id="protabs"><button data-t="lib" class="on">🎼 Biblioteka CC</button><button data-t="lp">🔁 Loopy (27)</button><button data-t="mega">🤖 Mega Set</button></div>'+
+'<div class="pp on" id="pp-lib"><div class="row"><input id="libq" placeholder="🔎 szukaj tytuł / artysta / album…" style="flex:2;min-width:140px;background:#111;color:#eee;border:1px solid #33335a;border-radius:8px;padding:6px"><select id="libg"><option value="">wszystkie</option><option value="techno">⚡ techno</option><option value="hiphop">🎤 hip-hop</option></select><span class="small" id="libn">ładuję katalog…</span></div><div id="libl"></div><div class="small">Muzyka Creative Commons z Internet Archive (netlabels) — streaming, nie w APK. Licencja przy każdym utworze (link).</div></div>'+
+'<div class="pp" id="pp-lp"><div class="row"><span class="small">Loopy grają w tempie zegara · tap = start/stop · pomarańczowe = wycinki CC</span><button id="lpstop">⏹ stop wszystkie</button><label class="small">głośność <input id="lpvol" type="range" min="0" max="1" step=".01" value=".7"></label></div><div id="lpg"></div></div>'+
+'<div class="pp" id="mega"><div class="row"><label class="small">Długość seta <select id="mlen"><option value="15">15 min</option><option value="30">30 min</option><option value="60" selected>60 min</option><option value="120">2 h</option><option value="0">∞ ciągle</option></select></label>'+
+'<label class="small">Mix gatunków: techno <input id="mmix" type="range" min="0" max="100" value="60" style="width:110px"> hip-hop <span id="mmixv">60/40</span></label><label class="small">Energia <select id="men"><option value="up">rosnąca</option><option value="wave" selected>fale</option><option value="peak">szczyt</option></select></label>'+
+'<label class="small"><input type="checkbox" id="mfx" checked> AI FX przy przejściach</label></div><div class="small st" id="mst">gotowy · wciśnij ▶ (AI wybiera z biblioteki CC, beatmatch, przejścia co 16 taktów)</div><ol class="small" id="mlog" style="max-height:20vh;overflow:auto;margin:4px 0"></ol></div>';
+function mount(){var sm=$('#sampler');if(!sm||!W())return setTimeout(mount,60);sm.parentNode.insertBefore(box,sm.nextSibling);wire()}
+/* ---------- master clock (shared with launcher D7Clock when present) ---------- */
+var C={bpm:124,src:'manual',t0:performance.now(),auto:true,sync:true,taps:[]};
+function PC(){var p=P();try{return p&&p.D7Clock}catch(e){return null}}
+function setBpm(b,src,fromParent){b=Math.max(60,Math.min(190,+b||124));b=Math.round(b*10)/10;var ch=Math.abs(b-C.bpm)>.04;C.bpm=b;C.src=src||'manual';$('#pbpm').textContent=b.toFixed(1);$('#psrc').textContent={tap:'TAP',auto:'auto (deck)',manual:'ręcznie',parent:'zegar startowy',mega:'Mega Set',ai:'AI'}[C.src]||C.src;
+ if(!fromParent){var pc=PC();if(pc&&pc.set)try{pc.set(b,'wedj')}catch(e){}}if(ch&&C.sync)follow();if(ch)regenLoops()}
+function follow(){var w=W();if(!w)return;w.decks.forEach(function(d){if(d.bpm&&(d.buf)){var r=C.bpm/d.bpm;if(r<.84||r>1.16){var r2=C.bpm/(d.bpm*2),r3=C.bpm/(d.bpm/2);r=Math.abs(r2-1)<Math.abs(r3-1)?r2:r3}if(r>=.84&&r<=1.16)d.setRate(r)}});LP.forEach(function(l){if(l.src&&l.bpm)l.src.playbackRate.setTargetAtTime(C.bpm/l.bpm,l.ctx.currentTime,.02)})}
+window.addEventListener('message',function(e){var d=e.data;if(d&&d.type=='d7:clock'&&d.bpm&&C.src!='tap')setBpm(d.bpm,'parent',true)});
+setInterval(function(){/* auto BPM: master deck tempo drives the clock */var w=W();if(!w||!C.auto)return;var m=w.master();if(m&&m.playing&&m.bpm&&C.src!='tap'){var b=m.bpm*m.rate;if(Math.abs(b-C.bpm)>.3&&!C.sync)setBpm(b,'auto');else if(Math.abs(b-C.bpm)>.3&&C.sync&&C.src!='manual'&&!MEGA.on)setBpm(b,'auto')}},1000);
+(function blink(){requestAnimationFrame(blink);var e=$('#pbeat');if(!e)return;var ph=((performance.now()-C.t0)/(60000/C.bpm))%1;e.classList.toggle('on',ph<.18)})();
+/* ---------- CC library ---------- */
+var CAT=[],LIBF=[];
+function loadCat(){var urls=['data/cc-catalog.json','https://danieldydo-cyber.github.io/super-x-g/data/cc-catalog.json'];(function nx(i){if(i>=urls.length){$('#libn').textContent='katalog niedostępny (offline)';return}fetch(urls[i]).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){CAT=j.tracks||[];CAT.forEach(function(t,k){t.i=k;t.k=(t.title+' '+t.artist+' '+t.album).toLowerCase();t.est=t.genre=='hiphop'?90:126});lib()}).catch(function(){nx(i+1)})})(0)}
+function lib(){var q=$('#libq').value.toLowerCase().trim(),g=$('#libg').value;LIBF=CAT.filter(function(t){return(!g||t.genre==g)&&(!q||t.k.indexOf(q)>=0)});$('#libn').textContent=LIBF.length+' / '+CAT.length+' utworów';
+ $('#libl').innerHTML=LIBF.slice(0,200).map(function(t){return '<div class="tr"><span>'+(t.genre=='hiphop'?'🎤':'⚡')+'</span><b title="'+esc(t.title)+'">'+esc(t.title)+'</b><i>'+esc(t.artist)+'</i><a href="'+esc(t.license)+'" target="_blank" rel="noopener">'+lic(t.license)+'</a><button data-a="'+t.i+'">→A</button><button data-b="'+t.i+'">→B</button></div>'}).join('')+(LIBF.length>200?'<div class="small" style="padding:6px">…pokazano 200, zawęź wyszukiwanie</div>':'')}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function lic(u){var m=String(u).match(/licenses\/([a-z-]+)\/([\d.]+)/);return m?'CC '+m[1].toUpperCase()+' '+m[2]:/publicdomain|zero/.test(u)?'PD/CC0':'CC'}
+function loadTo(di,t){var w=W(),d=w.decks[di];w.stat('Ładuję z biblioteki: '+t.title);return d.loadUrl(t.url,t.artist+' – '+t.title).then(function(){d.cc=t;return new Promise(function(res){(function wt(n){if(d.bpm||n>40)return res(d);setTimeout(function(){wt(n+1)},100)})(0)})})}
+/* ---------- 27 loop slots: 18 generated on-device (rendered at clock BPM) + 9 CC slices ---------- */
+var GENL=['Techno kick','Techno hats','Techno clap','Acid bass','Rumble','Stab chord','Hypnotic perc','Tech groove','Techno full',
+ 'Boom-bap','Trap hats','Trap 808','Lo-fi keys','Hip-hop snare','Shaker','Vinyl crackle','Sub bass','Hip-hop full'];
+var LP=[],LPOUT=null;
+function lpOut(){var w=W();w.pre();var c=w.ctx();if(!LPOUT){LPOUT=c.createGain();LPOUT.gain.value=+$('#lpvol').value;LPOUT.connect(w.pre())}return c}
+function render(name,bpm){var sr=44100,beats=name.indexOf('full')>=0||/keys|Stab|Acid|808|Sub/.test(name)?8:4,len=Math.round(sr*beats*60/bpm),oc=new OfflineAudioContext(1,len,sr),sp=60/bpm/4,o=oc.destination,NB=oc.createBuffer(1,sr,sr),nd=NB.getChannelData(0);for(var i=0;i<nd.length;i++)nd[i]=Math.random()*2-1;
+ function kick(t,v,f0){var s=oc.createOscillator(),g=oc.createGain();s.frequency.setValueAtTime(f0||150,t);s.frequency.exponentialRampToValueAtTime(42,t+.12);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+.42);s.connect(g);g.connect(o);s.start(t);s.stop(t+.45)}
+ function nz(t,d,f,v,ty){var s=oc.createBufferSource(),fl=oc.createBiquadFilter(),g=oc.createGain();s.buffer=NB;fl.type=ty||'highpass';fl.frequency.value=f;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);s.connect(fl);fl.connect(g);g.connect(o);s.start(t);s.stop(t+d+.01)}
+ function tone(t,n,d,v,w,fc,q){var s=oc.createOscillator(),fl=oc.createBiquadFilter(),g=oc.createGain();s.type=w||'sawtooth';s.frequency.value=440*Math.pow(2,(n-69)/12);fl.type='lowpass';fl.frequency.setValueAtTime(fc||1200,t);fl.frequency.exponentialRampToValueAtTime(150,t+d);fl.Q.value=q||4;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);s.connect(fl);fl.connect(g);g.connect(o);s.start(t);s.stop(t+d+.01)}
+ var N=beats*4;for(var k=0;k<N;k++){var t=k*sp,i=k%16;switch(name){
+ case'Techno kick':if(i%4==0)kick(t,1);break;case'Techno hats':if(i%4==2)nz(t,.06,7000,.4);if(i%2)nz(t,.02,9000,.15);break;case'Techno clap':if(i==4||i==12){nz(t,.15,1800,.6,'bandpass');nz(t+.012,.12,1800,.4,'bandpass')}break;
+ case'Acid bass':if([0,3,6,8,10,11,14].indexOf(i)>=0)tone(t,[33,45,36,33,40,45,38][k%7],.16,.5,'sawtooth',2400,14);break;case'Rumble':if(i%4==0)tone(t+sp,33,sp*3,.6,'sine',300,1);break;
+ case'Stab chord':if(i==2||i==10)[57,60,64].forEach(function(n){tone(t,n,.25,.18,'square',3000,2)});break;case'Hypnotic perc':if([3,7,9,14].indexOf(i)>=0)tone(t,72+(i%5),.08,.3,'triangle',4000,1);break;
+ case'Tech groove':if(i%4==0)kick(t,.9);if(i%4==2)nz(t,.05,7000,.35);if([2,3,6,10,11,14].indexOf(i)>=0)tone(t,33,.14,.35);break;
+ case'Techno full':if(i%4==0)kick(t,1);if(i%4==2)nz(t,.06,7000,.35);if(i==4||i==12)nz(t,.14,2000,.5,'bandpass');if([2,3,6,10,11,14].indexOf(i)>=0)tone(t,33+(k>=16?5:0),.15,.35,'sawtooth',1800,10);break;
+ case'Boom-bap':if(i==0||i==6||i==10)kick(t,1,120);if(i==4||i==12)nz(t,.2,1400,.7,'bandpass');if(i%2==0)nz(t,.04,8000,.2);break;case'Trap hats':nz(t,.03,8500,.25);if(i==14){nz(t+sp/3,.02,8500,.2);nz(t+2*sp/3,.02,8500,.2)}break;
+ case'Trap 808':if(i==0||i==7||i==10)tone(t,31+(k>=16?3:0),.7,.8,'sine',500,1);break;case'Lo-fi keys':if(i==0||i==8)[48,55,58,62].forEach(function(n,j){tone(t+j*.02,n+(k>=16?-2:0),1.1,.12,'triangle',1600,1)});break;
+ case'Hip-hop snare':if(i==4||i==12){nz(t,.22,1300,.75,'bandpass');kick(t,.25,220)}break;case'Shaker':nz(t+(i%2?sp*.12:0),.05,5000,i%2?.28:.15);break;case'Vinyl crackle':if(Math.random()<.5)nz(t+Math.random()*sp,.004,3000,.25);break;
+ case'Sub bass':if(i==0||i==6||i==10)tone(t,36+(k>=16?-4:0),sp*4,.7,'sine',260,1);break;
+ case'Hip-hop full':if(i==0||i==6||i==10)kick(t,1,120);if(i==4||i==12)nz(t,.2,1400,.7,'bandpass');if(i%2==0)nz(t+(i%4?sp*.1:0),.04,8000,.2);if(i==0||i==8)[48,55,58,62].forEach(function(n){tone(t,n+(k>=16?-2:0),.9,.08,'triangle',1500,1)});break}}
+ return oc.startRendering()}
+function buildLoops(){var g=$('#lpg');LP=[];GENL.forEach(function(n){LP.push({name:n,kind:'gen',bpm:C.bpm})});for(var i=0;i<9;i++)LP.push({name:'CC slice '+(i+1),kind:'cc'});
+ g.innerHTML=LP.map(function(l,i){return '<button data-i="'+i+'" class="'+(l.kind=='cc'?'cc':'')+'">'+(i+1)+' · '+esc(l.name)+'</button>'}).join('');g.querySelectorAll('button').forEach(function(b){b.onclick=function(){toggleLoop(+b.dataset.i)}})}
+function ccSlice(l,i){/* 2-bar slice from a CC track whose license allows remix (no ND), tempo-matched by playbackRate */var pool=CAT.filter(function(t){return!/-nd/.test(t.license)&&t.dur>60&&t.dur<480});if(!pool.length)return Promise.reject('brak katalogu');
+ var t=pool[(i*137+7)%pool.length],c=lpOut();l.name=t.title.slice(0,18);l.cc=t;return fetch(t.url).then(function(r){return r.arrayBuffer()}).then(function(a){return c.decodeAudioData(a)}).then(function(b){var bpm=W().detectBpm(b)||120,bs=60/bpm,st=Math.floor(Math.min(b.duration*.4,60)/bs)*bs,L=Math.round(8*bs*b.sampleRate),o=c.createBuffer(b.numberOfChannels,L,b.sampleRate),s0=Math.round(st*b.sampleRate);for(var ch=0;ch<b.numberOfChannels;ch++)o.getChannelData(ch).set(b.getChannelData(ch).subarray(s0,s0+L));l.buf=o;l.bpm=bpm})}
+function toggleLoop(i){var l=LP[i],b=$('#lpg [data-i="'+i+'"]'),c=lpOut();if(l.src){try{l.src.stop()}catch(e){}l.src=null;b.classList.remove('on');return}
+ b.classList.add('ld');var ready=l.kind=='gen'?(l.buf&&Math.abs(l.bpm-C.bpm)<.05?Promise.resolve():render(l.name,C.bpm).then(function(x){l.buf=x;l.bpm=C.bpm})):(l.buf?Promise.resolve():ccSlice(l,i));
+ ready.then(function(){b.classList.remove('ld');b.textContent=(i+1)+' · '+l.name;var s=c.createBufferSource();s.buffer=l.buf;s.loop=true;s.playbackRate.value=C.bpm/l.bpm;s.connect(LPOUT);
+  /* start on the next beat of the master clock */var bm=60000/C.bpm,wait=(bm-((performance.now()-C.t0)%bm))/1000;s.start(c.currentTime+wait);l.src=s;l.ctx=c;b.classList.add('on')},function(e){b.classList.remove('ld');W().stat('Loop '+(i+1)+': '+e)})}
+var regenT=0;function regenLoops(){clearTimeout(regenT);regenT=setTimeout(function(){LP.forEach(function(l,i){if(l.kind=='gen'&&l.src){var c=l.ctx;render(l.name,C.bpm).then(function(x){if(!l.src)return;var old=l.src;l.buf=x;l.bpm=C.bpm;var s=c.createBufferSource();s.buffer=x;s.loop=true;s.connect(LPOUT);s.start(c.currentTime+.02);try{old.stop(c.currentTime+.02)}catch(e){}l.src=s})}})},400)}
+/* ---------- AI DJ Auto Mega Set ---------- */
+var MEGA=window.WeDJMega={on:false,t0:0,n:0,log:[],busy:false,timer:0};
+function mlog(t){MEGA.log.push(t);var li=document.createElement('li');li.textContent=t;$('#mlog').appendChild(li);$('#mlog').scrollTop=1e9;$('#mst').textContent=t}
+function energyTarget(){var e=$('#men').value,m=(Date.now()-MEGA.t0)/60000,L=+$('#mlen').value||60;if(e=='peak')return .9;if(e=='up')return Math.min(1,.4+.6*m/L);return .55+.35*Math.sin(m/6*Math.PI)}
+function candidates(){var tp=+$('#mmix').value/100,g=Math.random()<tp?'techno':'hiphop',pool=CAT.filter(function(t){return t.genre==g&&t.dur>90&&t.dur<720&&!MEGA.used[t.i]}),out=[];for(var i=0;i<8&&pool.length;i++)out.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0]);return{g:g,c:out}}
+function choose(){var cs=candidates(),en=energyTarget();if(!cs.c.length)return Promise.resolve(null);var local=cs.c[0];
+ var q='AI DJ Mega Set: zegar '+C.bpm.toFixed(0)+' BPM, gatunek '+cs.g+', docelowa energia '+Math.round(en*100)+'%. Wybierz NAJLEPSZY następny utwór (indeks 0-'+(cs.c.length-1)+') i efekt przejścia (echo|reverb|flanger|sweep|crush). Kandydaci: '+cs.c.map(function(t,i){return i+') '+t.artist+' – '+t.title+' ('+Math.round(t.dur/60)+' min)'}).join('; ')+'. Odpowiedz JSON {"i":n,"fx":"...","why":"..."}';
+ var done=false;return new Promise(function(res){var tm=setTimeout(function(){if(done)return;done=true;res({t:local,fx:en>.6?'sweep':'reverb',why:'offline heurystyka',g:cs.g})},TEST?1500:9000);
+  try{W().brainAsk('music',q).then(function(a){if(done)return;done=true;clearTimeout(tm);var j=null;try{j=JSON.parse(String(a).match(/\{[\s\S]*\}/)[0])}catch(e){}var off=/\[offline\]/.test(String(a));var i=j&&+j.i>=0&&+j.i<cs.c.length?+j.i:0;res({t:cs.c[i],fx:j&&/echo|reverb|flanger|sweep|crush/.test(j.fx)?j.fx:'sweep',why:(off?'offline: ':'🧠 ')+(j&&j.why?String(j.why).slice(0,80):'wybór'),g:cs.g})},function(){})}catch(e){}})}
+function idleDeck(){var w=W(),a=w.decks[0],b=w.decks[1];if(!a.playing)return 0;if(!b.playing)return 1;return w.xf()<=0?1:0}
+function beatmatch(d){var r=C.bpm/d.bpm;if(r<.84||r>1.16){var r2=C.bpm/(d.bpm*2),r3=C.bpm/(d.bpm/2);r=Math.abs(r2-1)<Math.abs(r3-1)?r2:r3}if(r<.84||r>1.16)return false;d.setRate(r);return true}
+function next(first){if(!MEGA.on||MEGA.busy)return;MEGA.busy=true;var w=W(),di=first?0:idleDeck(),d=w.decks[di],o=w.decks[1-di];
+ choose().then(function(pk){if(!pk||!MEGA.on){MEGA.busy=false;return}MEGA.used[pk.t.i]=1;mlog('🎯 '+pk.t.artist+' – '+pk.t.title+' ['+pk.g+'] · '+pk.why);
+  return loadTo(di,pk.t).then(function(){if(!MEGA.on)return;if(!d.buf){mlog('⚠ nie załadowano, próbuję inny');MEGA.busy=false;return setTimeout(function(){next(first)},500)}
+   if(first){setBpm(d.bpm,'mega');d.setRate(1);d.seek(Math.min(30,d.dur()*.1));d.play();w.xf(di?1:-1);MEGA.cur=di;MEGA.started=Date.now();mlog('▶ start '+d.bpm+' BPM');MEGA.busy=false;return}
+   if(!beatmatch(d)){mlog('↷ tempo '+d.bpm+' za daleko od '+C.bpm.toFixed(0)+' → inny utwór');MEGA.busy=false;return setTimeout(next,300)}
+   /* phrase-aligned: start incoming at the next 16-beat boundary of the playing deck, then crossfade over 16 beats with AI FX */
+   var bsO=60/(o.bpm*o.rate),pO=o.pos()-(o.beatOff||0),toPhrase=(16-((pO/bsO)%16))*bsO;if(toPhrase<1)toPhrase+=16*bsO;d.seek(Math.min(32,d.dur()*.12));
+   mlog('⏳ przejście za '+toPhrase.toFixed(1)+' s (granica frazy 16 bitów) · FX '+pk.fx);
+   MEGA.timer=setTimeout(function(){if(!MEGA.on){MEGA.busy=false;return}d.play();d.sync&&setTimeout(function(){try{d.sync()}catch(e){}},60);var fx=$('#mfx').checked?pk.fx:null;if(fx)try{w.fx(fx,true)}catch(e){}
+    var steps=32,k=0,from=di?-1:1,to=di?1:-1,dur=16*bsO*1000;(function st(){if(!MEGA.on){MEGA.busy=false;return}k++;w.xf(from+(to-from)*k/steps);if(k<steps)return MEGA.timer=setTimeout(st,dur/steps);
+     o.pause();if(fx)try{w.fx(fx,false)}catch(e){}MEGA.cur=di;MEGA.n++;MEGA.started=Date.now();setBpm(C.bpm,'mega');mlog('✔ przejście '+MEGA.n+' · gra deck '+d.id);MEGA.busy=false})()},toPhrase*1000)})}).catch(function(e){MEGA.busy=false;mlog('⚠ '+e)})}
+function megaTick(){if(!MEGA.on)return;var L=+$('#mlen').value;if(L&&Date.now()-MEGA.t0>L*60000){mlog('🏁 koniec seta ('+L+' min, '+MEGA.n+' przejść)');return mega(false)}
+ var w=W(),d=w.decks[MEGA.cur||0];if(!d.playing&&!MEGA.busy)return next(!w.decks[0].playing&&!w.decks[1].playing);var left=d.dur()-d.pos(),played=(Date.now()-MEGA.started)/1000,want=TEST?8:Math.min(170,Math.max(60,d.dur()*.55));if(!MEGA.busy&&(played>want||left<45))next()}
+function mega(on){MEGA.on=on;$('#megab').classList.toggle('on',on);$('#megab').textContent=on?'🤖 Mega Set ⏹ STOP':'🤖 AI DJ Auto Mega Set ▶';clearInterval(MEGA.iv);clearTimeout(MEGA.timer);
+ if(on){if(!CAT.length){mlog('katalog jeszcze się ładuje…');setTimeout(function(){if(MEGA.on)mega(true)},1500);return}W().pre();MEGA.t0=Date.now();MEGA.n=0;MEGA.used={};MEGA.busy=false;tab('mega');mlog('🤖 start Mega Set · '+($('#mlen').value=='0'?'∞':$('#mlen').value+' min')+' · mix '+$('#mmixv').textContent);next(true);MEGA.iv=setInterval(megaTick,TEST?500:2000)}
+ else{MEGA.busy=false;mlog('⏹ Mega Set zatrzymany')}return on}
+MEGA.start=function(){return mega(true)};MEGA.stop=function(){return mega(false)};
+function tab(t){document.querySelectorAll('#protabs button').forEach(function(b){b.classList.toggle('on',b.dataset.t==t)});document.querySelectorAll('.pp').forEach(function(p){p.classList.toggle('on',p.id==(t=='mega'?'mega':'pp-'+t))})}
+function wire(){document.querySelectorAll('#protabs button').forEach(function(b){b.onclick=function(){tab(b.dataset.t)}});
+ $('#ptap').onclick=function(){var t=performance.now();C.taps=C.taps.filter(function(x){return t-x<3000});C.taps.push(t);if(C.taps.length>3){C.t0=t;setBpm(60000*(C.taps.length-1)/(t-C.taps[0]),'tap')}};
+ $('#pup').onclick=function(){setBpm(C.bpm+1,'manual')};$('#pdn').onclick=function(){setBpm(C.bpm-1,'manual')};
+ $('#pauto').onclick=function(){C.auto=!C.auto;this.classList.toggle('on',C.auto);if(C.auto&&C.src=='tap')C.src='auto'};$('#psync').onclick=function(){C.sync=!C.sync;this.classList.toggle('on',C.sync);if(C.sync)follow()};
+ $('#pgen').onclick=function(){var p=P();try{var r=p&&p.D7Radio;if(!r){W().stat('Generator jest na stronie startowej (Super X G)');return}var i=p.D7Stations.findIndex(function(s){return s[1]=='gen:'+(C.bpm<105?'hiphop':'techno')});r.set(i);setTimeout(function(){p.D7Clock.set(C.bpm,'wedj')},50);this.classList.add('on');W().stat('🎛 Generator gra w tempie zegara '+C.bpm.toFixed(1))}catch(e){}};
+ $('#megab').onclick=function(){mega(!MEGA.on)};$('#mmix').oninput=function(){$('#mmixv').textContent=this.value+'/'+(100-this.value)};
+ $('#libq').oninput=function(){clearTimeout(this.t);this.t=setTimeout(lib,150)};$('#libg').onchange=lib;
+ $('#libl').onclick=function(e){var b=e.target.closest('button');if(!b)return;var i=+(b.dataset.a||b.dataset.b),t=CAT[i];W().pre();loadTo(b.dataset.a!=null?0:1,t).then(function(d){if(C.sync&&d&&d.bpm)beatmatch(d)})};
+ $('#lpstop').onclick=function(){LP.forEach(function(l,i){if(l.src)toggleLoop(i)})};$('#lpvol').oninput=function(){if(LPOUT)LPOUT.gain.value=+this.value};
+ buildLoops();var pc=PC();if(pc&&pc.bpm)setBpm(pc.bpm,'parent',true);loadCat();
+ window.WeDJPro={clock:C,setBpm:setBpm,tap:function(){$('#ptap').click()},loops:LP,toggleLoop:toggleLoop,catalog:function(){return CAT},lib:function(q,g){$('#libq').value=q||'';$('#libg').value=g||'';lib();return LIBF.length},loadTo:loadTo,mega:MEGA}}
+if(document.readyState=='loading')document.addEventListener('DOMContentLoaded',mount);else mount()})();

@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="en"><head><script src="js/d7-token.js?v=1070"></script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>7D · G DJ Super Pro</title><style>
+:root{--n1:#0ff;--n2:#f0f;--n3:#7f0;--bg:#07070c;--p:#11111c}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#1a0830,var(--bg) 60%);color:#ddd;font-family:monospace}
+header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid #f0f4}
+h1{margin:0;font-size:30px;letter-spacing:5px;color:#fff;text-shadow:0 0 8px var(--n2),0 0 20px var(--n2)}h1 small{font-size:13px;color:var(--n3);text-shadow:0 0 8px var(--n3);display:block;letter-spacing:8px}
+.wa{background:#25d366;color:#000;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:bold;box-shadow:0 0 12px #25d366}
+main{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px}
+.panel{background:var(--p);border:1px solid #0ff3;border-radius:8px;padding:8px;box-shadow:0 0 12px #0ff2 inset}
+.panel h2{margin:0 0 6px;color:var(--n1);font-size:14px;text-shadow:0 0 6px var(--n1)}
+.full{grid-column:1/-1}.half{grid-column:span 2}label{display:inline-block;margin:2px 4px;font-size:10px;text-align:center}
+input[type=range]{accent-color:var(--n2);width:78px;display:block}
+button{background:#000;color:var(--n1);border:1px solid var(--n1);border-radius:4px;padding:5px 8px;cursor:pointer;font-family:inherit;margin:2px;font-size:11px}
+button:hover,button.on{background:var(--n1);color:#000;box-shadow:0 0 10px var(--n1)}
+.hc{border-color:#fa0;color:#fa0}.hc.set{background:#fa0;color:#000}
+.learn{outline:2px dashed var(--n3)!important}
+.pads{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}.pad{height:54px;border-color:var(--n2);color:var(--n2)}
+.pad.rec{background:#f00;color:#fff}.pad.loop{box-shadow:0 0 14px var(--n3);border-color:var(--n3)}
+.seq{display:grid;grid-template-columns:60px repeat(16,1fr);gap:3px;align-items:center}
+.st{height:20px;padding:0;margin:0;border-color:#555}.st.on{background:var(--n2);border-color:var(--n2);box-shadow:0 0 8px var(--n2)}.st.cur{outline:2px solid var(--n3)}
+canvas{width:100%;height:110px;background:#000;border-radius:6px}.bpm{font-size:18px;color:var(--n3)}
+.ch{display:inline-block;text-align:center;margin:0 10px}.ch input[type=range]{writing-mode:vertical-lr;direction:rtl;width:24px;height:110px}
+#log{font-size:11px;color:#888;white-space:pre-wrap;max-height:80px;overflow:auto}#cmd{width:70%;background:#000;color:var(--n3);border:1px solid var(--n3);padding:6px;font-family:inherit}
+.kb{font-size:10px;color:#999;columns:3}
+@media(max-width:900px){main{grid-template-columns:1fr 1fr}.half{grid-column:1/-1}}
+.chat{height:220px;overflow:auto;background:#000;border-radius:6px;padding:6px;font-size:12px}.chat .u{color:#0ff;text-align:right;margin:3px}.chat .b{color:#7f0;margin:3px}.chat .b b{color:#f0f}
+.bots{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px}.bot{border:1px solid #f0f6;border-radius:6px;padding:8px;text-align:center;box-shadow:0 0 8px #f0f3 inset}.bot b{color:#fff;text-shadow:0 0 6px #f0f}.bot .open{display:inline-block;margin-top:5px;color:#0ff;border:1px solid #0ff;border-radius:4px;padding:2px 8px;text-decoration:none;font-size:11px}.bot .open:hover{background:#0ff;color:#000}.bot small{display:block;color:#7f0;font-size:10px}
+</style></head><body>
+<header><h1>G DJ<small>SUPER PRO G</small></h1>
+<span>BPM <input id="mbpm" type="number" value="128" min="60" max="200" style="width:56px"> <button id="start">▶ AUDIO</button> <button id="learnBtn">MIDI LEARN</button> <button id="clockBtn">MIDI CLOCK</button>
+<button id="recWebm">● REC WEBM</button><button id="recWav">● REC WAV</button> <button id="autoBtn">AUTO-DJ</button> every <input id="autoBars" type="number" value="16" min="1" style="width:44px"> bars</span>
+<a class="wa" href="https://wa.me/48730377357" target="_blank">💬 WhatsApp</a></header>
+<main>
+<div class="panel full"><canvas id="viz" width="1400" height="110"></canvas></div>
+<div class="panel" id="deckA"></div><div class="panel" id="deckB"></div><div class="panel" id="deckC"></div><div class="panel" id="deckD"></div>
+<div class="panel full" style="text-align:center"><h2>4-CHANNEL MIXER</h2><div id="mixer"></div>
+<div>A/C side <input id="xf" data-midi="xf" type="range" min="0" max="1" step="0.01" value="0.5" style="width:50%;display:inline"> B/D side &nbsp; MASTER <input id="mvol" data-midi="mvol" type="range" min="0" max="1.5" step="0.01" value="1" style="display:inline"></div></div>
+<div class="panel half"><h2>SAMPLER — REC LOOP then pad = 1-bar loop</h2><button id="recBtn">● REC LOOP</button> <button id="clrBtn">CLEAR LOOPS</button><div class="pads" id="pads"></div></div>
+<div class="panel half"><h2>DRUM MACHINE 16-STEP</h2><button id="dmPlay">▶ PLAY</button><div class="seq" id="seq"></div></div>
+<div class="panel half"><h2>COMMAND CHAT</h2><input id="cmd" placeholder="type 'help' — e.g. play a, sync b, bpm 130, fx c flanger 0.6, cue a 1, autodj on 8"><button id="cmdGo">RUN</button><div id="log">MIDI: connecting… (Roland MC-707: USB MIDI, clock out on)</div></div>
+<div class="panel half"><h2>KEYBOARD</h2><div class="kb">Q W E R play A–D<br>Shift+Q..R sync A–D<br>1–8 sampler pads<br>Space drum machine<br>← → crossfader<br>A S D F hot cue 1–4 deck A<br>G H J K hot cue 1–4 deck B<br>Shift+cue key = set cue<br>Z X C V stutter A–D (hold)<br>T auto-DJ · Y rec WebM · / command</div></div>
+<div class="panel half"><h2>MULTIBOT G — czat</h2><div class="chat" id="chat"></div><input id="mbIn" placeholder="np. graj A; bpm 128 i crossfader środek · pomoc" style="width:62%;background:#000;color:#7f0;border:1px solid #7f0;padding:6px;font-family:inherit"><button id="mbGo">WYŚLIJ</button><button id="mbMic">🎤 GŁOS</button><button id="mbTts">🔊 MOWA</button></div>
+<div class="panel half"><h2>BOTY</h2><div class="bots" id="bots"></div><div style="margin-top:8px"><a class="wa" href="https://wa.me/48730377357" target="_blank">💬 WhatsApp</a></div></div>
+</main>
+<script>
+"use strict";
+let ctx,master,analyser,started=false;
+const $=id=>document.getElementById(id),K=['A','B','C','D'],decks={};
+const FX=[['flt','FILTER ◀LP|HP▶',-1,1,0,.01],['dly','DELAY',0,.9,0,.01],['rev','REVERB',0,1,0,.01],['fla','FLANGER',0,1,0,.01],['pha','PHASER',0,1,0,.01],['bit','BITCRUSH',0,1,0,.01]];
+function initAudio(){if(started)return;ctx=new (window.AudioContext||window.webkitAudioContext)();
+master=ctx.createGain();analyser=ctx.createAnalyser();analyser.fftSize=2048;master.connect(analyser);analyser.connect(ctx.destination);
+const len=ctx.sampleRate*2.5,ir=ctx.createBuffer(2,len,ctx.sampleRate);for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,3);}
+K.forEach(k=>buildDeckAudio(decks[k],ir));mixUpdate();started=true;$('start').classList.add('on');draw();}
+function deckUI(k){const el=$('deck'+k);el.innerHTML=`<h2>DECK ${k} <span class="bpm" id="bpm${k}">--</span> BPM <span id="pos${k}" style="font-size:10px;color:#888"></span></h2>
+<input type="file" accept="audio/*" id="file${k}" style="width:100%"><div id="name${k}" style="font-size:10px;color:#888">no track</div>
+<button id="play${k}" data-midi="play${k}">▶/❚❚</button><button id="sync${k}" data-midi="sync${k}">SYNC</button><button id="cue${k}" data-midi="cue${k}">⏮</button><button id="stut${k}" data-midi="stut${k}">STUTTER</button>
+<div>${[1,2,3,4].map(n=>`<button class="hc" id="hc${k}${n}" data-midi="hc${k}${n}" title="click: set/jump, shift/right-click: clear">HC${n}</button>`).join('')}</div>
+<div>${[['rate','TEMPO',.5,1.5,1,.001],['hi','HI',-24,12,0,.1],['mid','MID',-24,12,0,.1],['lo','LOW',-24,12,0,.1],...FX].map(([id,l,mn,mx,v,s])=>`<label>${l}<input type="range" id="${id}${k}" data-midi="${id}${k}" min="${mn}" max="${mx}" value="${v}" step="${s}"></label>`).join('')}</div>`;
+const d=decks[k]={k,buf:null,src:null,playing:false,offset:0,startT:0,bpm:0,cues:[null,null,null,null],stut:null};
+$('file'+k).onchange=e=>loadFile(d,e.target.files[0]);$('play'+k).onclick=()=>toggle(d);$('sync'+k).onclick=()=>sync(d);
+$('cue'+k).onclick=()=>seek(d,0);$('stut'+k).onclick=()=>stutter(d,!d.stut);
+[1,2,3,4].forEach(n=>{const b=$('hc'+k+n);b.onclick=e=>hotcue(d,n-1,e.shiftKey?'clear':null);b.oncontextmenu=e=>{e.preventDefault();hotcue(d,n-1,'clear');};});
+['hi','mid','lo',...FX.map(f=>f[0])].forEach(p=>$(p+k).oninput=()=>params(d));$('rate'+k).oninput=()=>{if(d.src)d.src.playbackRate.value=+$('rate'+k).value;showBpm(d);};}
+function crushCurve(a){const n=4096,c=new Float32Array(n),steps=Math.pow(2,16-a*14);for(let i=0;i<n;i++){const x=i/n*2-1;c[i]=Math.round(x*steps)/steps;}return c;}
+function buildDeckAudio(d,ir){const C=t=>ctx.createBiquadFilter(),G=v=>{const g=ctx.createGain();g.gain.value=v||0;return g};
+d.in=G(1);d.lo=C();d.lo.type='lowshelf';d.lo.frequency.value=250;d.mid=C();d.mid.type='peaking';d.mid.frequency.value=1000;d.mid.Q.value=.8;d.hi=C();d.hi.type='highshelf';d.hi.frequency.value=4000;d.flt=C();
+d.crush=ctx.createWaveShaper();d.post=G(1);d.ch=G(1);d.xf=G(1);
+d.in.connect(d.lo).connect(d.mid).connect(d.hi).connect(d.flt).connect(d.crush).connect(d.post).connect(d.ch).connect(d.xf).connect(master);
+// delay
+d.dly=ctx.createDelay(2);d.fb=G();d.dw=G();d.post.connect(d.dly);d.dly.connect(d.fb).connect(d.dly);d.dly.connect(d.dw).connect(d.ch);
+d.conv=ctx.createConvolver();d.conv.buffer=ir;d.rw=G();d.post.connect(d.conv);d.conv.connect(d.rw).connect(d.ch);
+// flanger
+d.fd=ctx.createDelay(.05);d.fd.delayTime.value=.004;d.ffb=G();d.fw=G();const lfo=ctx.createOscillator(),lg=G(.003);lfo.frequency.value=.25;lfo.connect(lg).connect(d.fd.delayTime);lfo.start();
+d.post.connect(d.fd);d.fd.connect(d.ffb).connect(d.fd);d.fd.connect(d.fw).connect(d.ch);
+// phaser
+let last=d.post;const plfo=ctx.createOscillator();plfo.frequency.value=.5;plfo.start();for(let i=0;i<4;i++){const ap=C();ap.type='allpass';ap.frequency.value=600+i*400;ap.Q.value=4;const pg=G(500+i*300);plfo.connect(pg).connect(ap.frequency);last.connect(ap);last=ap;}d.pw=G();last.connect(d.pw).connect(d.ch);
+params(d);}
+function params(d){if(!ctx||!d.in)return;const k=d.k,v=id=>+$(id+k).value;d.hi.gain.value=v('hi');d.mid.gain.value=v('mid');d.lo.gain.value=v('lo');
+const f=v('flt');if(f<0){d.flt.type='lowpass';d.flt.frequency.value=20000*Math.pow(10,f*2.5);}else{d.flt.type='highpass';d.flt.frequency.value=f<=.001?10:20*Math.pow(10,f*2.8);}
+d.dw.gain.value=v('dly');d.fb.gain.value=v('dly')*.7;d.dly.delayTime.value=60/mbpm()*.75;d.rw.gain.value=v('rev');
+d.fw.gain.value=v('fla');d.ffb.gain.value=v('fla')*.75;d.pw.gain.value=v('pha');const b=v('bit');d.crush.curve=b>0.01?crushCurve(b):null;}
+function mbpm(){return +$('mbpm').value||128;}
+async function loadFile(d,f){if(!f)return;initAudio();$('name'+d.k).textContent='loading '+f.name+'…';d.buf=await ctx.decodeAudioData(await f.arrayBuffer());
+if(d.playing)toggle(d);d.offset=0;d.cues=[null,null,null,null];[1,2,3,4].forEach(n=>$('hc'+d.k+n).classList.remove('set'));d.bpm=detectBpm(d.buf);showBpm(d);$('name'+d.k).textContent=f.name;}
+function detectBpm(buf){const data=buf.getChannelData(0),sr=buf.sampleRate,hop=Math.floor(sr/200),n=Math.min(Math.floor(data.length/hop),200*60);
+const env=new Float32Array(n);let prev=0;for(let i=0;i<n;i++){let s=0;for(let j=0;j<hop;j++){const x=data[i*hop+j]||0;s+=x*x;}s=Math.sqrt(s/hop);env[i]=Math.max(0,s-prev);prev=s;}
+let best=0,bb=120;for(let bpm=70;bpm<=180;bpm+=.5){const lag=200*60/bpm;let c=0;for(let i=0;i+lag*2<n;i++)c+=env[i]*(env[Math.round(i+lag)]+.5*env[Math.round(i+lag*2)]);if(c>best){best=c;bb=bpm;}}return bb;}
+function showBpm(d){$('bpm'+d.k).textContent=d.bpm?(d.bpm*+$('rate'+d.k).value).toFixed(1):'--';}
+function sync(d){if(!d.bpm)return;$('rate'+d.k).value=Math.min(1.5,Math.max(.5,mbpm()/d.bpm));$('rate'+d.k).oninput();}
+function pos(d){return d.playing?(d.offset+(ctx.currentTime-d.startT)*d.src.playbackRate.value)%d.buf.duration:d.offset;}
+function startSrc(d,at){if(d.src){try{d.src.stop()}catch(e){}}d.src=ctx.createBufferSource();d.src.buffer=d.buf;d.src.loop=true;d.src.playbackRate.value=+$('rate'+d.k).value;d.src.connect(d.in);d.offset=at%d.buf.duration;d.src.start(0,d.offset);d.startT=ctx.currentTime;}
+function toggle(d,force){initAudio();if(!d.buf)return;const want=force===undefined?!d.playing:force;if(want===d.playing)return;
+if(!want){d.offset=pos(d);d.src.stop();d.playing=false;stutter(d,false);}else{startSrc(d,d.offset);d.playing=true;}$('play'+d.k).classList.toggle('on',d.playing);}
+function seek(d,t){if(!d.buf)return;if(d.playing)startSrc(d,t);else d.offset=t;}
+function hotcue(d,i,mode){if(!d.buf)return;const b=$('hc'+d.k+(i+1));if(mode==='clear'){d.cues[i]=null;b.classList.remove('set');return;}
+if(mode==='set'||d.cues[i]===null){d.cues[i]=pos(d);b.classList.add('set');}else{seek(d,d.cues[i]);if(!d.playing)toggle(d,true);}}
+function stutter(d,on){if(!d.buf||!d.playing){on=false;}clearInterval(d.stut);d.stut=null;$('stut'+d.k).classList.toggle('on',!!on);
+if(on){const p=pos(d),len=60/mbpm()/4;d.stut=setInterval(()=>startSrc(d,p),len*1000);startSrc(d,p);}}
+function mixUpdate(){if(!ctx)return;const x=+$('xf').value,l=Math.cos(x*Math.PI/2),r=Math.cos((1-x)*Math.PI/2);master.gain.value=+$('mvol').value;
+K.forEach(k=>{const d=decks[k],a=$('asg'+k).value;d.ch.gain.value=+$('ch'+k).value;d.xf.gain.value=a==='L'?l:a==='R'?r:1;});}
+// mixer UI
+$('mixer').innerHTML=K.map((k,i)=>`<div class="ch">${k}<input type="range" id="ch${k}" data-midi="ch${k}" min="0" max="1.2" step="0.01" value="1"><select id="asg${k}"><option value="L" ${i%2?'':'selected'}>XF-L</option><option value="T">THRU</option><option value="R" ${i%2?'selected':''}>XF-R</option></select></div>`).join('');
+// synth voices
+function noise(t,dur,g,hp){const b=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate),c=b.getChannelData(0);for(let i=0;i<c.length;i++)c[i]=Math.random()*2-1;const s=ctx.createBufferSource();s.buffer=b;const f=ctx.createBiquadFilter();f.type='highpass';f.frequency.value=hp;const e=ctx.createGain();e.gain.setValueAtTime(g,t);e.gain.exponentialRampToValueAtTime(.001,t+dur);s.connect(f).connect(e).connect(master);s.start(t);}
+function tone(t,type,f0,f1,dur,g){const o=ctx.createOscillator(),e=ctx.createGain();o.type=type;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+dur);e.gain.setValueAtTime(g,t);e.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(e).connect(master);o.start(t);o.stop(t+dur+.05);}
+const VOICES={kick:t=>tone(t,'sine',150,40,.4,1),snare:t=>{noise(t,.2,.6,1500);tone(t,'triangle',220,120,.1,.4)},clap:t=>{for(let i=0;i<3;i++)noise(t+i*.012,.15,.5,1000)},hat:t=>noise(t,.05,.35,7000),ohat:t=>noise(t,.3,.3,6000),
+tom:t=>tone(t,'sine',200,90,.3,.7),bass:t=>{const o=ctx.createOscillator(),f=ctx.createBiquadFilter(),e=ctx.createGain();o.type='sawtooth';o.frequency.value=55;f.type='lowpass';f.Q.value=12;f.frequency.setValueAtTime(2000,t);f.frequency.exponentialRampToValueAtTime(100,t+.3);e.gain.setValueAtTime(.5,t);e.gain.exponentialRampToValueAtTime(.001,t+.35);o.connect(f).connect(e).connect(master);o.start(t);o.stop(t+.4)},
+stab:t=>[0,3,7].forEach(n=>tone(t,'square',220*Math.pow(2,n/12),220*Math.pow(2,n/12)*.99,.25,.12)),zap:t=>tone(t,'sawtooth',2000,60,.2,.25),rim:t=>tone(t,'square',800,700,.03,.4)};
+const PADS=['kick','snare','clap','hat','bass','stab','zap','ohat'];
+let recArm=false,recPad=-1,recStart=0;const loops=PADS.map(()=>[]);
+function barLen(){return 60/mbpm()*4;}
+function hitPad(i){initAudio();const t=ctx.currentTime;VOICES[PADS[i]](t);const el=$('pad'+i);el.style.background='#f0f';setTimeout(()=>el.style.background='',100);
+if(recPad>=0)loops[recPad].push({v:i,pos:(t-recStart)%barLen()});
+else if(recArm){recArm=false;$('recBtn').classList.remove('on');recPad=i;recStart=t;loops[i]=[{v:i,pos:0}];el.classList.add('rec');setTimeout(()=>{el.classList.remove('rec');el.classList.add('loop');recPad=-1;ensureClock();},barLen()*1000);}}
+// clock / scheduler
+const ROWS=['kick','snare','clap','hat','ohat','tom','rim','bass'];const pat=ROWS.map((r,i)=>Array(16).fill(0).map((_,s)=>(i==0&&s%4==0)||(i==3&&s%2==1)?1:0));
+let dmOn=false,step=0,nextT=0,barCount=0;
+function stepDur(){return 60/mbpm()/4;}
+function clockNeeded(){return dmOn||autoOn||loops.some((l,i)=>l.length&&$('pad'+i).classList.contains('loop'));}
+function ensureClock(){if(ctx&&nextT<ctx.currentTime)nextT=ctx.currentTime+.05;}
+function playStep(t){if(dmOn)ROWS.forEach((r,i)=>{if(pat[i][step])VOICES[r](t);});
+loops.forEach((l,i)=>{if(!$('pad'+i).classList.contains('loop'))return;const s0=step*stepDur(),s1=s0+stepDur();l.forEach(ev=>{if(ev.pos>=s0&&ev.pos<s1)VOICES[PADS[ev.v]](t+ev.pos-s0);});});
+const s=step;setTimeout(()=>document.querySelectorAll('.st').forEach(e=>e.classList.toggle('cur',+e.dataset.s===s)),Math.max(0,(t-ctx.currentTime)*1000));
+if(step===15){barCount++;if(autoOn)autoTick(t);}step=(step+1)%16;}
+setInterval(()=>{if(!ctx||clockSync||!clockNeeded())return;if(nextT<ctx.currentTime-.2)nextT=ctx.currentTime+.05;while(nextT<ctx.currentTime+.1){playStep(nextT);nextT+=stepDur();}},25);
+// Auto-DJ
+let autoOn=false,autoCur=null,autoBar=0;
+function loaded(){return K.filter(k=>decks[k].buf);}
+function setAuto(on,bars){initAudio();if(bars)$('autoBars').value=bars;autoOn=on;$('autoBtn').classList.toggle('on',on);if(!on)return log('Auto-DJ off');
+const L=loaded();if(!L.length){log('Auto-DJ: load tracks first');autoOn=false;$('autoBtn').classList.remove('on');return;}
+autoCur=L.find(k=>decks[k].playing)||L[0];K.forEach(k=>{$('asg'+k).value='T';$('ch'+k).value=k===autoCur?1:0;});const d=decks[autoCur];sync(d);toggle(d,true);mixUpdate();autoBar=barCount;ensureClock();log('Auto-DJ on: '+autoCur+' every '+$('autoBars').value+' bars');}
+function autoTick(t){const N=+$('autoBars').value||16;if(barCount-autoBar<N)return;autoBar=barCount;const L=loaded();if(L.length<2)return;
+const nk=L[(L.indexOf(autoCur)+1)%L.length],a=decks[autoCur],b=decks[nk],dur=barLen()*2;sync(b);toggle(b,true);
+a.ch.gain.cancelScheduledValues(t);b.ch.gain.cancelScheduledValues(t);a.ch.gain.setValueAtTime(a.ch.gain.value,t);a.ch.gain.linearRampToValueAtTime(0,t+dur);b.ch.gain.setValueAtTime(0,t);b.ch.gain.linearRampToValueAtTime(1,t+dur);
+const old=autoCur;autoCur=nk;setTimeout(()=>{$('ch'+old).value=0;$('ch'+nk).value=1;if(autoOn&&old!==autoCur)toggle(decks[old],false);},dur*1000+100);log('Auto-DJ: '+old+' → '+nk);}
+// recorder
+let mrec=null,wavRec=null;
+function recWebm(){initAudio();if(mrec){mrec.stop();return;}const dest=ctx.createMediaStreamDestination();master.connect(dest);const ch=[];mrec=new MediaRecorder(dest.stream);mrec.ondataavailable=e=>ch.push(e.data);
+mrec.onstop=()=>{master.disconnect(dest);dl(new Blob(ch,{type:'audio/webm'}),'gdj-mix.webm');mrec=null;$('recWebm').classList.remove('on');};mrec.start();$('recWebm').classList.add('on');log('Recording WebM…');}
+function recWav(){initAudio();if(wavRec){wavRec.node.disconnect();master.disconnect(wavRec.node);dl(encWav(wavRec.L,wavRec.R,ctx.sampleRate),'gdj-mix.wav');wavRec=null;$('recWav').classList.remove('on');return;}
+const node=ctx.createScriptProcessor(4096,2,2),L=[],R=[];node.onaudioprocess=e=>{L.push(new Float32Array(e.inputBuffer.getChannelData(0)));R.push(new Float32Array(e.inputBuffer.getChannelData(1)));};
+master.connect(node);node.connect(ctx.destination);wavRec={node,L,R};$('recWav').classList.add('on');log('Recording WAV…');}
+function encWav(L,R,sr){const n=L.reduce((a,b)=>a+b.length,0),buf=new ArrayBuffer(44+n*4),v=new DataView(buf),w=(o,s)=>[...s].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));
+w(0,'RIFF');v.setUint32(4,36+n*4,true);w(8,'WAVEfmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,2,true);v.setUint32(24,sr,true);v.setUint32(28,sr*4,true);v.setUint16(32,4,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,n*4,true);
+let o=44;for(let c=0;c<L.length;c++)for(let i=0;i<L[c].length;i++){for(const x of[L[c][i],R[c][i]]){v.setInt16(o,Math.max(-1,Math.min(1,x))*32767,true);o+=2;}}return new Blob([buf],{type:'audio/wav'});}
+function dl(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();log('Saved '+name+' ('+(blob.size/1e6).toFixed(1)+' MB)');}
+// MIDI
+let learnMode=false,learnTarget=null,clockSync=false,clockTicks=[],tickCount=0;const map=JSON.parse(localStorage.gdjMidi||'{}');
+function log(m){const l=$('log');l.textContent=m+'\n'+l.textContent.slice(0,2000);}
+function onMidi(e){const [st,d1,d2]=e.data,cmd=st&0xf0;
+if(st===0xF8){if(clockSync){const now=performance.now();clockTicks.push(now);if(clockTicks.length>48)clockTicks.shift();if(clockTicks.length>24)$('mbpm').value=(60000/((now-clockTicks[0])/(clockTicks.length-1)*24)).toFixed(1);
+if(tickCount%6===0&&ctx)playStep(ctx.currentTime+.01);tickCount++;}return;}
+if(st===0xFA||st===0xFB){tickCount=0;step=0;if(clockSync)dmOn=true;return;}if(st===0xFC){if(clockSync)dmOn=false;return;}
+if(cmd!==0xB0&&cmd!==0x90)return;if(cmd===0x90&&d2===0)return;const key=(cmd===0xB0?'cc':'n')+(st&15)+':'+d1;
+if(learnMode&&learnTarget){map[key]=learnTarget.dataset.midi;localStorage.gdjMidi=JSON.stringify(map);log('Mapped '+key+' → '+learnTarget.dataset.midi);learnTarget.classList.remove('learn');learnTarget=null;return;}
+const id=map[key];if(!id)return log('MIDI '+key+' '+d2);const el=document.querySelector(`[data-midi="${id}"]`);if(!el)return;
+if(el.type==='range'){el.value=+el.min+(d2/127)*(el.max-el.min);el.dispatchEvent(new Event('input'));}else el.click();}
+if(navigator.requestMIDIAccess)navigator.requestMIDIAccess().then(a=>{const hook=()=>{const n=[];a.inputs.forEach(i=>{i.onmidimessage=onMidi;n.push(i.name);});log('MIDI inputs: '+(n.join(', ')||'none (connect MC-707 via USB)'));};hook();a.onstatechange=hook;}).catch(e=>log('MIDI unavailable: '+e));else log('Web MIDI not supported (use Chrome/Edge).');
+// visualizer
+function draw(){const c=$('viz'),g=c.getContext('2d'),W=c.width,H=c.height,f=new Uint8Array(analyser.frequencyBinCount),w=new Uint8Array(analyser.fftSize);
+(function loop(){requestAnimationFrame(loop);analyser.getByteFrequencyData(f);analyser.getByteTimeDomainData(w);g.fillStyle='rgba(0,0,0,.35)';g.fillRect(0,0,W,H);
+for(let i=0;i<128;i++){const v=f[i*4]/255;g.fillStyle=`hsl(${180+i*1.2},100%,55%)`;g.fillRect(i*W/128,H-v*H,W/128-2,v*H);}
+g.strokeStyle='#f0f';g.lineWidth=2;g.beginPath();for(let i=0;i<w.length;i+=4){const x=i/w.length*W,y=w[i]/255*H;i?g.lineTo(x,y):g.moveTo(x,y);}g.stroke();
+g.fillStyle='#7f0';g.font='bold 16px monospace';g.fillText('SUPER PRO G',W-140,20);K.forEach(k=>{const d=decks[k];if(d.buf)$('pos'+k).textContent=pos(d).toFixed(1)+'s';});})();}
+// command chat
+const HELP='play|stop|sync|cue <deck> · hotcue <deck> <1-4> [set|clear] · fx <deck> <filter|delay|reverb|flanger|phaser|bitcrush|eq-hi|eq-mid|eq-lo|tempo> <val> · stutter <deck> on|off · vol <deck> <0-1.2> · xf <0-1> · bpm <n> · pad <1-8> · drums on|off · step <row 1-8> <1-16> · loop rec|clear · autodj on|off [bars] · rec webm|wav · midi learn|clock · help';
+const FXN={filter:'flt',delay:'dly',reverb:'rev',flanger:'fla',phaser:'pha',bitcrush:'bit','eq-hi':'hi','eq-mid':'mid','eq-lo':'lo',tempo:'rate'};
+function setR(id,v){const e=$(id);if(!e)return false;e.value=v;e.dispatchEvent(new Event('input'));return true;}
+function runCmd(s){initAudio();const a=s.trim().toLowerCase().split(/\s+/),c=a[0],dk=(a[1]||'').toUpperCase(),d=decks[dk];
+try{switch(c){case'help':return log(HELP);
+case'play':if(d)toggle(d,true);break;case'stop':case'pause':if(d)toggle(d,false);break;case'sync':if(d)sync(d);break;case'cue':if(d)seek(d,0);break;
+case'hotcue':case'hc':if(d)hotcue(d,(+a[2]||1)-1,a[3]);break;case'stutter':if(d)stutter(d,a[2]!=='off');break;
+case'fx':if(!d||!FXN[a[2]])return log('usage: fx <deck> <name> <value>');setR(FXN[a[2]]+dk,+a[3]);break;
+case'vol':setR('ch'+dk,+a[2]);break;case'xf':setR('xf',+a[1]);break;case'bpm':$('mbpm').value=+a[1];$('mbpm').oninput();break;
+case'pad':hitPad((+a[1]||1)-1);break;case'drums':if((a[1]!=='off')!==dmOn)$('dmPlay').click();break;
+case'step':{const r=+a[1]-1,st=+a[2]-1;document.querySelector(`[data-midi="st${r}_${st}"]`).click();break;}
+case'loop':$(a[1]==='clear'?'clrBtn':'recBtn').click();break;case'autodj':setAuto(a[1]!=='off',+a[2]||0);break;
+case'rec':(a[1]==='wav'?recWav:recWebm)();break;case'midi':$(a[1]==='clock'?'clockBtn':'learnBtn').click();break;
+default:return log('unknown: '+s+" — type 'help'");}log('> '+s);}catch(e){log('error: '+e.message);}}
+$('cmd').onkeydown=e=>{if(e.key==='Enter'){runCmd(e.target.value);e.target.value='';}};$('cmdGo').onclick=()=>{runCmd($('cmd').value);$('cmd').value='';};
+window.gdj={run:runCmd,decks};
+// build UI
+K.forEach(deckUI);
+PADS.forEach((p,i)=>{const b=document.createElement('button');b.className='pad';b.id='pad'+i;b.dataset.midi='pad'+i;b.textContent=(i+1)+' '+p.toUpperCase();b.onclick=()=>hitPad(i);$('pads').appendChild(b);});
+ROWS.forEach((r,i)=>{const l=document.createElement('div');l.textContent=r.toUpperCase();$('seq').appendChild(l);for(let s=0;s<16;s++){const b=document.createElement('button');b.className='st'+(pat[i][s]?' on':'');b.dataset.s=s;b.dataset.midi='st'+i+'_'+s;b.onclick=()=>{pat[i][s]^=1;b.classList.toggle('on');};if(s%4==0)b.style.borderColor='#0ff';$('seq').appendChild(b);}});
+$('start').onclick=initAudio;['xf','mvol',...K.map(k=>'ch'+k)].forEach(id=>$(id).oninput=mixUpdate);K.forEach(k=>$('asg'+k).onchange=mixUpdate);
+$('mbpm').oninput=()=>K.forEach(k=>params(decks[k]));
+$('dmPlay').dataset.midi='dmPlay';$('dmPlay').onclick=()=>{initAudio();dmOn=!dmOn;$('dmPlay').classList.toggle('on',dmOn);if(dmOn){step=0;nextT=ctx.currentTime+.05;}};
+$('recBtn').onclick=()=>{initAudio();recArm=!recArm;$('recBtn').classList.toggle('on',recArm);};
+$('clrBtn').onclick=()=>loops.forEach((l,i)=>{l.length=0;$('pad'+i).classList.remove('loop');});
+$('autoBtn').dataset.midi='autoBtn';$('autoBtn').onclick=()=>setAuto(!autoOn);$('recWebm').onclick=recWebm;$('recWav').onclick=recWav;
+$('learnBtn').onclick=()=>{learnMode=!learnMode;$('learnBtn').classList.toggle('on',learnMode);log(learnMode?'LEARN: click a control, then move a MIDI knob/pad':'Learn off');};
+$('clockBtn').onclick=()=>{clockSync=!clockSync;$('clockBtn').classList.toggle('on',clockSync);log(clockSync?'Following external MIDI clock (MC-707)':'Internal clock');};
+document.addEventListener('click',e=>{if(!learnMode)return;const el=e.target.closest('[data-midi]');if(!el||el.id==='learnBtn')return;document.querySelectorAll('.learn').forEach(x=>x.classList.remove('learn'));learnTarget=el;el.classList.add('learn');},true);
+// keyboard
+const PLAYK='qwer',CUEK={a:['A',0],s:['A',1],d:['A',2],f:['A',3],g:['B',0],h:['B',1],j:['B',2],k:['B',3]},STK='zxcv';
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'&&e.target.type!=='range'||e.target.tagName==='SELECT')return;const key=e.key.toLowerCase();if(e.repeat)return;
+if(key==='/'){e.preventDefault();return $('cmd').focus();}const pi=PLAYK.indexOf(key);if(pi>=0)return e.shiftKey?sync(decks[K[pi]]):toggle(decks[K[pi]]);
+if(key>='1'&&key<='8')return hitPad(+key-1);if(key===' '){e.preventDefault();return $('dmPlay').click();}
+if(key==='arrowleft'||key==='arrowright'){e.preventDefault();return setR('xf',Math.min(1,Math.max(0,+$('xf').value+(key==='arrowleft'?-.05:.05))));}
+if(CUEK[key]){const[dk,i]=CUEK[key];return hotcue(decks[dk],i,e.shiftKey?'set':null);}const si=STK.indexOf(key);if(si>=0)return stutter(decks[K[si]],true);
+if(key==='t')return setAuto(!autoOn);if(key==='y')return recWebm();});
+document.addEventListener('keyup',e=>{const si=STK.indexOf(e.key.toLowerCase());if(si>=0)stutter(decks[K[si]],false);});
+</script><script>
+"use strict";
+const BOTS=[{"name": "G", "id": "990af3d4-2d64-4833-8277-f6131a5e1336"}, {"name": "SuperGrok", "id": "25bf78ab-b1d9-4817-8d63-a9f64bf47670"}, {"name": "77", "id": "33dab54b-9d16-43b6-aa8b-4a5875051aed"}, {"name": "DargonMoon", "id": "8cd795b4-e5c2-4f5c-96c8-bf88d85b3278"}, {"name": "AutoFix", "id": "9efe9295-6a59-49f0-94e0-2c7b11dc6eff"}, {"name": "SuperCharger", "id": "a29a2aa1-5395-4a53-9a76-ab1832b622e5"}, {"name": "D", "id": "d56dc24c-0f3f-4fc4-91fd-1b2ccafdea06"}, {"name": "Dragon", "id": "db0dd1c5-3595-4211-ad3f-76706a40a063"}, {"name": "SuperBotD", "id": "fdd4f671-6385-4f12-87ec-95c9a562b79a"}, {"name": "MoePieseDevil", "id": "fa62e2c3-8d27-4ea8-852e-ef6fd348da76"}];
+const botUrl=b=>'grokbot://app/v1/agent?id='+encodeURIComponent(b.id);
+$('bots').innerHTML='';BOTS.forEach(b=>{const c=document.createElement('div');c.className='bot';const n=document.createElement('b');n.textContent=b.name;const sm=document.createElement('small');sm.textContent='● lokalnie';const a=document.createElement('a');a.className='open';a.href=botUrl(b);a.textContent='Otwórz';a.title=b.id;c.append(n,sm,a);$('bots').appendChild(c);});
+const scenes=JSON.parse(localStorage.gdjScenes||'{}');let tts=false;
+function say(who,t){const c=$('chat'),d=document.createElement('div');d.className=who;d.innerHTML=who==='b'?'<b>G:</b> '+t.replace(/</g,'&lt;'):t.replace(/</g,'&lt;');c.appendChild(d);c.scrollTop=1e9;
+if(who==='b'&&tts&&window.speechSynthesis){const u=new SpeechSynthesisUtterance(t);u.lang='pl-PL';speechSynthesis.speak(u);}}
+const PLHELP='Komendy: graj A · stop B · bpm 128 · sync [A] · crossfader lewo/prawo/środek · filtr A 30 (-100..100) · efekt A flanger 50 (filtr/delay/pogłos/flanger/phaser/bitcrush) · głośność A 80 · hotcue A 1 · stutter A · perkusja start/stop · losowy beat · pad 3 · autodj [8] · nagraj (WAV, ponownie = zapis) · nagraj webm · zapisz scenę NAZWA: komenda; komenda · scena NAZWA · sceny · boty / połącz wszystkie · pomoc. Łącz komendy przez ";" lub " i ". Działają też komendy angielskie (help).';
+const EFX={filtr:'filter',filter:'filter',delay:'delay',echo:'delay','pogłos':'reverb',poglos:'reverb',reverb:'reverb',flanger:'flanger',phaser:'phaser',fazer:'phaser',bitcrush:'bitcrush',bitcrusher:'bitcrush',krusz:'bitcrush'};
+const pct=v=>{v=parseFloat(String(v).replace(',','.'));return Math.abs(v)>1?v/100:v;};
+function randomBeat(){initAudio();ROWS.forEach((r,i)=>{for(let s=0;s<16;s++){const pr=[s%4==0?.95:.08,s%8==4?.9:.05,.12,s%2?.75:.3,.12,.1,.15,.25][i];pat[i][s]=Math.random()<pr?1:0;}});
+document.querySelectorAll('.st').forEach(b=>{const[r,st]=b.dataset.midi.slice(2).split('_').map(Number);b.classList.toggle('on',!!pat[r][st]);});if(!dmOn)$('dmPlay').click();}
+function one(raw){const t=raw.trim();if(!t)return;const l=t.toLowerCase(),a=l.split(/\s+/),c=a[0],dk=(a[1]||'').toUpperCase(),hasD=K.includes(dk);
+let m;
+if((m=t.match(/^zapisz\s+scen[eęa]\s+([^:]+):\s*(.+)$/i))){scenes[m[1].trim().toLowerCase()]=m[2];localStorage.gdjScenes=JSON.stringify(scenes);return 'Zapisano scenę "'+m[1].trim()+'".';}
+if(c==='scena'||c==='scene'){const n=a.slice(1).join(' '),sc=scenes[n];if(!sc)return 'Nie ma sceny "'+n+'". Sceny: '+(Object.keys(scenes).join(', ')||'brak');handle(sc,true);return 'Odpalam scenę "'+n+'" 🔥';}
+if(c==='sceny')return 'Sceny: '+(Object.keys(scenes).join(', ')||'brak');
+if(c==='boty'||c==='bots'||l==='połącz wszystkie'||l==='polacz wszystkie')return 'Boty ('+BOTS.length+', lokalnie): '+BOTS.map(b=>b.name+' → '+botUrl(b)).join(' | ');
+if(c==='pomoc'||c==='?')return PLHELP;
+if(c==='graj'||c==='odtwórz'||c==='play'){if(!hasD)return 'Który deck? (A–D)';if(!decks[dk].buf)return 'Deck '+dk+' jest pusty — wczytaj plik.';runCmd('play '+dk);return 'Gram deck '+dk+' ▶';}
+if(c==='stop'||c==='pauza'){if(!hasD){K.forEach(k=>decks[k].playing&&toggle(decks[k],false));return 'Zatrzymane wszystko ⏹';}runCmd('stop '+dk);return 'Stop deck '+dk;}
+if(c==='bpm'||c==='tempo'){if(!+a[1])return 'BPM teraz: '+mbpm();runCmd('bpm '+a[1]);return 'Master BPM = '+a[1];}
+if(c==='sync'||c==='synchronizuj'){const L=hasD?[dk]:K.filter(k=>decks[k].buf);L.forEach(k=>sync(decks[k]));return L.length?'Zsynchronizowano: '+L.join(', ')+' → '+mbpm()+' BPM':'Brak wczytanych decków.';}
+if(c==='crossfader'||c==='xf'){const v={lewo:0,left:0,prawo:1,right:1,'środek':.5,srodek:.5,center:.5}[a[1]];const x=v!==undefined?v:pct(a[1]);if(isNaN(x))return 'crossfader lewo/prawo/środek';runCmd('xf '+x);return 'Crossfader: '+(a[1]||x);}
+if(c==='filtr'&&hasD){runCmd('fx '+dk+' filter '+pct(a[2]||0));return 'Filtr '+dk+' = '+(a[2]||0);}
+if(c==='efekt'||c==='fx'){if(!hasD)return 'efekt A flanger 50';const n=EFX[a[2]];if(!n)return 'Nieznany efekt. Dostępne: filtr, delay, pogłos, flanger, phaser, bitcrush';runCmd('fx '+dk+' '+n+' '+pct(a[3]||50));return 'Efekt '+a[2]+' na '+dk+' = '+(a[3]||50);}
+if(c==='głośność'||c==='glosnosc'||c==='vol'){runCmd('vol '+dk+' '+pct(a[2]||100));return 'Głośność '+dk+' = '+(a[2]||100);}
+if(l.startsWith('losowy beat')||l==='random beat'){randomBeat();return 'Nowy losowy beat 🥁';}
+if(c==='perkusja'||c==='bęben'||c==='drums'){runCmd('drums '+(/stop|off|wyłącz/.test(a[1]||'')?'off':'on'));return 'Perkusja '+(dmOn?'gra':'stop');}
+if(c==='nagraj'||c==='nagrywaj'){const w=a[1]==='webm';const was=w?!!mrec:!!wavRec;runCmd('rec '+(w?'webm':'wav'));return was?'Nagranie zapisane 💾':'Nagrywam '+(w?'WebM':'WAV')+'… (napisz "nagraj" ponownie aby zapisać)';}
+if(c==='autodj'){runCmd('autodj '+(a[1]==='off'||a[1]==='stop'?'off':'on '+(+a[1]||'')));return 'Auto-DJ '+(autoOn?'włączony':'wyłączony');}
+if(c==='stutter'&&hasD&&!a[2]){stutter(decks[dk],!decks[dk].stut);return 'Stutter '+dk+(decks[dk].stut?' ON':' OFF');}
+const before=$('log').textContent;runCmd(t);const out=$('log').textContent.split('\n')[0];return out.startsWith('unknown')?'Nie rozumiem "'+t+'". Napisz "pomoc".':'OK: '+out.replace(/^> /,'');}
+function handle(text,quiet){if(!quiet)say('u',text);initAudio();const parts=/^\s*zapisz\s+scen/i.test(text)?[text]:text.split(/\s*;\s*|\s+i\s+/i).filter(Boolean);const r=[];
+for(const p of parts){try{r.push(one(p));}catch(e){r.push('Błąd: '+e.message);}}if(!quiet)say('b',r.filter(Boolean).join(' · '));}
+$('mbIn').onkeydown=e=>{if(e.key==='Enter'){handle(e.target.value);e.target.value='';}};$('mbGo').onclick=()=>{handle($('mbIn').value);$('mbIn').value='';};
+$('mbTts').onclick=()=>{tts=!tts;$('mbTts').classList.toggle('on',tts);say('b',tts?'Mowa włączona.':'Mowa wyłączona.');};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null;
+$('mbMic').onclick=()=>{if(!SR)return say('b','Rozpoznawanie mowy niedostępne (użyj Chrome).');if(rec){rec.stop();return;}rec=new SR();rec.lang='pl-PL';rec.continuous=true;
+rec.onresult=e=>handle(e.results[e.results.length-1][0].transcript);rec.onend=()=>{rec=null;$('mbMic').classList.remove('on');};rec.onerror=e=>say('b','Mikrofon: '+e.error);rec.start();$('mbMic').classList.add('on');say('b','Słucham… 🎤');};
+window.gdj.chat=handle;
+say('b','Cześć! Tu Multibot G. Napisz "pomoc" żeby zobaczyć komendy.');
+</script><script src="js/d7-dock.js?v=1"></script></body></html>

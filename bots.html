@@ -1,0 +1,172 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>7D · D7 Universal Bots</title><meta name="theme-color" content="#05060c">
+<style>
+:root{--bg:#05060c;--pan:#0d0f1c;--acc:#ff2bd6;--acc2:#00f0ff;--tx:#e9e6ff;--mut:#8a87a8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% -10%,#2a0b3d,transparent 50%),var(--bg);color:var(--tx);font:15px/1.4 system-ui,sans-serif;padding:12px 12px 90px}
+h1{font:900 22px/1 monospace;letter-spacing:3px;margin:6px 0 2px;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;color:transparent}
+.sub{color:var(--mut);font-size:12px;margin-bottom:10px}.card{background:var(--pan);border:1px solid #1f2240;border-radius:14px;padding:12px;margin:10px 0}
+h2{font:700 13px monospace;letter-spacing:2px;color:var(--acc2);margin:0 0 8px;text-transform:uppercase}
+#tabs{display:flex;gap:4px;overflow-x:auto;position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0}
+#tabs button{flex:0 0 auto;background:#14183a;border:1px solid #2a2d55;font-size:13px;padding:8px 10px}#tabs button.on{background:linear-gradient(90deg,var(--acc),#8a2bff)}
+section{display:none}section.on{display:block}
+#bots,.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.bot,.st{background:#111428;border:1px solid #23264a;border-radius:10px;padding:8px;cursor:pointer;user-select:none;position:relative}.bot.sel,.st.sel{border-color:var(--acc);box-shadow:0 0 12px #ff2bd655}
+.bot b,.st b{display:block;font-size:14px}.bot small,.st small{color:var(--mut);font-size:11px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fav{position:absolute;right:6px;top:4px;font-size:16px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#555;margin-right:5px}.on .dot{background:#2bff88;box-shadow:0 0 6px #2bff88}
+.log{height:300px;overflow:auto;background:#07081a;border-radius:10px;padding:8px}.m{margin:6px 0;padding:8px 10px;border-radius:10px;max-width:90%;white-space:pre-wrap;word-break:break-word}
+.me{background:#3a1146;margin-left:auto}.ai{background:#0f2a33}.m i{display:block;font-style:normal;font-size:11px;color:var(--acc2)}
+.row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}input,select,button{font:inherit;border-radius:10px;border:1px solid #2a2d55;background:#0a0c1e;color:var(--tx);padding:10px}
+input{flex:1;min-width:120px}button{background:linear-gradient(90deg,var(--acc),#8a2bff);border:0;font-weight:700;cursor:pointer;color:var(--tx)}button.g{background:#14183a;border:1px solid #2a2d55}
+.qa{display:flex;flex-wrap:wrap;gap:6px}.iban{font:700 16px monospace;letter-spacing:1px;margin:6px 0;word-break:break-all}
+.wa{display:block;text-align:center;background:#25d366;color:#04210f;font-weight:800;text-decoration:none;padding:12px;border-radius:10px;margin-top:8px}
+#st,.info{font-size:12px;color:var(--mut)}#off{display:none;background:#3a1020;border:1px solid #ff2b6a;color:#ffd0dc;padding:8px;border-radius:10px;font-size:13px}
+#np{position:fixed;left:0;right:0;bottom:0;background:#0d0f1cee;border-top:1px solid #2a2d55;padding:10px 12px;display:flex;gap:8px;align-items:center;z-index:9}#np span{flex:1;font-size:13px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+#viz{width:100%;height:56vh;background:#000;border-radius:12px;display:block}
+.honest{background:#1a1830;border:1px dashed var(--acc2);border-radius:10px;padding:8px;font-size:12px;color:#cfe;margin-bottom:8px}
+#subs{max-height:280px;overflow:auto}
+</style></head><body>
+<h1>D7 UNIVERSAL BOTS</h1><div class="sub">DJ DaX · Kraków · techno control room</div>
+<div id="off">⚠️ Tryb offline — serwer niedostępny. Pokazuję zapisaną listę botów. <button class="g" onclick="init()">Ponów</button></div>
+<nav id="tabs"><button data-t="bots" class="on">🤖 Boty</button><button data-t="kali">🎛 Kali radio</button><button data-t="radio">📻 Radio</button><button data-t="viz">🌀 MilkDrop</button><button data-t="subs">777 podbotów</button><button data-t="support">💖 Wsparcie</button></nav>
+
+<section id="s-bots" class="on">
+<div class="card"><h2>Boty <span id="st"></span></h2><div id="bots"></div>
+<div class="row"><button class="g" onclick="selAll(1)">Zaznacz wszystkie</button><button class="g" onclick="selAll(0)">Tylko D</button></div></div>
+<div class="card"><h2>Czat <span id="mode"></span></h2><div id="log" class="log"></div>
+<div class="row"><input id="msg" placeholder="Napisz do botów…" autocomplete="off"><button id="send" onclick="send()">Wyślij</button></div></div>
+<div class="card"><h2>Szybkie akcje</h2><div class="qa">
+<button class="g" onclick="quick('Podaj status systemu D7')">📊 Status</button>
+<button class="g" onclick="quick('Zaproponuj techno set na dziś, 130 BPM')">🎧 Techno set</button>
+<button class="g" onclick="quick('Napisz krótki post promujący DJ DaX Kraków')">📣 Post promo</button>
+<button class="g" onclick="quick('Podsumuj co robią boty')">🤖 Raport botów</button>
+<button class="g" onclick="init()">🔄 Odśwież</button></div></div>
+</section>
+
+<section id="s-kali"><div class="card"><h2>Kali radio · live beaty D7</h2>
+<div class="info">Beaty z serwera D7 (ten sam radio-loop co kali.html). Pełna analiza audio → MilkDrop reaguje na beat.</div>
+<div class="grid" id="kali" style="margin-top:8px"></div>
+<div class="row"><a class="g" style="color:var(--acc2)" id="kLink1" target="_blank">↗ Pełne KALI RADIO (kali.html)</a> · <a style="color:var(--acc2)" id="kLink2" target="_blank">↗ KALI LIVE</a></div>
+</div></section>
+
+<section id="s-radio"><div class="card"><h2>Radio internetowe</h2>
+<div class="qa" id="genres"></div>
+<div class="row"><input id="rQ" placeholder="Szukaj stacji / kraju…"><button onclick="rq(document.getElementById('rQ').value.trim()||'pl')">🔎 Szukaj</button></div>
+<div class="info" id="rInfo" style="margin:8px 0">—</div><div class="grid" id="stations"></div></div></section>
+
+<section id="s-viz"><div class="card"><h2>MilkDrop · butterchurn</h2><canvas id="viz"></canvas>
+<div class="row"><button class="g" id="vNext">⏭ Następny</button><button class="g" id="vRand">🎲 Losowy</button><button class="g" id="vFs">⛶ Pełny ekran</button><label class="info"><input type="checkbox" id="vAuto" checked style="flex:0;min-width:0"> auto</label></div>
+<select id="vList" style="width:100%;margin-top:8px"></select><div class="info" id="vInfo">Kliknij zakładkę, aby uruchomić.</div></div></section>
+
+<section id="s-subs"><div class="card"><h2>777 podbotów</h2>
+<div class="honest">ℹ️ Uczciwie: to <b>wirtualne role (persony)</b> AI wybranego bota — generowane w telefonie. To <b>nie są</b> osobne, działające programy. Każda wiadomość idzie do mózgu bota-rodzica z prefiksem persony.</div>
+<div class="row"><select id="pBot"></select><input id="pQ" placeholder="Szukaj: D-042, android, muzyka…"></div>
+<div class="info" id="pInfo" style="margin:6px 0"></div><div class="grid" id="subs"></div>
+<div class="card" style="margin-top:10px"><h2 id="pSel">Wybierz podbota</h2><div id="plog" class="log" style="height:220px"></div>
+<div class="row"><input id="pMsg" placeholder="Napisz do podbota…"><button id="pSend" onclick="psend()">Wyślij</button></div></div></div></section>
+
+<section id="s-support"><div class="card"><h2>Wsparcie · Nest Bank</h2><div>Daniel Dydo</div><div class="iban" id="iban">PL45 1870 1045 2083 1058 7576 0001</div>
+<button onclick="copyIban()" id="cp">📋 Kopiuj IBAN</button>
+<a class="wa" href="https://wa.me/48730377357" target="_blank" rel="noopener">💬 WhatsApp +48 730 377 357</a></div></section>
+
+<div id="np"><span id="npT">— radio stop —</span><input type="range" id="vol" min="0" max="1" step="0.05" value="0.8" style="flex:0 0 90px;min-width:0;padding:0"><button class="g" id="stop">⏹</button></div>
+<script>
+const FALLBACK=[{"id": "supergrok", "name": "SuperGrok", "role": "D7 DJ ONE maintainer (/app.html, APK D7-DJ-ONE v54); tunnel-keeper owner for :8080"}, {"id": "superbotd", "name": "SuperBotD", "role": "asystent Daniela"}, {"id": "supercharger", "name": "SuperCharger", "role": "turbo zadania"}, {"id": "autofix", "name": "AutoFix", "role": "naprawy i CI"}, {"id": "dargonmoon", "name": "DargonMoon", "role": "buildy / gateway"}, {"id": "d", "name": "D", "role": "bot D"}, {"id": "g", "name": "G", "role": "bot G"}, {"id": "dragon", "name": "Dragon", "role": "strażnik"}, {"id": "77", "name": "77", "role": "agent 77"}, {"id": "moepiesedevil", "name": "MoePieseDevil", "role": "chaos & fun"}];
+const CURATED=[{"name": "Radio 357", "url": "https://n-11-21.dcs.redcdn.pl/sc/o2/radio357/live/radio357_pr.livx?preroll=0", "tags": "adult contemporary", "countrycode": "PL", "bitrate": 128}, {"name": "Radio RMF FM", "url": "https://rs102-krk.rmfstream.pl/rmf_fm", "tags": "classical", "countrycode": "PL", "bitrate": 128}, {"name": "ESKA ROCK", "url": "https://ic2.smcdn.pl/5380-1.mp3#ESKA_ROCK", "tags": "", "countrycode": "PL", "bitrate": 128}, {"name": "Anty Radio", "url": "https://an.cdn.eurozet.pl/ant-web.mp3?t=1713710188361", "tags": "", "countrycode": "PL", "bitrate": 128}, {"name": "Radio Republika", "url": "https://ssl-1.radiotvrepublika.pl:12698/stream", "tags": "news,news talk,politics", "countrycode": "PL", "bitrate": 128}, {"name": "Antyradio", "url": "https://n-4-2.dcs.redcdn.pl/sc/o2/Eurozet/live/antyradio.livx?audio=5", "tags": "metal,rock", "countrycode": "PL", "bitrate": 128}, {"name": "TokFM", "url": "https://radiostream.pl/tuba10-1.mp3", "tags": "", "countrycode": "PL", "bitrate": 128}, {"name": "Radio RMF MAXXX", "url": "https://rs9-krk2-cyfronet.rmfstream.pl/RMFMAXXX48", "tags": "misc", "countrycode": "PL", "bitrate": 48}, {"name": "TOK FM", "url": "https://radiostream.pl/tuba10-1.mp3#TOK_FM", "tags": "information", "countrycode": "PL", "bitrate": 128}, {"name": "Radio Nowy Świat", "url": "https://go-audio.toya.net.pl/63214", "tags": "soft adult contemporary", "countrycode": "PL", "bitrate": 0}, {"name": "ESKA - Gorąca 20", "url": "https://waw.ic.smcdn.pl/6130-1.mp3", "tags": "dance,pop,pop music", "countrycode": "PL", "bitrate": 128}, {"name": "Chilli Zet", "url": "https://ch.cdn.eurozet.pl/chi-net.mp3", "tags": "", "countrycode": "PL", "bitrate": 128}, {"name": "Radio ZET Chilli", "url": "https://ch.cdn.eurozet.pl/chi-net.mp3", "tags": "", "countrycode": "PL", "bitrate": 128}, {"name": "357", "url": "https://n-11-26.dcs.redcdn.pl/sc/o2/radio357/live/radio357_pr.livx?preroll=0", "tags": "", "countrycode": "PL", "bitrate": 128}, {"name": "VOX FM 128", "url": "https://ic2.smcdn.pl/3990-1.mp3", "tags": "", "countrycode": "PL", "bitrate": 128}, {"name": "Radio Pogoda", "url": "https://radiostream.pl/tuba140-1.mp3", "tags": "", "countrycode": "PL", "bitrate": 128}, {"name": "Radio Party - Kanał Główny", "url": "https://s2.radioparty.pl:8015/stream?nocache=4171", "tags": "electronic,party,rap", "countrycode": "PL", "bitrate": 128}, {"name": "Polskie Radio 24 (NEW STREAM)", "url": "https://stream15.polskieradio.pl/pr24/pr24.sdp/playlist.m3u8", "tags": "information,news,polskie radio", "countrycode": "PL", "bitrate": 194}, {"name": "PR TRÓJKA", "url": "https://stream13.polskieradio.pl/pr3/pr3.sdp/playlist.m3u8", "tags": "public", "countrycode": "PL", "bitrate": 194}, {"name": "Radio ZET", "url": "https://hub.radiostream.pl/stream.pls?radio=8400&type=none&dist=zet&app=none&coding=aac&redirect=true", "tags": "", "countrycode": "PL", "bitrate": 64}, {"name": "Radio Złote Przeboje", "url": "https://radiostream.pl/tuba8904-1.mp3", "tags": "classic hits,classic rock,pop", "countrycode": "PL", "bitrate": 128}, {"name": "Rmf Fm Polska", "url": "https://rs101-krk-cyfronet.rmfstream.pl/RMFFM48", "tags": "", "countrycode": "PL", "bitrate": 48}, {"name": "Polskie Radio Trójka", "url": "https://stream13.polskieradio.pl/pr3/pr3.sdp/chunklist_w476233979.m3u8", "tags": "", "countrycode": "PL", "bitrate": 0}, {"name": "Radio Eska Warszawa", "url": "https://waw.ic.smcdn.pl/2380-1.mp3", "tags": "", "countrycode": "PL", "bitrate": 128}, {"name": "Zloteprzeboje", "url": "https://radiostream.pl/tuba8904-1.mp3", "tags": "", "countrycode": "PL", "bitrate": 128}, {"name": "# TOP 100 CLUB CHARTS - DANCE & DJ MIX RADIO - 2", "url": "https://breakz-2012-high.rautemusik.fm/?ref=radiobrowser-top100-clubcharts", "tags": "#,#charts,#club", "countrycode": "DE", "bitrate": 192}, {"name": "Intense Radio - We love Dance 256K", "url": "https://secure.live-streams.nl/main", "tags": "clubhouse,dance,electronic", "countrycode": "NL", "bitrate": 256}, {"name": "# TOP 100 DJ CHARTS - DJ REMIX & CHARTS RADIO @ ", "url": "https://breakz-high.rautemusik.fm/?ref=radiobrowser-top100-djcharts", "tags": "#90s,#charts,2000s", "countrycode": "DE", "bitrate": 192}, {"name": "- DJ & CLUB CHARTS ---> Club Classics, Festival-", "url": "https://breakz-2012-high.rautemusik.fm/?ref=rb-djclubcharts", "tags": "#bewirbdich!,#mashup,beach", "countrycode": "DE", "bitrate": 192}, {"name": "Dance Wave!", "url": "https://dancewave.online/dance.mp3", "tags": "club dance electronic house trance", "countrycode": "HU", "bitrate": 128}, {"name": "_DEEJAY REMIXE_ Your Radio for finest House, EDM", "url": "https://breakz-high.rautemusik.fm/?ref=radiobrowser-deejay-remixes-radio", "tags": "#mashup,bass,beach music", "countrycode": "DE", "bitrate": 192}, {"name": "Anon.FM", "url": "https://icecast.anon.fm/radio", "tags": "anime,dnb,downtempo", "countrycode": "RU", "bitrate": 192}, {"name": "UK Bass Radio", "url": "https://www.ukbassradio.com/stream", "tags": "breakbeat hardcore,drum and bass,drumfunk", "countrycode": "GB", "bitrate": 192}, {"name": "#100 BEST IBIZA DEEP HOUSE", "url": "https://stream.zeno.fm/lwv6zqgtv1dtv", "tags": "chill,chill house,chillout", "countrycode": "CA", "bitrate": 128}, {"name": "AIRPORT LOUNGE RADIO", "url": "https://az1.mediacp.eu/listen/airport-lounge-radio/radio.mp3", "tags": "aereoporto,airport,ambient", "countrycode": "CA", "bitrate": 128}, {"name": "Kiss Fm", "url": "https://live.kissfm.ro/kissfm.aacp", "tags": "dance,dance pop,house", "countrycode": "RO", "bitrate": 80}, {"name": "# Aktuelle HITS - 24H NON-STOP MUSIC - DANCE & D", "url": "https://breakz-2012-high.rautemusik.fm/?ref=radiobrowser-akthits", "tags": "#,#charts,#dj", "countrycode": "DE", "bitrate": 192}, {"name": "__TRANCE__ by rautemusik (rm.fm)", "url": "https://trance-high.rautemusik.fm/?ref=radiobrowser", "tags": "electro,electro house,electronic", "countrycode": "DE", "bitrate": 192}, {"name": "#joint radio Beat Trance", "url": "https://jointil.com/stream-beat", "tags": "ambient,edm,edm radioshows", "countrycode": "IL", "bitrate": 320}, {"name": "Technolovers - PSYTRANCE", "url": "https://stream.technolovers.fm/psytrance?ref=radiobrowser", "tags": "dark psytrance,electronic,progressive psytrance", "countrycode": "DE", "bitrate": 192}, {"name": "Babaganousha Labs", "url": "https://babacast.ddns.net/listen/baba_archives/baba-labs.mp3", "tags": "goa,psychedelic,psytrance", "countrycode": "DE", "bitrate": 96}, {"name": "Breaking Bass Air", "url": "https://aircast.breaking-bass.ru:8443/air", "tags": "atmospheric,darkstep,dnb", "countrycode": "RU", "bitrate": 320}, {"name": "After Hours – Melodic House & DnB", "url": "https://r.bgp.rodeo/listen/after_hours/radio.mp3", "tags": "dance,deep house,dnb", "countrycode": "NL", "bitrate": 320}, {"name": "DnB&EDM", "url": "https://edmdnb.com:448/radio/8000/radio.mp3", "tags": "chillstep,dnb,drum & bass", "countrycode": "US", "bitrate": 0}, {"name": "24Dubstep.pl || DropZone Radio", "url": "https://stream.24dubstep.pl/radio/8000/mp3_normal", "tags": "dnb,drill,dubstep", "countrycode": "PL", "bitrate": 128}, {"name": "SomaFM Groove Salad (128k MP3)", "url": "https://ice5.somafm.com/groovesalad-128-mp3", "tags": "ambient,chillout,downtempo", "countrycode": "US", "bitrate": 128}, {"name": "0R - MUSIC FOR SLEEP || Sleep, Relax, Calm, Medi", "url": "https://0nlineradio.radioho.st/classical-classical-music-for-sleep?ref=radio-browser26", "tags": "ambient,background,calm", "countrycode": "DE", "bitrate": 192}, {"name": "SomaFM Secret Agent (128k MP3)", "url": "https://ice5.somafm.com/secretagent-128-mp3", "tags": "ambient,downtempo,jazz", "countrycode": "US", "bitrate": 128}, {"name": "0R - PIANO JAZZ LOUNGE || Jazz, Piano, Lounge, S", "url": "https://0nlineradio.radioho.st/lounge-piano-jazz-bar?ref=radio-browser26", "tags": "acoustic,ambient,ambient and relaxation music", "countrycode": "DE", "bitrate": 192}, {"name": "SWR3", "url": "https://liveradio.swr.de/sw282p3/swr3/play.mp3", "tags": "news,pop,rock", "countrycode": "DE", "bitrate": 128}, {"name": "Power POP", "url": "https://listen.powerapp.com.tr/powerpop/128/chunks.m3u8", "tags": "00s,70s,80s", "countrycode": "TR", "bitrate": 0}, {"name": "Convoy en vivo", "url": "https://live.convoynetwork.com/stream", "tags": "classic rock,latin music,rock", "countrycode": "MX", "bitrate": 64}, {"name": "# RdMix Classic Rock 70s 80s 90s", "url": "https://cast1.torontocast.com:4610/stream", "tags": "60s,60s and 70s.,70's", "countrycode": "CA", "bitrate": 128}, {"name": "Classic Vinyl HD", "url": "https://icecast.walmradio.com:8443/classic", "tags": "1930,1940,1950", "countrycode": "US", "bitrate": 320}, {"name": "Adroit Jazz Underground", "url": "https://icecast.walmradio.com:8443/jazz", "tags": "avant-garde,bebop,big band", "countrycode": "US", "bitrate": 320}, {"name": "Adroit Jazz Underground HD Opus", "url": "https://icecast.walmradio.com:8443/jazz_opus", "tags": "avant-garde,bebop,big band", "countrycode": "US", "bitrate": 192}, {"name": "Classic Vinyl HD Opus", "url": "https://icecast.walmradio.com:8443/classic_opus", "tags": "1930,1940,1950", "countrycode": "US", "bitrate": 192}, {"name": "Europe 1", "url": "https://stream.europe1.fr/europe1.aac", "tags": "aac,news,talk", "countrycode": "FR", "bitrate": 128}, {"name": "Deutschlandfunk | DLF | MP3 128k", "url": "https://st01.sslstream.dlf.de/dlf/01/128/mp3/stream.mp3?aggregator=web", "tags": "culture,news,public service", "countrycode": "DE", "bitrate": 128}, {"name": "Radio Deejay", "url": "https://4c4b867c89244861ac216426883d1ad0.msvdn.net/radiodeejay/radiodeejay/master_ma.m3u8", "tags": "italian,news,pop", "countrycode": "IT", "bitrate": 122}, {"name": "CNN", "url": "https://tunein.cdnstream1.com/2868_96.mp3", "tags": "news", "countrycode": "US", "bitrate": 96}];
+let API=(location.protocol.startsWith('http'))?location.origin:'';
+try{if(!API&&window.D7Native)API=D7Native.getServer()}catch(e){}
+let BOTS=[],SEL=new Set(['d']);const $=id=>document.getElementById(id);
+const LS=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem('d7bots.'+k)||'null');localStorage.setItem('d7bots.'+k,JSON.stringify(v))}catch(e){return null}};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+// tabs
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id==='s-'+b.dataset.t));
+ const t=b.dataset.t;if(t==='radio'&&!$('stations').children.length)rq('pl');if(t==='viz')initViz();if(t==='subs')renderSubs();location.hash=t});
+setTimeout(()=>{const b=document.querySelector('#tabs button[data-t="'+location.hash.slice(1)+'"]');if(b)b.click()},0);
+// bots + chat
+function render(){$('bots').innerHTML=BOTS.map(b=>'<div class="bot '+(b.on?'on ':'')+(SEL.has(b.id)?'sel':'')+'" data-id="'+esc(b.id)+'"><b><span class="dot"></span>'+esc(b.name)+'</b><small>'+esc(b.role||'')+'</small></div>').join('');
+document.querySelectorAll('#bots .bot').forEach(e=>e.onclick=()=>{const i=e.dataset.id;SEL.has(i)?SEL.delete(i):SEL.add(i);if(!SEL.size)SEL.add(i);render()});
+$('mode').textContent=SEL.size>1?'· grupowy ('+SEL.size+')':'· '+(BOTS.find(b=>SEL.has(b.id))||{name:[...SEL][0]}).name;
+$('st').textContent=BOTS.filter(b=>b.on).length+'/'+BOTS.length+' online';
+const pv=$('pBot').value;$('pBot').innerHTML=BOTS.map(b=>'<option value="'+esc(b.id)+'">'+esc(b.name)+'</option>').join('');$('pBot').value=pv||'d'}
+function selAll(a){SEL=new Set(a?BOTS.map(b=>b.id):['d']);render()}
+async function j(p,o){const r=await fetch(API+p,Object.assign({cache:'no-store'},o||{}));if(!r.ok)throw new Error(r.status);return r.json()}
+async function init(){try{const [b,s]=await Promise.all([j('/api/bots'),j('/api/status').catch(()=>({}))]);const on=new Set(s.online||[]);
+BOTS=(b.bots||[]).map(x=>({id:x.id,name:x.name,role:x.role,on:on.has(x.id)}));LS('list',BOTS);$('off').style.display='none'}
+catch(e){BOTS=LS('list')||FALLBACK.map(x=>Object.assign({},x));BOTS.forEach(b=>b.on=false);$('off').style.display='block'}
+if(!BOTS.some(b=>b.id==='d'))BOTS.unshift({id:'d',name:'D',role:'główny hub D7 DJ',on:false});render()}
+function add(log,cls,who,t){const d=document.createElement('div');d.className='m '+cls;d.innerHTML=(who?'<i>'+esc(who)+'</i>':'')+'<span>'+esc(t)+'</span>';$(log).appendChild(d);$(log).scrollTop=1e9;return d}
+async function ask(bot,message){const r=await j('/api/brain',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({bot,message,lang:'pl'})});return r.answer||r.reply||JSON.stringify(r)}
+async function send(){const t=$('msg').value.trim();if(!t)return;$('msg').value='';add('log','me','Ty',t);
+await Promise.all([...SEL].map(async id=>{const name=(BOTS.find(b=>b.id===id)||{name:id}).name;const d=add('log','ai',name,'…');
+try{d.lastChild.textContent=await ask(id,t)}catch(e){d.lastChild.textContent='❌ Brak połączenia z botem ('+e.message+')'}}))}
+function quick(t){$('msg').value=t;send()}
+function copyIban(){const v='PL45187010452083105875760001';(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).catch(()=>{const a=document.createElement('textarea');a.value=v;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}).finally(()=>{$('cp').textContent='✅ Skopiowano'})}
+$('msg').addEventListener('keydown',e=>{if(e.key==='Enter')send()});
+
+// ---------- audio graph (from one.js)
+let AC=null,master=null,audioEl=null,analysed=false;
+function ctx(){if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)();master=AC.createGain();master.connect(AC.destination)}if(AC.state==='suspended')AC.resume();return AC}
+function playUrl(url,label,same){ctx();if(audioEl){audioEl.pause();audioEl.src=''}
+ const tryEl=(cors)=>{const a=new Audio();if(cors)a.crossOrigin='anonymous';a.volume=+$('vol').value;a.src=url;
+  if(cors){try{AC.createMediaElementSource(a).connect(master)}catch(e){}}audioEl=a;return a.play()};
+ tryEl(true).then(()=>{analysed=true;$('npT').textContent='▶ '+label+' · viz reaguje';schedule()}).catch(()=>{if(same){$('npT').textContent='⚠ '+label+': błąd odtwarzania';return}
+  tryEl(false).then(()=>{analysed=false;$('npT').textContent='▶ '+label+' (brak CORS → MilkDrop auto-presety)';schedule()},e=>{$('npT').textContent='⚠ '+label+': '+e.message})})}
+$('stop').onclick=()=>{if(audioEl)audioEl.pause();$('npT').textContent='— stop —'};$('vol').oninput=function(){if(audioEl)audioEl.volume=+this.value};
+// ---------- Kali radio
+const KALI=[['🎤 Kali Hip-Hop 120','samples/kali-hiphop-120.wav'],['🌌 Trance 120','samples/trance-120.wav'],['⚙️ Berlin Techno 128','samples/berlin-techno-128.wav']];
+$('kali').innerHTML=KALI.map((k,i)=>'<div class="st" data-i="'+i+'"><b>'+k[0]+'</b><small>KALI LIVE · loop</small></div>').join('');
+document.querySelectorAll('#kali .st').forEach(e=>e.onclick=()=>{const k=KALI[+e.dataset.i];playUrl(k[1],'KALI · '+k[0],true);const a=audioEl;a&&(a.loop=true)});
+const WEB=API||location.origin;$('kLink1').href=WEB+'/kali.html';$('kLink2').href=WEB+'/kali-live.html';
+// ---------- radio-browser (from one.js)
+const MIRRORS=['https://de1.api.radio-browser.info','https://de2.api.radio-browser.info','https://fi1.api.radio-browser.info','https://nl1.api.radio-browser.info','https://at1.api.radio-browser.info'];
+function rapi(path){let i=0;const next=()=>{if(i>=MIRRORS.length)return Promise.reject(new Error('radio-browser offline'));const u=MIRRORS[i++]+path;return fetch(u,{headers:{Accept:'application/json'}}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).catch(next)};return next()}
+const GEN=[['pl','🇵🇱 Polska'],['fav','⭐ Ulubione'],['curated','📋 Lista D7'],['techno'],['trance'],['house'],['psytrance'],['dnb'],['ambient'],['rock'],['jazz'],['news']];
+$('genres').innerHTML=GEN.map(g=>'<button class="g" data-g="'+g[0]+'">'+(g[1]||g[0])+'</button>').join('');document.querySelectorAll('#genres button').forEach(b=>b.onclick=()=>rq(b.dataset.g));
+$('rQ').onkeydown=e=>{if(e.key==='Enter')rq($('rQ').value.trim()||'pl')};
+let RLIST=[];
+function norm(l){const seen={};return(l||[]).map(s=>({name:(s.name||'').trim().slice(0,48),url:s.url_resolved||s.url,tags:s.tags||'',countrycode:s.countrycode||'',bitrate:s.bitrate||0,uuid:s.stationuuid})).filter(s=>s.url&&/^https:/.test(s.url)&&s.name&&!seen[s.name+s.url]&&(seen[s.name+s.url]=1))}
+function favs(){return LS('favs')||[]}
+function showR(l,label){RLIST=norm(l);$('rInfo').textContent=label+' · '+RLIST.length+' stacji (tylko HTTPS)';const F=new Set(favs().map(f=>f.url));
+$('stations').innerHTML=RLIST.slice(0,300).map((s,i)=>'<div class="st" data-i="'+i+'"><span class="fav" data-f="'+i+'">'+(F.has(s.url)?'★':'☆')+'</span><b>'+esc(s.name)+'</b><small>'+esc([s.countrycode,s.tags.split(',').slice(0,3).join(', '),s.bitrate?s.bitrate+' kbps':''].filter(Boolean).join(' · '))+'</small></div>').join('');
+document.querySelectorAll('#stations .st').forEach(e=>e.onclick=ev=>{const s=RLIST[+e.dataset.i];if(ev.target.dataset.f!=null){let f=favs();f=f.some(x=>x.url===s.url)?f.filter(x=>x.url!==s.url):f.concat([s]);LS('favs',f);ev.target.textContent=f.some(x=>x.url===s.url)?'★':'☆';return}
+ document.querySelectorAll('#stations .st').forEach(x=>x.classList.toggle('sel',x===e));playUrl(s.url,s.name);LS('last',s)})}
+function rq(q){$('rInfo').textContent='⏳ Ładuję…';let p;const o='hidebroken=true&order=clickcount&reverse=true';
+if(q==='fav'){showR(favs(),'⭐ Ulubione');return}if(q==='curated'){showR(CURATED,'📋 Lista D7 (offline)');return}
+if(q==='pl')p=rapi('/json/stations/bycountrycodeexact/PL?'+o+'&limit=300');
+else if(GEN.some(g=>g[0]===q))p=rapi('/json/stations/bytag/'+encodeURIComponent(q)+'?'+o+'&limit=200');
+else p=rapi('/json/stations/search?name='+encodeURIComponent(q)+'&'+o+'&limit=200').then(a=>a.length?a:rapi('/json/stations/search?country='+encodeURIComponent(q)+'&'+o+'&limit=200'));
+p.then(l=>{LS('cache.'+q,norm(l).slice(0,150));showR(l,q)},e=>{const c=LS('cache.'+q);if(c)showR(c,q+' · cache');else{const t=q.toLowerCase();const f=CURATED.filter(s=>(s.name+' '+s.tags+' '+s.countrycode).toLowerCase().includes(t==='pl'?'pl':t));showR(f.length?f:CURATED,'⚠ radio-browser offline → lista D7')}})}
+// ---------- MilkDrop (from one.js)
+let viz=null,presets={},names=[],idx=0,autoT=0,libsP=null;const canvas=$('viz');
+function loadScript(s){return new Promise((ok,no)=>{const e=document.createElement('script');e.src=s;e.onload=ok;e.onerror=()=>no(new Error(s));document.head.appendChild(e)})}
+function libs(){return libsP||(libsP=loadScript('libs/butterchurn.min.js').then(()=>Promise.all([loadScript('libs/butterchurnPresets.min.js'),loadScript('libs/butterchurnPresetsExtra.min.js').catch(()=>0)])))}
+function resize(){const w=canvas.clientWidth||360,h=canvas.clientHeight||300,d=Math.min(window.devicePixelRatio||1,2);canvas.width=w*d;canvas.height=h*d;if(viz)viz.setRendererSize(canvas.width,canvas.height)}
+window.addEventListener('resize',resize);
+async function initViz(){if(viz)return;$('vInfo').textContent='⏳ Ładuję butterchurn…';try{await libs()}catch(e){$('vInfo').textContent='Brak bibliotek: '+e.message;return}
+ const bc=window.butterchurn&&(window.butterchurn.default||window.butterchurn);if(!bc||!bc.createVisualizer){$('vInfo').textContent='butterchurn niedostępny';return}
+ try{[window.butterchurnPresets,window.butterchurnPresetsExtra].forEach(P=>{try{P=P&&(P.default||P);if(P&&P.getPresets)Object.assign(presets,P.getPresets())}catch(_){}});names=Object.keys(presets).sort();
+ resize();ctx();viz=bc.createVisualizer(AC,canvas,{width:canvas.width,height:canvas.height,pixelRatio:1,textureRatio:1});viz.connectAudio(master);
+ $('vList').innerHTML=names.map((n,i)=>'<option value="'+i+'">'+esc(n.slice(0,70))+'</option>').join('');load(Math.floor(Math.random()*names.length),0);
+ (function loop(){try{viz.render()}catch(_){}requestAnimationFrame(loop)})();schedule()}catch(e){$('vInfo').textContent='WebGL błąd: '+e.message;viz=null}}
+function load(i,blend){if(!viz||!names.length)return;idx=(i+names.length)%names.length;viz.loadPreset(presets[names[idx]],blend==null?2.5:blend);$('vList').value=idx;$('vInfo').textContent='✨ '+(idx+1)+'/'+names.length+' · '+names[idx]+(analysed?' · reaguje na audio':' · auto-presety (brak analizy audio)')}
+function schedule(){clearInterval(autoT);if($('vAuto').checked&&viz)autoT=setInterval(()=>load(Math.floor(Math.random()*names.length)),(analysed?25:12)*1000)}
+$('vNext').onclick=()=>load(idx+1);$('vRand').onclick=()=>load(Math.floor(Math.random()*names.length));$('vList').onchange=function(){load(+this.value)};$('vAuto').onchange=schedule;
+$('vFs').onclick=()=>(canvas.requestFullscreen||canvas.webkitRequestFullscreen||function(){}).call(canvas);
+// ---------- 777 podbotów (virtual personas, generated client-side)
+const ROLES=['app builder','chatbot AI builder','Android dev','web dev','muzyka / producent','wizualizacje','sync','fix / naprawy','promo','DJ set planner','tester QA','UX / design','backend API','dane i analityka','social media','copywriter PL','radio curator','MilkDrop preset artist','bezpieczeństwo','dokumentacja'];
+const SKILL=['techno','trance','house','Kraków scene','APK','PWA','Python','JS','MIDI','MC-707','streaming','SEO','TikTok','YouTube','automatyzacja','prompting'];
+function h32(s){let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0}
+function subsOf(bot){const pre=(bot.name||bot.id).replace(/[^A-Za-z0-9]/g,'').toUpperCase()||'BOT',s=h32(bot.id);const out=[];
+ for(let i=1;i<=777;i++){const x=h32(bot.id+':'+i);out.push({code:pre+'-'+String(i).padStart(3,'0'),role:ROLES[(s+i*7+(x%3))%ROLES.length],skill:SKILL[x%SKILL.length]})}return out}
+let SUB=null;
+function renderSubs(){const bot=BOTS.find(b=>b.id===$('pBot').value)||BOTS[0];if(!bot)return;const q=$('pQ').value.trim().toLowerCase();const all=subsOf(bot);
+ const f=q?all.filter(s=>(s.code+' '+s.role+' '+s.skill).toLowerCase().includes(q)):all;$('pInfo').textContent=bot.name+': 777 wirtualnych person · pasuje '+f.length+(f.length>120?' (pokazuję 120 — zawęź wyszukiwanie)':'');
+ $('subs').innerHTML=f.slice(0,120).map(s=>'<div class="st'+(SUB&&SUB.code===s.code?' sel':'')+'" data-c="'+s.code+'"><b>'+s.code+'</b><small>'+esc(s.role)+' · '+esc(s.skill)+'</small></div>').join('');
+ document.querySelectorAll('#subs .st').forEach(e=>e.onclick=()=>{SUB=Object.assign({bot:bot.id,botName:bot.name},all.find(s=>s.code===e.dataset.c));$('pSel').textContent='💬 '+SUB.code+' · '+SUB.role+' (persona bota '+bot.name+')';renderSubs()})}
+$('pBot').onchange=()=>{SUB=null;$('pSel').textContent='Wybierz podbota';renderSubs()};$('pQ').oninput=renderSubs;
+async function psend(){const t=$('pMsg').value.trim();if(!t)return;if(!SUB){renderSubs();const first=document.querySelector('#subs .st');if(first)first.click()}if(!SUB)return;$('pMsg').value='';add('plog','me','Ty → '+SUB.code,t);const d=add('plog','ai',SUB.code+' (wirtualna rola '+SUB.botName+')','…');
+ const pref='[Persona: '+SUB.code+' — wirtualna rola bota '+SUB.botName+', specjalizacja: '+SUB.role+', '+SUB.skill+'. Odpowiadaj z tej perspektywy, krótko, po polsku.] ';
+ try{d.lastChild.textContent=await ask(SUB.bot,pref+t)}catch(e){d.lastChild.textContent='❌ Brak połączenia ('+e.message+')'}}
+$('pMsg').addEventListener('keydown',e=>{if(e.key==='Enter')psend()});
+init().then(renderSubs);setInterval(init,60000);
+</script><script src="js/d7-dock.js?v=1"></script></body></html>
