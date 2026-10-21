@@ -1,0 +1,51 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="manifest" href="manifest.json"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="S ver G"><link rel="apple-touch-icon" sizes="180x180" href="img/ios/icon-180.png"><link rel="apple-touch-startup-image" media="(device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="img/ios/splash-1206x2622.png"><link rel="apple-touch-startup-image" media="(device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="img/ios/splash-1320x2868.png"><meta name="theme-color" content="#05030f">
+<title>7D</title><meta name="apple-mobile-web-app-title" content="7D"><meta name="application-name" content="7D"><meta name="theme-color" content="#ff2d55"><link rel="icon" href="favicon.png">
+<style>
+body{margin:0;font-family:system-ui;background:radial-gradient(#2a0618,#05010f);color:#eee}
+header{padding:10px;position:sticky;top:0;background:#0a0210ee;z-index:5}
+h1{margin:0 0 6px;font-size:20px;color:#ffcc00;text-shadow:0 0 10px #ff2d55}
+nav{display:flex;gap:5px;flex-wrap:wrap}
+nav button,.b{background:#3a0a28;color:#fff;border:1px solid #ff2d55;border-radius:10px;padding:7px 9px;font-size:13px;cursor:pointer}
+nav button.on{background:#ff2d55}
+section{display:none;padding:10px}.hxld{padding:30px;text-align:center;color:#fc0}nav{overflow-x:auto;-webkit-overflow-scrolling:touch}section.on{display:block}
+iframe{width:100%;height:calc(100vh - 150px);min-height:420px;border:0;border-radius:10px;background:#000}
+.card{background:#0007;border-radius:10px;padding:10px;margin:8px 0}.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:6px 0}
+.grid{display:grid;grid-template-columns:70px repeat(16,1fr);gap:2px}.cell{height:22px;background:#222;border-radius:3px;cursor:pointer}.cell.on{background:#ff2d55}.cell.cur{outline:2px solid #ffcc00}
+.pad{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.pad button{height:64px;font-size:15px;background:#1c0a3a;color:#fff;border:1px solid #7b2cff;border-radius:12px}
+input,select,textarea{background:#18061e;color:#fff;border:1px solid #663;border-radius:8px;padding:7px}
+#viz{width:100%;height:160px;border-radius:10px;background:#000;display:block}#lyr{white-space:pre-wrap;min-height:120px}
+.fsbtn{float:right;background:#3a0a28;color:#fc0;border:1px solid #ff2d55;border-radius:8px;padding:4px 9px;font-size:16px;position:relative;z-index:3}
+section:fullscreen,section:-webkit-full-screen{background:#05010f;overflow:auto}section:fullscreen iframe{height:calc(100vh - 40px)}
+.fsfake{position:fixed!important;inset:0;z-index:9999;background:#05010f;overflow:auto;display:block!important}.fsfake iframe{height:calc(100vh - 40px)}.m.u{color:#9cf}.m.b{color:#fda}
+#launch{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:8px}
+.tile{min-height:84px;background:linear-gradient(135deg,#3a0a28,#1c0a3a);color:#fff;border:1px solid #ff2d55;border-radius:14px;font-size:15px;padding:10px;cursor:pointer;text-align:left;box-shadow:0 0 10px #ff2d5533}
+.tile:active,.tile:hover{background:#ff2d55}
+header{position:static}
+#hxov{display:none;position:fixed;inset:0;z-index:10000;background:#05010f;flex-direction:column}#hxov.on{display:flex}
+#hxbar{position:relative;z-index:5;display:flex;gap:6px;align-items:center;padding:6px 8px;background:#0a0210;border-bottom:1px solid #ff2d55;flex:0 0 auto;flex-wrap:wrap}#hxbar b{color:#ffcc00}
+#hxbody{flex:1 1 auto;position:relative;overflow:hidden;z-index:1;isolation:isolate}#hxbody>iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:0}#hxbody>section{display:block}
+#hxbody .hxld{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:1}
+body.ovon>header,body.ovon>section{display:none!important}
+#mkCv{aspect-ratio:16/9;max-height:calc(100vh - 120px);height:auto!important}
+body>section .fsbtn{display:none}
+.hxfade{opacity:0;transition:opacity .25s ease}.hxfade.in{opacity:1}
+#hxbody .hxld{flex-direction:column;gap:12px;color:#ffcc00;font-size:16px;background:radial-gradient(#2a0618,#05010f)}
+.hxspin{width:54px;height:54px;border-radius:50%;border:5px solid #ff2d5533;border-top-color:#ffcc00;animation:hxr .8s linear infinite;will-change:transform}@keyframes hxr{to{transform:rotate(360deg)}}
+#hxov{animation:hxin .18s ease-out}@keyframes hxin{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}
+</style></head><body>
+<header><h1>🐲 Super X G <small style="font-size:13px;color:#ffcc00">Super Bot DJ Builder</small> <small style="font-size:12px;color:#f9a">· HIPHOP X · D7</small></h1><nav id="nav"></nav></header>
+<section id="t-hiphop" class="on">
+<div class="card"><div class="row"><b>🥁 Beat generator</b>
+<select id="style"><option value="boombap">Boom-bap</option><option value="trap">Trap</option><option value="lofi">Lo-fi</option><option value="drill">Drill</option></select>
+BPM <input id="bpm" type="range" min="70" max="100" value="90"><span id="bpmv">90</span>
+Swing <input id="swing" type="range" min="0" max="40" value="12">
+<button class="b" id="play">▶ Play</button><button class="b" id="rnd">🎲 Losuj</button><button class="b" id="rec">⏺ Nagraj WAV</button>
+808 nuta <select id="key"><option value="0">C</option><option value="2">D</option><option value="3">D#</option><option value="5">F</option><option value="7">G</option><option value="9">A</option></select>
+</div><div id="grid" class="grid"></div><canvas id="viz"></canvas><div id="recout"></div></div>
+<div class="card"><b>🎛 Scratch / FX pad</b><div class="pad" id="pad"></div>
+<div class="row">Filtr <input id="flt" type="range" min="200" max="18000" value="18000"> Echo <input id="dly" type="range" min="0" max="80" value="0"></div></div>
+<div class="card"><b>🎤 Rap-lyrics bot</b> <small>(darmowe Pollinations.ai, offline fallback)</small>
+<div class="row"><input id="topic" style="flex:1" placeholder="Temat, np. Kraków nocą, smok wawelski, DJ-ing"><select id="lang"><option>polski</option><option>English</option></select><button class="b" id="gen">✍ Pisz zwrotkę</button><button class="b" id="say">🔊 Czytaj</button></div>
+<div id="lyr" class="card"></div></div>
+</section>
+<script src="js/d7-res.js?v=1081"></script><script src="js/sbdj.js?v=1090"></script><script src="js/d7-agents.js?v=1076"></script><script src="js/hiphopx.js?v=10811"></script><script src="js/d7-cosmos.js?v=1094"></script><script src="js/d7-ctl.js?v=1071"></script><script src="js/d7-ios.js?v=1070"></script><a href="dj777si.html" style="position:fixed;right:10px;bottom:56px;z-index:99;background:#6b21ff;color:#fff;padding:6px 10px;border-radius:999px;font:700 12px system-ui;text-decoration:none">🧠 DJ 777 SI</a><a href="gx/index.html" id="gxBtn" style="position:fixed;right:10px;bottom:90px;z-index:99;background:linear-gradient(90deg,#6b21ff,#00e5ff);color:#fff;padding:6px 10px;border-radius:999px;font:700 12px system-ui;text-decoration:none">🐲 Ghost X G · AI offline · 💎</a><a href="shop.html" id="shopBtn7d" style="position:fixed;right:10px;bottom:124px;z-index:99;background:#b8860b;color:#fff;padding:6px 10px;border-radius:999px;font:700 12px system-ui;text-decoration:none">🛒 Sklep · 💎 · 👑</a></body></html>

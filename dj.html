@@ -1,0 +1,41 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<script src="js/d7-token.js"></script><title>7D · 🎛 Super DJ Bot</title>
+<style>
+body{margin:0;background:#07080c;color:#dfe;font-family:system-ui;font-size:14px}header{display:flex;gap:10px;align-items:center;padding:8px 12px;background:#0d1a14;flex-wrap:wrap}
+h1{margin:0;font-size:19px;color:#3fc}a{color:#6fd}.wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px;padding:8px}
+.card{background:#0f1418;border:1px solid #1f3a30;border-radius:12px;padding:10px}.card h3{margin:0 0 6px;color:#3fc;font-size:15px}
+button,select{background:#13261f;color:#bfe;border:1px solid #2a6;border-radius:8px;padding:8px 10px;margin:2px;font-size:14px;touch-action:manipulation}
+button.on{background:#2a6;color:#000}.pad{width:64px;height:56px;font-weight:bold}.big{font-size:22px;color:#fff}input[type=range]{width:100%}
+.st{font-size:12px;color:#9cb;min-height:16px}.warn{color:#fa0}canvas{width:100%;height:140px;background:#000;border-radius:10px;display:block}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:4px}.lbl{width:72px;display:inline-block;color:#8ab}kbd{background:#223;border-radius:4px;padding:0 4px}
+</style></head><body>
+<header><h1>🎛 Super DJ Bot</h1><a href="gpro.html">😈 G Pro</a><a href="g.html">😈 Super Bot G</a><a href="radio-gen.html">📻 Radio</a><a href="super.html">🧠 Bot D</a><a href="./">🏠</a>
+<span>BPM <b class="big" id="bpmv">128.0</b></span><button id="tap">TAP <kbd>T</kbd></button><button id="auto">AUTO BPM</button><span class="st" id="bpms"></span>
+<button id="start" class="on">▶ START AUDIO</button></header>
+<div class="wrap">
+<div class="card"><h3>💿 Deck A</h3><select id="sA"></select><div class="row"><button id="pA">▶</button><button id="xA">⏹</button><button id="nA">⏭</button></div>
+ <span class="lbl">Volume</span><input type="range" id="vA" min="0" max="1" step=".01" value=".9"><div class="st" id="tA">—</div></div>
+<div class="card"><h3>💿 Deck B</h3><select id="sB"></select><div class="row"><button id="pB">▶</button><button id="xB">⏹</button><button id="nB">⏭</button></div>
+ <span class="lbl">Volume</span><input type="range" id="vB" min="0" max="1" step=".01" value=".9"><div class="st" id="tB">—</div></div>
+<div class="card"><h3>🎚 Crossfader A ↔ B</h3><input type="range" id="xf" min="0" max="1" step=".01" value=".5">
+ <h3>🎹 Deck C · Generator techno (WebAudio)</h3><div class="row"><button id="gP">▶</button><button id="gS">⏹</button><button id="gR">🎲 wzór</button></div>
+ <span class="lbl">Volume</span><input type="range" id="vG" min="0" max="1" step=".01" value=".8"><div class="st">Tempo generatora = BPM na górze.</div>
+ <h3>🌐 Pętle z internetu (CC, Wikimedia Commons)</h3><select id="lS"></select><div class="row"><button id="lP">▶</button><button id="lX">⏹</button></div>
+ <span class="lbl">Volume</span><input type="range" id="vL" min="0" max="1" step=".01" value=".8"><div class="st" id="lT">—</div></div>
+<div class="card"><h3>🔁 Looper (RMX/DJM-style)</h3><div class="row">
+ <button class="pad" data-b="1">1 <kbd>1</kbd></button><button class="pad" data-b="2">2 <kbd>2</kbd></button><button class="pad" data-b="4">4 <kbd>3</kbd></button><button class="pad" data-b="8">8 <kbd>4</kbd></button></div>
+ <div class="row"><button id="ov">OVERDUB <kbd>O</kbd></button><button id="rv">REVERSE <kbd>R</kbd></button><button id="hf">½× <kbd>H</kbd></button><button id="db">2× <kbd>D</kbd></button><button id="ls">⏹ LOOP <kbd>Space</kbd></button></div>
+ <h3>⚡ Roll / Stutter (przytrzymaj)</h3><div class="row"><button class="pad roll" data-r=".25">1/4 <kbd>Q</kbd></button><button class="pad roll" data-r=".125">1/8 <kbd>W</kbd></button><button class="pad roll" data-r=".0625">1/16 <kbd>E</kbd></button></div>
+ <div class="st" id="lpT">Looper nagrywa ostatnie ~16 s miksu (decki A/B/C/pętle). Pady łapią ostatnie 1/2/4/8 beatów w BPM.</div></div>
+<div class="card"><h3>🎛 FX</h3>
+ <span class="lbl">Filtr</span><input type="range" id="fF" min="-1" max="1" step=".01" value="0"><div class="st">← LPF · środek = off · HPF →</div>
+ <span class="lbl">Echo</span><input type="range" id="fE" min="0" max="1" step=".01" value="0"><select id="fEd"><option value=".25">1/4</option><option value=".1875">3/16</option><option value=".5">1/2</option><option value=".125">1/8</option></select>
+ <span class="lbl">Reverb</span><input type="range" id="fR" min="0" max="1" step=".01" value="0">
+ <span class="lbl">Flanger</span><input type="range" id="fL" min="0" max="1" step=".01" value="0">
+ <span class="lbl">Bitcrush</span><input type="range" id="fB" min="0" max="1" step=".01" value="0">
+ <div class="row"><button id="fx0">FX RESET</button></div></div>
+<div class="card" style="grid-column:1/-1"><h3>🌈 Wizualizer (spektrum + przebieg)</h3><canvas id="cv"></canvas>
+ <div class="st">Klawisze: <kbd>1-4</kbd> pętle · <kbd>Q/W/E</kbd> roll · <kbd>O</kbd> overdub · <kbd>R</kbd> reverse · <kbd>H</kbd>/<kbd>D</kbd> ½×/2× · <kbd>Space</kbd> stop pętli · <kbd>T</kbd> tap · <kbd>A</kbd>/<kbd>B</kbd> crossfader · <kbd>G</kbd> generator</div><div class="st warn" id="err"></div></div>
+</div>
+<script src="js/d7-stations.js"></script><script src="js/dj-bot.js?v=54"></script><script src="js/d7-pay.js?v=2"></script>
+</body></html>

@@ -1,0 +1,23 @@
+<!doctype html><html lang="pl"><head><script src="js/d7-token.js?v=1070"></script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>🎛 Remixlive · 7D</title><meta name="theme-color" content="#07031a">
+<style>
+*{box-sizing:border-box}body{margin:0;color:#eef;font:13px system-ui;background:radial-gradient(900px 500px at 10% -10%,#3a0d6b66,transparent),radial-gradient(800px 500px at 110% 0,#0a4b7a55,transparent),#05030f;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+#top{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:6px 8px 6px 8px;background:linear-gradient(90deg,#160733,#0b1a3a);border-bottom:1px solid #8a5cff66;padding-right:52px}
+#top b{font-size:16px;background:linear-gradient(90deg,#2de2ff,#ff2d95);-webkit-background-clip:text;background-clip:text;color:transparent}
+button,select{background:#1c0f38;color:#fff;border:1px solid #8a5cff88;border-radius:10px;padding:6px 10px;font:inherit;cursor:pointer;touch-action:manipulation}button.on{background:linear-gradient(135deg,#00e5ff,#8a5cff);box-shadow:0 0 12px #00e5ff99}
+.bpm{font:bold 20px monospace;color:#fff;text-shadow:0 0 10px #2de2ff;min-width:70px;text-align:center}.beat{width:12px;height:12px;border-radius:50%;background:#333}.beat.on{background:#2de2ff;box-shadow:0 0 10px #2de2ff}
+#grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:8px}.col h4{margin:0 0 4px;text-align:center;font-size:12px;letter-spacing:.08em}
+.pad{width:100%;height:clamp(44px,9vh,72px);margin-bottom:6px;border-radius:12px;border:1px solid #ffffff22;color:#fff;font-size:11px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--c1),var(--c2));opacity:.55;transition:opacity .15s,box-shadow .2s}
+.pad.on{opacity:1;box-shadow:0 0 18px var(--c1)}.pad.wait{animation:pw .25s steps(2) infinite}@keyframes pw{50%{opacity:1}}.pad i{position:absolute;left:0;bottom:0;height:3px;background:#fff;width:0}
+#fx,#inp{display:flex;gap:5px;flex-wrap:wrap;padding:0 8px 8px;align-items:center}#fx button{background:linear-gradient(135deg,#3a0d4a,#1a0b3a)}#fx button.hit{background:#ff2d95}
+h3{margin:6px 8px 4px;font-size:13px;color:#ffd23f}#log{padding:0 8px 8px;color:#a9b4d6;font-size:12px}
+@media (max-width:700px){#grid{grid-template-columns:repeat(5,minmax(58px,1fr));overflow-x:auto}}
+</style></head><body>
+<div id="top"><b>🎛 Remixlive X</b><span class="beat" id="bt"></span><span class="bpm" id="bpm">124.0</span><span class="small" id="bsrc">zegar</span>
+<select id="genre"><option value="techno">⚡ techno</option><option value="hiphop">🎤 hip-hop</option></select>
+<button id="aigen">🧠 AI generuj pady</button><button id="sync">📻 Radio sync BPM live</button><button id="auto">🔀 Auto remix</button><button id="stopall">⏹ stop pady</button></div>
+<div id="grid"></div>
+<h3>⚡ Special beat FX (zsynchronizowane z zegarem)</h3><div id="fx"></div>
+<h3>🎤 Audio In FX</h3><div id="inp"><button id="mic">🎤 Włącz wejście (mikrofon / line-in)</button><select id="ifx"><option value="clean">czysty</option><option value="space">kosmos (reverb+delay)</option><option value="robot">robot (ring+crush)</option><option value="radio">radio (bandpass+drive)</option><option value="dub">dub echo</option></select><button id="aifx">🧠 AI FX</button><label class="small">monitor <input id="mon" type="range" min="0" max="1" step=".01" value=".6"></label><span id="ilvl" class="small">—</span></div>
+<div id="log">gotowe · dotknij pad (start na następnym takcie)</div>
+<script src="js/remixlive.js?v=1070"></script></body></html>

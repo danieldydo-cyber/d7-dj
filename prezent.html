@@ -1,0 +1,84 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🎁 Prezent od DJ DaX · D7 DJ</title><meta name="theme-color" content="#05050a"><link rel="icon" href="favicon.png">
+<style>
+body{margin:0;background:#05050a;color:#eef;font-family:system-ui,sans-serif;padding:12px}
+h1{text-align:center;color:#ff2d7a;text-shadow:0 0 14px #ff2d7a,0 0 30px #7a2dff;margin:6px 0}
+.sub{text-align:center;color:#9cf;margin:0 0 12px}
+.wrap{max-width:980px;margin:auto;display:grid;grid-template-columns:minmax(260px,360px) 1fr;gap:14px}
+@media(max-width:760px){.wrap{grid-template-columns:1fr}}
+.pan{background:#0b0b16;border:1px solid #7a2dff;border-radius:14px;padding:12px;box-shadow:0 0 18px #7a2dff44}
+label{display:block;margin:10px 0 4px;color:#00f0ff;font-weight:700;font-size:13px}
+input,textarea{width:100%;box-sizing:border-box;background:#05050a;color:#fff;border:1px solid #333;border-radius:8px;padding:8px;font:inherit}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chips button{background:#111;border:1px solid #444;color:#eef;border-radius:18px;padding:7px 11px;cursor:pointer;font:600 13px system-ui}
+.chips button.on{border-color:#ff2d7a;background:#ff2d7a33;box-shadow:0 0 10px #ff2d7a}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.acts a,.acts button{border:0;border-radius:10px;padding:10px 13px;font:700 14px system-ui;cursor:pointer;text-decoration:none;color:#031;background:#00f0ff}
+.acts .wa{background:#25d366}.acts .pk{background:#ff2d7a;color:#fff}.acts .st{background:#635bff;color:#fff}
+canvas{width:100%;height:auto;border-radius:14px;display:block;box-shadow:0 0 30px #ff2d7a55}
+.info{font-size:13px;color:#ccd;margin-top:8px;line-height:1.5}.info b{color:#fff}code{color:#ff9}
+.nav{text-align:center;margin-top:14px}.nav a{color:#00f0ff;margin:0 8px}
+</style></head><body>
+<h1>🎁 Prezent od DJ DaX</h1><p class="sub">Voucher prezentowy · D7 DJ · Kraków</p>
+<div class="wrap"><div class="pan">
+<label>Rodzaj prezentu</label><div class="chips" id="types"></div>
+<label>Kwota</label><div class="chips" id="amts"><button data-a="50">50 zł</button><button data-a="100" class="on">100 zł</button><button data-a="200">200 zł</button></div>
+<input id="amt" type="number" min="1" max="9999" value="100" style="margin-top:6px" aria-label="Własna kwota">
+<label>Dla kogo</label><input id="to" maxlength="40" placeholder="Imię obdarowanego">
+<label>Od kogo</label><input id="from" maxlength="40" placeholder="Twoje imię">
+<label>Życzenia</label><textarea id="wish" rows="3" maxlength="160">Niech bas zawsze trzyma rytm! 🎶</textarea>
+<label>Kod vouchera</label><div style="display:flex;gap:6px"><input id="code" readonly><button id="regen" class="chips" style="background:#111;color:#fff;border:1px solid #444;border-radius:8px;cursor:pointer">🔄</button></div>
+</div><div class="pan">
+<canvas id="cv" width="1200" height="720"></canvas>
+<div class="acts"><button id="png">⬇ Pobierz PNG</button><button id="share" class="pk">📤 Udostępnij</button><a id="wa" class="wa" target="_blank" rel="noopener">💬 WhatsApp</a><a id="pay" style="background:#ffd400">💳 Opłać</a><a id="stripe" class="st" target="_blank" rel="noopener" hidden>💳 Zapłać kartą</a></div>
+<div class="info" id="info"></div></div></div>
+<div class="nav"><a href="promo.html">🎧 DJ DaX</a><a href="pay.html">💳 Wsparcie</a><a href="app.html">▶ Aplikacja</a></div>
+<script src="pay/qrcode.js"></script>
+<script>
+const STRIPE_LINK=''; // np. https://buy.stripe.com/xxxx — przycisk pojawi się tylko gdy ustawione
+const BLIK='730 377 357',IBAN='PL45 1870 1045 2083 1058 7576 0001',NAME='Daniel Dydo';
+const TYPES=[['set','🎧 Voucher na DJ set'],['mix','💿 Mix na zamówienie'],['lekcja','🎛 Lekcja MC-707'],['wsparcie','💜 Wsparcie D7 DJ']];
+const $=i=>document.getElementById(i);let type='set';
+const tb=$('types');TYPES.forEach(([k,l],i)=>{const b=document.createElement('button');b.textContent=l;b.dataset.t=k;if(!i)b.className='on';tb.appendChild(b)});
+tb.onclick=e=>{const b=e.target.closest('button');if(!b)return;type=b.dataset.t;tb.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));upd()};
+$('amts').onclick=e=>{const b=e.target.closest('button');if(!b)return;$('amt').value=b.dataset.a;upd()};
+function newCode(){const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',r=new Uint32Array(4);crypto.getRandomValues(r);return 'D7-'+[...r].map(x=>c[x%c.length]).join('')}
+$('code').value=newCode();$('regen').onclick=()=>{$('code').value=newCode();upd()};
+['amt','to','from','wish'].forEach(i=>$(i).addEventListener('input',upd));
+const tl=()=>TYPES.find(t=>t[0]===type)[1];const amount=()=>Math.max(1,Math.min(9999,Math.round(+$('amt').value||0)));
+const title=()=>('Prezent '+$('code').value+' '+type).slice(0,32);
+const payUrl=()=>new URL('pay.html?amount='+amount()+'&title='+encodeURIComponent(title()),location.href).href;
+let qrImg=null;
+function mkQR(t){qrcode.stringToBytes=qrcode.stringToBytesFuncs['UTF-8'];const q=qrcode(0,'M');q.addData(t,'Byte');q.make();const n=q.getModuleCount(),c=document.createElement('canvas'),s=6,m=3;c.width=c.height=(n+2*m)*s;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.fillStyle='#000';for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))x.fillRect((k+m)*s,(r+m)*s,s,s);return c}
+function upd(){$('amts').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.a==String(amount())));
+ qrImg=mkQR(payUrl());const msg=`🎁 Prezent od DJ DaX dla ${$('to').value||'Ciebie'}: ${tl().replace(/^\S+ /,'')} — ${amount()} zł. Kod: ${$('code').value}`;
+ $('wa').href='https://wa.me/48730377357?text='+encodeURIComponent('Cześć DJ DaX! Kupuję voucher: '+msg+'. Tytuł przelewu: '+title());
+ $('pay').href=payUrl();if(STRIPE_LINK){$('stripe').hidden=false;$('stripe').href=STRIPE_LINK}
+ $('info').innerHTML=`Płatność: <b>BLIK na telefon ${BLIK}</b> lub przelew <b>Nest Bank ${IBAN}</b>, odbiorca <b>${NAME}</b>, kwota <b>${amount()} zł</b>, tytuł <code>${title().replace(/</g,'&lt;')}</code>. Po wpłacie napisz na WhatsApp z kodem vouchera – DaX aktywuje prezent.`}
+const cv=$('cv'),g=cv.getContext('2d'),W=cv.width,H=cv.height;
+function wrap(t,x,y,mw,lh){let line='',ys=y;for(const w of t.split(' ')){const tt=line+w+' ';if(g.measureText(tt).width>mw&&line){g.fillText(line,x,ys);line=w+' ';ys+=lh}else line=tt}g.fillText(line,x,ys)}
+function draw(t){t/=1000;
+ // MilkDrop-like: feedback fade + warped radial waves
+ g.globalCompositeOperation='source-over';g.fillStyle='rgba(5,5,10,0.18)';g.fillRect(0,0,W,H);
+ g.save();g.translate(W/2,H/2);g.rotate(Math.sin(t*.2)*.02);g.scale(1.01,1.01);g.drawImage(cv,-W/2,-H/2);g.restore();g.fillStyle='rgba(5,5,10,0.25)';g.fillRect(0,0,W,H);
+ g.globalCompositeOperation='lighter';
+ for(let k=0;k<3;k++){g.beginPath();const hue=(t*40+k*120)%360;g.strokeStyle=`hsla(${hue},100%,60%,.55)`;g.lineWidth=3;
+  for(let a=0;a<=Math.PI*2+.01;a+=.04){const r=140+k*70+40*Math.sin(a*(3+k)+t*2)+25*Math.sin(a*7-t*3);const x=W*.32+Math.cos(a+t*.3)*r*1.2,y=H/2+Math.sin(a+t*.3)*r*.8;a?g.lineTo(x,y):g.moveTo(x,y)}g.stroke()}
+ for(let i=0;i<40;i++){const x=(i*97+t*60)%W,y=H/2+Math.sin(i+t*2)*H*.4;g.fillStyle=`hsla(${(i*20+t*50)%360},100%,60%,.6)`;g.fillRect(x,y,3,3)}
+ g.globalCompositeOperation='source-over';
+ // card overlay
+ g.fillStyle='rgba(5,5,12,.55)';g.fillRect(30,30,W-60,H-60);g.strokeStyle=`hsl(${(t*60)%360},100%,60%)`;g.lineWidth=4;g.shadowColor=g.strokeStyle;g.shadowBlur=25;g.strokeRect(30,30,W-60,H-60);
+ g.shadowColor='#ff2d7a';g.fillStyle='#ff2d7a';g.font='900 64px system-ui';g.fillText('🎁 PREZENT',70,120);
+ g.shadowColor='#00f0ff';g.fillStyle='#00f0ff';g.font='700 34px system-ui';g.fillText('od DJ DaX · D7 DJ · Kraków',70,170);
+ g.shadowBlur=12;g.shadowColor='#7a2dff';g.fillStyle='#fff';g.font='800 46px system-ui';g.fillText(tl(),70,250);
+ g.fillStyle='#ffd400';g.shadowColor='#ffd400';g.font='900 96px system-ui';g.fillText(amount()+' PLN',70,360);
+ g.shadowBlur=0;g.fillStyle='#eef';g.font='600 32px system-ui';g.fillText('Dla: '+($('to').value||'…'),70,425);if($('from').value)g.fillText('Od: '+$('from').value,70,465);
+ g.font='italic 28px system-ui';g.fillStyle='#cbf';wrap('„'+$('wish').value+'”',70,515,700,36);
+ g.font='700 24px monospace';g.fillStyle='#9cf';g.fillText('BLIK tel. '+BLIK+' · '+NAME,70,620);g.fillText(IBAN+' (Nest Bank)',70,652);
+ g.fillStyle='#ff2d7a';g.font='900 40px monospace';g.shadowColor='#ff2d7a';g.shadowBlur=18;g.fillText($('code').value,W-370,H-80);g.shadowBlur=0;
+ if(qrImg){g.fillStyle='#fff';g.fillRect(W-372,148,304,304);g.drawImage(qrImg,W-370,150,300,300);g.fillStyle='#fff';g.font='600 20px system-ui';g.fillText('Zeskanuj → zapłać',W-320,485)}
+ requestAnimationFrame(draw)}
+upd();requestAnimationFrame(draw);
+const blob=()=>new Promise(r=>cv.toBlob(r,'image/png'));
+$('png').onclick=async()=>{const b=await blob(),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='prezent-'+$('code').value+'.png';a.click()};
+$('share').onclick=async()=>{const b=await blob(),f=new File([b],'prezent-'+$('code').value+'.png',{type:'image/png'}),txt='🎁 Prezent od DJ DaX – '+tl()+' '+amount()+' zł. Kod '+$('code').value;
+ try{if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:'Prezent od DJ DaX',text:txt});else if(navigator.share)await navigator.share({title:'Prezent od DJ DaX',text:txt,url:payUrl()});else{await navigator.clipboard.writeText(txt+' '+payUrl());alert('Skopiowano link')}}catch(e){}};
+</script><script src="js/d7-pay.js" defer></script></body></html>

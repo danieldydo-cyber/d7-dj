@@ -22,6 +22,7 @@ function mount(el){
  '<div class="qrs"><div class="qr"><div class="q1"></div><b>QR przelew (ZBP)</b><br>zeskanuj w aplikacji banku</div><div class="qr"><div class="q2"></div><b>Numer telefonu BLIK</b><br>(tylko numer – wpisz w BLIK „przelew na telefon”)</div></div>'+
  '<div class="note">Dane QR: <code class="raw"></code><br>Tylko informacja – strona nie przetwarza płatności, nie zbiera danych kart i nie łączy się z żadnym zewnętrznym API płatności.</div>';
  var amt=el.querySelector('.amt'),t=el.querySelector('input.t');
+ try{var Q=new URLSearchParams(location.search),qa=Q.get('amount'),qt=Q.get('title');if(qa&&!isNaN(parseFloat(qa.replace(',','.')))){amt.value=String(parseFloat(qa.replace(',','.')));el.querySelectorAll('.am').forEach(function(x){x.classList.toggle('on',x.dataset.a===amt.value)})}if(qt)t.value=clean(qt,32)}catch(_){}
  function upd(){var s=zbp(amt.value,t.value);el.querySelector('.q1').innerHTML=svg(s);el.querySelector('.raw').textContent=s;el.dataset.zbp=s}
  el.querySelector('.q2').innerHTML=svg(BLIK);
  el.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;

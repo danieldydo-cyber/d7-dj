@@ -17,6 +17,7 @@
     m.innerHTML='<div class="bx"><button class="x" aria-label="Zamknij">×</button><div class="slot"></div>'+
       '<a class="wa" href="'+WA+'" target="_blank" rel="noopener">💬 WhatsApp 730 377 357</a>'+
       '<a class="wa" style="background:#00f0ff" href="'+base+'pay.html">🔗 Strona płatności</a>'+
+      '<a class="wa" style="background:#ff2d7a;color:#fff" href="'+base+'prezent.html">🎁 Prezent</a>'+
       '<div class="soon">💳 Płatności kartą (Stripe) — <b>wkrótce</b>.</div></div>';
     document.body.appendChild(b);document.body.appendChild(m);
     var loaded=false;

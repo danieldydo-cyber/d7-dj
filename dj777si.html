@@ -1,0 +1,9 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>7D · DJ 777 SI 🧠</title>
+<style>body{margin:0;font-family:system-ui;background:#05030c;color:#eee;padding:14px}h1{color:#b388ff}.c{background:#140b2a;border:1px solid #3a1f73;border-radius:14px;padding:12px;margin:10px 0}button{background:#6b21ff;color:#fff;border:0;border-radius:10px;padding:10px}input{width:70%;padding:10px;border-radius:10px;border:1px solid #3a1f73;background:#0c0620;color:#fff}#o{white-space:pre-wrap}</style></head><body>
+<h1>DJ 777 SI 🧠</h1><p>Sekcja 7D z mózgiem AI offline (ten sam co w <a href="gx/index.html" style="color:#0ef">Ghost X G 🐲</a>).</p>
+<div class="c"><button id="dl">⬇️ Pobierz mózg offline</button> <span id="st"></span></div>
+<div class="c"><input id="q" placeholder="Zapytaj DJ 777 SI (BPM, miks, setlista…)"> <button id="go">➤</button><p id="o"></p></div>
+<script src="gx/brain.js"></script><script>
+GXBrain.onstatus=function(s){st.textContent=s};GXBrain.onstatus(GXBrain.status);GXBrain.autoload();dl.onclick=function(){GXBrain.load()};
+go.onclick=async function(){o.textContent='⏳';var r=await GXBrain.ask(q.value||'Daj 3 porady DJ',[],{system:'Jesteś DJ 777 SI z aplikacji 7D (DJ DaX, Kraków). Odpowiadaj krótko po polsku o DJ-ingu i muzyce.'});o.textContent=r.a+'\n— '+r.src};
+</script></body></html>

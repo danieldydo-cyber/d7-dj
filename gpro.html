@@ -1,0 +1,85 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="js/d7-token.js"></script><title>7D · 😈 Super Bot G Pro</title>
+<style>
+body{margin:0;background:radial-gradient(#1a0505,#000);color:#fdd;font-family:system-ui}header{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#300;flex-wrap:wrap;gap:6px}
+h1{margin:0;font-size:22px;color:#f44}#hl{font-size:13px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#888;margin-right:4px}
+nav a,nav button,button{background:#511;color:#fcc;border:1px solid #f44;border-radius:8px;padding:8px 10px;margin:3px;cursor:pointer;text-decoration:none;display:inline-block;font:inherit}
+nav a{background:#311}section{display:none;padding:10px}section.on{display:block}
+#avwrap{position:relative;width:min(340px,90vw);margin:0 auto}#av{width:100%;height:auto;display:block}
+#mood{position:absolute;right:8px;top:8px;background:#200a;padding:4px 8px;border-radius:8px;font-size:12px;color:#fa0}
+#log{height:32vh;overflow:auto;background:#100;border-radius:10px;padding:8px;font-size:14px;white-space:pre-wrap}
+.u{color:#9cf}.b{color:#fdd;margin:6px 0}.b.stream{color:#fc8}.b.refine{border-left:3px solid #f44;padding-left:6px}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}input,textarea,select{flex:1;background:#200;color:#fff;border:1px solid #a33;border-radius:8px;padding:10px;min-width:120px}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}.tabs button{font-size:12px}.tabs button.on{background:#f44;color:#000}
+.room{background:#200;border:1px solid #633;border-radius:10px;padding:10px;font-size:13px;min-height:120px;white-space:pre-wrap}
+.tool a{display:block;color:#f88;margin:6px 0;font-size:16px}#err{color:#fa0;font-size:12px}iframe.emb{width:100%;height:70vh;border:1px solid #633;border-radius:10px;background:#000}
+label{font-size:13px;margin-right:8px}button.on{background:#f44;color:#000}button.ptt{min-width:90px;font-weight:bold}
+@keyframes bobIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes bobTalk{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-3px) scale(1.02)}}
+@keyframes bobThink{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+#av.idle{animation:bobIdle 2.6s infinite}#av.talk{animation:bobTalk 0.35s infinite}#av.listen{animation:bobIdle 1.2s infinite}#av.think{animation:bobThink 0.8s infinite}
+</style></head><body>
+<header>
+ <h1>😈 Super Bot G <span style="font-size:14px;color:#fa0">Pro</span></h1>
+ <div id="hl"><span class="dot" id="hd"></span><span id="ht">sprawdzam…</span></div>
+</header>
+<nav>
+ <a href="g.html">G</a><a href="dj.html">🎛 DJ</a><a href="radio-gen.html">📻</a><a href="./">🏠</a>
+ <button data-s="chat">💬 Czat</button><button data-s="multi">🏠 Multiroom</button><button data-s="tool">🧰 Multitool</button><button data-s="build">🛠 Build app</button>
+</nav>
+<section id="chat" class="on">
+ <div id="avwrap">
+  <svg id="av" class="idle" viewBox="0 0 240 240">
+   <defs><radialGradient id="skin" cx="50%" cy="40%"><stop offset="0%" stop-color="#f44"/><stop offset="100%" stop-color="#a00"/></radialGradient></defs>
+   <path d="M55 70 L30 5 L90 50Z M185 70 L210 5 L150 50Z" fill="#c11"/><ellipse cx="120" cy="125" rx="85" ry="90" fill="url(#skin)"/>
+   <ellipse id="eL" cx="90" cy="105" rx="16" ry="18" fill="#ff0"/><ellipse id="eR" cx="150" cy="105" rx="16" ry="18" fill="#ff0"/>
+   <circle id="pL" cx="90" cy="108" r="6"/><circle id="pR" cx="150" cy="108" r="6"/>
+   <path id="brow" d="M70 82 L110 92 M170 82 L130 92" stroke="#300" stroke-width="6" stroke-linecap="round"/>
+   <ellipse id="mouth" cx="120" cy="165" rx="36" ry="5" fill="#200"/>
+   <path id="teeth" d="M100 162 l6 10 l6 -10 M128 162 l6 10 l6 -10" fill="#fff" opacity=".95"/>
+   <path id="cheek" d="M55 140 q20 20 0 30 M185 140 q-20 20 0 30" fill="#e33" opacity="0"/>
+  </svg>
+  <div id="mood">idle</div>
+ </div>
+ <div id="log"></div>
+ <div class="row">
+  <input id="q" placeholder="Zapytaj Super Bota G Pro (szybka odpowiedź → refine ze wszystkich botów)…">
+  <button id="mic" class="ptt" title="Przytrzymaj = push-to-talk">🎤 PTT</button>
+  <button id="go">▶</button>
+ </div>
+ <div class="row">
+  <label><input type="checkbox" id="tts" checked> mów (pl-PL)</label>
+  <label><input type="checkbox" id="cont"> rozmowa ciągła</label>
+  <label><input type="checkbox" id="fast" checked> szybka pierwsza odpowiedź</label>
+  <button id="clr">🗑 historia</button>
+ </div>
+ <span id="err"></span>
+</section>
+<section id="multi">
+ <p>Zakładki botów — ostatnia odpowiedź z rundy. Wspólny log: <span id="slog">…</span></p>
+ <div class="tabs" id="rtabs"></div>
+ <div class="room" id="rbody">Wybierz bota albo uruchom pytanie w czacie.</div>
+</section>
+<section id="tool" class="tool">
+ <div class="row">
+  <button data-emb="dj.html" class="on">🎛 DJ w panelu</button>
+  <button data-emb="radio-gen.html">📻 Radio + gen</button>
+  <button data-emb="super.html">🧠 Bot D</button>
+  <a href="dj.html" target="_blank">otwórz DJ ↗</a>
+  <a href="downloads/D7-Pay-v55.apk">📱 APK v55</a>
+  <a href="sync-manifest.json" target="_blank">📄 Manifest</a>
+ </div>
+ <div id="mst" class="st"></div>
+ <iframe class="emb" id="emb" src="dj.html" title="Multitool embed"></iframe>
+</section>
+<section id="build">
+ <h3>🛠 Build app — pomysły i specyfikacje</h3>
+ <p>Zapisuje do <code>/api/chat-log</code> (jeśli masz token właściciela) albo lokalnie w przeglądarce.</p>
+ <input id="bt" placeholder="Tytuł / nazwa aplikacji">
+ <textarea id="bs" rows="8" placeholder="Spec: funkcje, ekrany, API, deadline…"></textarea>
+ <div class="row"><button id="bsave">💾 Zapisz</button><button id="blist">📋 Pokaż lokalne</button></div>
+ <pre id="bout" class="room"></pre>
+</section>
+<script src="js/gpro.js?v=55"></script>
+<script src="js/d7-pay.js?v=2"></script>
+</body></html>
