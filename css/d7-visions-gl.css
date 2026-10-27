@@ -34,3 +34,4 @@
 html.d7g-lock,html.d7g-lock body{overflow:hidden!important}
 @media (max-width:640px){.d7g{padding:6px}.d7g-head b{font-size:16px}.d7g-sub{display:none}.d7g-stage{height:clamp(220px,62vw,420px);border-radius:10px}.d7g-hint{display:none}.d7g input[type=range]{width:90px}}
 @media (prefers-reduced-motion:reduce){.d7g-ctl{transition:none}}
+@media (max-width:640px){.d7g-chips{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.d7g-chips::-webkit-scrollbar{display:none}.d7g-chip{flex:none}}

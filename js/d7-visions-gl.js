@@ -219,7 +219,7 @@
     var lastTap = 0;
     stage.addEventListener('dblclick', function (e) { e.preventDefault(); toggleFs(); });
     stage.addEventListener('touchend', function (e) {
-      var n = Date.now(); if (n - lastTap < 320) { e.preventDefault(); toggleFs(); lastTap = 0; } else lastTap = n;
+      var n = Date.now(); if (n - lastTap < 400) { e.preventDefault(); toggleFs(); lastTap = 0; } else lastTap = n;
       if (isFs()) showUi();
     }, { passive: false });
     ['mousemove', 'pointerdown', 'keydown'].forEach(function (ev) { root.addEventListener(ev, function () { if (isFs()) showUi(); }); });
