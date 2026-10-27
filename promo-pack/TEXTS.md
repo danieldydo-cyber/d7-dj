@@ -1,67 +1,61 @@
+# D7 DJ · promo-pack (tylko aplikacje)
+
+Odświeżone 2026-10-27. Oferta: wyłącznie aplikacje D7 DJ (Android APK, Desktop Mac/Windows/Linux, PWA, Universal Bots, voucher PRO). Sklep: https://danieldydo-cyber.github.io/d7-dj/sklep.html · Pobierz: https://danieldydo-cyber.github.io/d7-dj/download.html
+
 ## Facebook (PL)
 
 ```
-🎧 DJ DaX — DJ na imprezy w Krakowie!
-Techno, trance, house i klasyki na urodziny, imprezy firmowe, domówki i kluby. Własny sprzęt (Roland MC-707) i wizualizacje MilkDrop na ekran.
-🎁 Szukasz oryginalnego prezentu? Voucher na set DJ lub mix na zamówienie.
-👉 Sprawdź darmową aplikację D7 DJ i napisz: https://danieldydo-cyber.github.io/d7-dj/promo.html
-🎁 Voucher: https://danieldydo-cyber.github.io/d7-dj/prezent.html
-
-#DJDaX #D7DJ #DJKraków #Kraków #techno #trance #DJnaimprezy #DJnawesele #imprezaKraków #prezent #voucher #MC707 #MilkDrop #radioonline #muzykaelektroniczna
+📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
 ```
 
 ## Facebook (EN)
 
 ```
-🎧 DJ DaX — party DJ in Kraków!
-Techno, trance, house & classics for birthdays, corporate events, house parties and clubs. Live Roland MC-707 gear + MilkDrop visuals.
-🎁 Need a unique gift? DJ set voucher or a custom mix.
-👉 Free D7 DJ web app & contact: https://danieldydo-cyber.github.io/d7-dj/promo.html
-🎁 Voucher: https://danieldydo-cyber.github.io/d7-dj/prezent.html
-
-#DJDaX #D7DJ #KrakowDJ #Krakow #techno #trance #partyDJ #giftideas #MC707 #MilkDrop #onlineradio #electronicmusic
+📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
 ```
 
 ## Instagram (PL)
 
 ```
-Kraków, gotowi na noc? 🔊⚡
-DJ DaX · techno · trance · MC-707 live
-🎁 Voucher DJ = najlepszy prezent
-Link w bio 👉 https://danieldydo-cyber.github.io/d7-dj/
-.
-#DJDaX #D7DJ #DJKraków #Kraków #techno #trance #DJnaimprezy #DJnawesele #imprezaKraków #prezent #voucher #MC707 #MilkDrop #radioonline #muzykaelektroniczna
+📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
 ```
 
 ## Instagram (EN)
 
 ```
-Kraków, ready for the night? 🔊⚡
-DJ DaX · techno · trance · MC-707 live
-🎁 A DJ voucher = the best gift
-Link in bio 👉 https://danieldydo-cyber.github.io/d7-dj/
-.
-#DJDaX #D7DJ #KrakowDJ #Krakow #techno #trance #partyDJ #giftideas #MC707 #MilkDrop #onlineradio #electronicmusic
+📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
 ```
 
 ## TikTok (PL)
 
 ```
-POV: Twoja impreza ma własnego DJ-a 🎧🔥 DJ DaX z Krakowa · techno/trance · voucher na prezent 🎁 link w bio
-#DJDaX #DJKraków #techno #trance #fyp #dlaciebie #MC707
+📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
 ```
 
 ## TikTok (EN)
 
 ```
-POV: your party gets its own DJ 🎧🔥 DJ DaX from Kraków · techno/trance · gift voucher 🎁 link in bio
-#DJDaX #KrakowDJ #techno #trance #fyp #MC707
+📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
 ```
 
 ## X (PL)
 
 ```
-🎧 DJ DaX · D7 DJ z Krakowa — techno, trance, MC-707, MilkDrop. Darmowa aplikacja DJ w przeglądarce + voucher DJ na prezent 🎁 https://danieldydo-cyber.github.io/d7-dj/ #DJKraków #techno #trance
+📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
 ```
 
 ## X (EN)
@@ -73,44 +67,57 @@ POV: your party gets its own DJ 🎧🔥 DJ DaX from Kraków · techno/trance ·
 ## OLX / Allegro Lokalnie — DJ (PL)
 
 ```
-TYTUŁ: DJ na imprezy Kraków – DJ DaX (techno, trance, house, klasyki)
+TYTUŁ: Aplikacje D7 DJ – Android APK, Desktop Mac/Windows/Linux, PWA, PRO
 
 OPIS:
-Zagram na Twojej imprezie w Krakowie i okolicach: urodziny, osiemnastki, imprezy firmowe, domówki, kluby.
-• muzyka: techno, trance, house, dance, klasyki i życzenia gości
-• sprzęt live: Roland MC-707, wizualizacje MilkDrop na ekran/projektor
-• elastyczne godziny, dojazd po Krakowie
-Cena do ustalenia – zależy od długości i miejsca. Napisz przez wiadomość OLX/Allegro.
-Zobacz więcej: https://danieldydo-cyber.github.io/d7-dj/promo.html
+• D7 DJ ONE PRO (Android APK) – 19 zł
+• D7 Universal Bots PRO (Android APK) – 19 zł
+• D7 DJ Desktop PRO (Mac/Windows/Linux) – 29 zł
+• Pakiet PRO wszystkie aplikacje – 49 zł
+• PWA w przeglądarce – za darmo
+• Voucher prezent na PRO
+Płatność BLIK / przelew.
+Sklep: https://danieldydo-cyber.github.io/d7-dj/sklep.html
 ```
 
 ## OLX / Allegro Lokalnie — voucher (PL)
 
 ```
-TYTUŁ: Voucher prezent DJ – set lub mix na zamówienie (Kraków)
+TYTUŁ: Aplikacje D7 DJ – Android APK, Desktop Mac/Windows/Linux, PWA, PRO
 
 OPIS:
-Oryginalny prezent dla fana muzyki! Voucher na:
-• set DJ DaX na imprezie (Kraków), albo
-• personalizowany mix techno/trance z dedykacją (wysyłka online).
-Voucher elektroniczny lub do wydruku. Idealny na urodziny, święta, rocznicę.
-Cena do ustalenia. Napisz wiadomość.
-Szczegóły: https://danieldydo-cyber.github.io/d7-dj/prezent.html
+• D7 DJ ONE PRO (Android APK) – 19 zł
+• D7 Universal Bots PRO (Android APK) – 19 zł
+• D7 DJ Desktop PRO (Mac/Windows/Linux) – 29 zł
+• Pakiet PRO wszystkie aplikacje – 49 zł
+• PWA w przeglądarce – za darmo
+• Voucher prezent na PRO
+Płatność BLIK / przelew.
+Sklep: https://danieldydo-cyber.github.io/d7-dj/sklep.html
 ```
 
 ## OLX / Allegro Lokalnie — DJ (EN)
 
 ```
-TITLE: Party DJ Kraków – DJ DaX (techno, trance, house)
+TYTUŁ: Aplikacje D7 DJ – Android APK, Desktop Mac/Windows/Linux, PWA, PRO
 
-I'll DJ your party in Kraków: birthdays, corporate events, house parties, clubs. Live Roland MC-707, MilkDrop visuals. Price on request – message me.
-More: https://danieldydo-cyber.github.io/d7-dj/promo.html
+OPIS:
+• D7 DJ ONE PRO (Android APK) – 19 zł
+• D7 Universal Bots PRO (Android APK) – 19 zł
+• D7 DJ Desktop PRO (Mac/Windows/Linux) – 29 zł
+• Pakiet PRO wszystkie aplikacje – 49 zł
+• PWA w przeglądarce – za darmo
+• Voucher prezent na PRO
+Płatność BLIK / przelew.
+Sklep: https://danieldydo-cyber.github.io/d7-dj/sklep.html
 ```
 
 ## WhatsApp status (PL)
 
 ```
-🎧 Gram imprezy w Krakowie! Techno/trance + voucher DJ na prezent 🎁 https://danieldydo-cyber.github.io/d7-dj/promo.html
+📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
 ```
 
 ## WhatsApp status (EN)
@@ -122,11 +129,11 @@ More: https://danieldydo-cyber.github.io/d7-dj/promo.html
 ## Hashtagi (PL)
 
 ```
-#DJDaX #D7DJ #DJKraków #Kraków #techno #trance #DJnaimprezy #DJnawesele #imprezaKraków #prezent #voucher #MC707 #MilkDrop #radioonline #muzykaelektroniczna
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
 ```
 
 ## Hashtags (EN)
 
 ```
-#DJDaX #D7DJ #KrakowDJ #Krakow #techno #trance #partyDJ #giftideas #MC707 #MilkDrop #onlineradio #electronicmusic
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
 ```
