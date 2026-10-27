@@ -529,7 +529,7 @@
     $('.x77-auto').onchange = function () { ST.auto = this.checked; save(); };
     $('.x77-every').onchange = function () { ST.every = +this.value; save(); };
     $('.x77-layers').onchange = function () { ST.layers = +this.value; if (mdMode) setMD(false); setLayers(curIdx, ST.layers); sizeCanvas(); save(); };
-    $('.x77-res').onchange = function () { ST.res = this.value; sizeCanvas(); save(); };
+    $('.x77-res').onchange = function () { ST.res = this.value; slow = 0; sizeCanvas(); save(); };
     $('.x77-md-btn').onclick = function () { if (mdMode) setMD(false); else setMD(true, null); };
 
     /* fullscreen: API + dwuklik/double-tap; iPhone → pseudo-fullscreen CSS */
@@ -564,7 +564,7 @@
         for (var j = 1; j < layers.length; j++) { ctx.globalCompositeOperation = j % 2 ? 'lighter' : 'screen'; ctx.globalAlpha = .75; ctx.drawImage(layers[j].cv, 0, 0); } ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
       }
       /* auto-jakość: jeśli klatki > 45 ms przez ~3 s, zejdź niżej z rozdzielczością */
-      fcount++; ftime += dt; if (ts - lastFpsT > 1000) { var fps = fcount * 1000 / (ts - lastFpsT); fpsEl.textContent = fps.toFixed(0) + ' fps · ' + w + '×' + h; if (!isFS() && ftime / fcount > 45) slow++; else slow = 0; fcount = 0; ftime = 0; lastFpsT = ts;
+      fcount++; ftime += dt; if (ts - lastFpsT > 1000) { var fps = fcount * 1000 / (ts - lastFpsT); fpsEl.textContent = fps.toFixed(0) + ' fps · ' + w + '×' + h; if (ST.autoQ !== false && !isFS() && ftime / fcount > 45) slow++; else slow = 0; fcount = 0; ftime = 0; lastFpsT = ts;
         if (slow >= 3 && (ST.res === '1080' || ST.res === 'native' || ST.res === '720')) { ST.res = ST.res === '720' ? '480' : '720'; $('.x77-res').value = ST.res; sizeCanvas(); toast('Auto-jakość: zmniejszono do ' + ST.res + 'p'); slow = 0; } }
     }
     setLayers(ST.sel >= 0 && ST.sel < REG.length ? ST.sel : 0, +ST.layers); sizeCanvas();
