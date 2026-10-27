@@ -315,8 +315,11 @@
   }
   function attractor(P) { /* Clifford */
     var N = MOBILE ? 500 : 1400;
+    function spread() { var x = .1, y = .1, i, cells = {}, n = 0; for (i = 0; i < 1500; i++) { var nx = M.sin(P.a * y) + P.c2 * M.cos(P.a * x), ny = M.sin(P.b * x) + P.d * M.cos(P.b * y); x = nx; y = ny; if (i > 300) { var k = ((x + 3) * 5 | 0) * 64 + ((y + 3) * 5 | 0); if (!cells[k]) { cells[k] = 1; n++; } } } return n; }
+    function good() { for (var k = 0; k < 80 && spread() < 90; k++) { P.a = -2 + M.random() * 4; P.b = -2 + M.random() * 4; P.c2 = -2 + M.random() * 4; P.d = -2 + M.random() * 4; } P.x = .1; P.y = .1; }
+    good();
     return {
-      fade: .06, params: function () { return 'atraktor a=' + P.a.toFixed(2) + ' b=' + P.b.toFixed(2); }, reroll: function () { P.a = -2 + M.random() * 4; P.b = -2 + M.random() * 4; P.c2 = -2 + M.random() * 4; P.d = -2 + M.random() * 4; P.hue = M.random() * 360; P.x = M.random(); P.y = M.random(); },
+      fade: .06, params: function () { return 'atraktor a=' + P.a.toFixed(2) + ' b=' + P.b.toFixed(2); }, reroll: function () { P.a = -2 + M.random() * 4; P.b = -2 + M.random() * 4; P.c2 = -2 + M.random() * 4; P.hue = M.random() * 360; good(); },
       draw: function (c, w, h, t, A) {
         c.globalCompositeOperation = 'lighter'; var x = P.x, y = P.y, a = P.a + M.sin(t * .1) * .05, b = P.b, cc = P.c2, d = P.d + A.bass * .03; c.fillStyle = hsl(P.hue + t * 6, 90, 60, .5);
         for (var i = 0; i < N; i++) { var nx = M.sin(a * y) + cc * M.cos(a * x), ny = M.sin(b * x) + d * M.cos(b * y); x = nx; y = ny; c.fillRect(w / 2 + x * w * .2, h / 2 + y * h * .2, 1.3, 1.3); } P.x = x; P.y = y;
@@ -448,7 +451,8 @@
       if (ST.res === 'native') { w = cw * dpr; h = ch * dpr; var cap = MOBILE ? 1280 : 2560; if (w > cap) { h = h * cap / w; w = cap; } }
       else { h = +ST.res; w = h * cw / ch; }
       w = M.max(64, w | 0); h = M.max(64, h | 0);
-      if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; layers.forEach(function (l) { l.cv.width = w; l.cv.height = h; l.cx.fillStyle = '#000'; l.cx.fillRect(0, 0, w, h); }); }
+      if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+      layers.forEach(function (l) { if (l.cv.width !== w || l.cv.height !== h) { l.cv.width = w; l.cv.height = h; l.cx.fillStyle = '#000'; l.cx.fillRect(0, 0, w, h); } });
       if (mdViz) { try { mdc.width = w; mdc.height = h; mdViz.setRendererSize(w, h); } catch (e) { } }
     }
 
@@ -569,7 +573,7 @@
     }
     setLayers(ST.sel >= 0 && ST.sel < REG.length ? ST.sel : 0, +ST.layers); sizeCanvas();
     requestAnimationFrame(frame);
-    var api = { registry: REG, state: ST, A: A, select: selectGen, random: function () { nextRandom(false); }, setLayers: function (n) { $('.x77-layers').value = n; $('.x77-layers').onchange(); }, fullscreen: toggleFS, md: setMD, play: playRadio, stop: stopRadio, root: root, resize: sizeCanvas, isMilkdrop: function () { return mdMode; }, beatSource: function () { return realAudio ? 'audio' : 'sim'; } };
+    var api = { registry: REG, state: ST, A: A, select: selectGen, random: function () { nextRandom(false); }, setLayers: function (n) { $('.x77-layers').value = n; $('.x77-layers').onchange(); }, fullscreen: toggleFS, md: setMD, play: playRadio, stop: stopRadio, root: root, resize: sizeCanvas, isMilkdrop: function () { return mdMode; }, layerSizes: function () { return layers.map(function (l) { return l.cv.width + 'x' + l.cv.height; }).concat([cv.width + 'x' + cv.height]); }, beatSource: function () { return realAudio ? 'audio' : 'sim'; } };
     return api;
   }
 
