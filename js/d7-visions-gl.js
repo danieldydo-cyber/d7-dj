@@ -203,7 +203,7 @@
     $('#d7g-every', root).onchange = function () { S.every = +this.value; lsSet('every', S.every); };
     $('#d7g-multi', root).onclick = function () { S.multi = !S.multi; lsSet('multi', S.multi ? 1 : 0); if (S.multi && S.mode === 'milk') showGen(); buildLayers(); syncUI(); };
     $('#d7g-nl', root).onchange = function () { S.nLayers = +this.value; lsSet('nl', S.nLayers); buildLayers(); syncUI(); };
-    $('#d7g-res', root).onchange = function () { S.res = this.value; lsSet('res', S.res); resize(true); };
+    $('#d7g-res', root).onchange = function () { S.res = this.value; S.autoCap = 0; lsSet('res', S.res); resize(true); };
     fsBtn.onclick = toggleFs; $('#d7g-x', root).onclick = function () { exitFs(); };
     $('#d7g-chips', root).addEventListener('click', function (e) {
       var b = e.target.closest('.d7g-chip'); if (!b) return; S.pool = b.getAttribute('data-pool'); lsSet('pool', S.pool);
@@ -332,6 +332,7 @@
     var h = Math.max(120, targetH(r.height)), w = Math.max(160, Math.round(h * r.width / r.height));
     if (!force && cv.width === w && cv.height === h) return;
     cv.width = w; cv.height = h; mc.width = w; mc.height = h;
+    perfAcc = 0; perfN = 0;
     if (viz) try { viz.setRendererSize(w, h); } catch (e) {}
     if (gl && S.glOk) gl.viewport(0, 0, w, h);
     updateHud();
@@ -506,10 +507,10 @@
     window.D7VisionsGL = {
       version: 1, count: 77, groups: GROUPS.map(function (g) { return { id: g.id, label: g.label, n: g.items.length }; }),
       list: function () { return GENS.map(function (g) { return { id: g.id, name: g.name, group: g.group }; }); },
-      set: setGen, setAuto: function (on, every) { S.auto = !!on; if (every) { S.every = every; } syncUI(); }, random: randomPick, params: randomizeParams, fullscreen: toggleFs, setRes: function (r) { S.res = r; $('#d7g-res', root).value = r; lsSet('res', r); resize(true); },
+      set: setGen, setAuto: function (on, every) { S.auto = !!on; if (every) { S.every = every; } syncUI(); }, random: randomPick, params: randomizeParams, fullscreen: toggleFs, setRes: function (r) { S.res = r; S.autoCap = 0; $('#d7g-res', root).value = r; lsSet('res', r); resize(true); },
       setMulti: function (on, n) { S.multi = !!on; if (n) S.nLayers = n; buildLayers(); syncUI(); },
-      milk: function (n) { loadMilk(function () { setMilk(n || randomMilkName()); }); }, play: playRadio, stop: stopRadio,
-      state: function () { return { mode: S.mode, gen: S.layers[0].g, layers: S.layers.map(function (l) { return l.g; }), res: S.res, canvas: [cv.width, cv.height], glOk: S.glOk, glErr: S.glErr, live: live, radioOn: radioOn, beats: S.beats, auto: S.auto, fs: isFs(), milk: S.milkName, milkPresets: presetNames.length, stations: stationsList.length }; }
+      milk: function (n) { loadMilk(function () { setMilk(n || randomMilkName()); }); }, play: playRadio, stop: stopRadio, playUrl: function (url, name) { stationsList.push({ name: name || url, url: url }); var o = document.createElement('option'); o.value = stationsList.length - 1; o.textContent = name || url; $('#d7g-st', root).appendChild(o); $('#d7g-st', root).value = stationsList.length - 1; playRadio(stationsList.length - 1); },
+      state: function () { return { mode: S.mode, gen: S.layers[0].g, layers: S.layers.map(function (l) { return l.g; }), res: S.res, canvas: [cv.width, cv.height], glOk: S.glOk, glErr: S.glErr, live: live, radioOn: radioOn, beats: S.beats, auto: S.auto, fs: isFs(), milk: S.milkName, milkPresets: presetNames.length, stations: stationsList.length, levels: levels.a.map(function (x) { return Math.round(x * 100) / 100; }), simBeat: !live }; }
     };
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
