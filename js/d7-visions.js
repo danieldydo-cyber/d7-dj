@@ -124,7 +124,7 @@
 
   /* ---------- UI ---------- */
   function mount() {
-    var host = document.getElementById('d7v-mount');
+    var host = document.getElementById('d7v-mount') || document.getElementById('d7-visions');
     root = document.createElement('section'); root.id = 'd7v'; root.className = 'd7v'; root.setAttribute('aria-label', '77 generatorów wizji');
     root.innerHTML =
       '<div class="d7v-head"><b>✨ 77 generatorów wizji</b><span class="d7v-sub">Kalejdoskop · Forest (las) · Kosmos · Live AI-generate · MilkDrop</span><span class="d7v-now" id="d7v-now"></span></div>' +
@@ -494,8 +494,8 @@
 
   /* ---------- init ---------- */
   function init() {
-    mount();
     S.layers = [seedLayer(S.cur)]; if (S.multi) buildLayers();
+    mount();
     initGL(); resize(true);
     if (!S.glOk) { $('.d7v-hint', root).textContent = 'Tryb lekki 2D · WebGL niedostępny'; }
     buildStations();
