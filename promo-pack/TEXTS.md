@@ -1,139 +1,111 @@
 # D7 DJ · promo-pack (tylko aplikacje)
 
-Odświeżone 2026-10-27. Oferta: wyłącznie aplikacje D7 DJ (Android APK, Desktop Mac/Windows/Linux, PWA, Universal Bots, voucher PRO). Sklep: https://danieldydo-cyber.github.io/d7-dj/sklep.html · Pobierz: https://danieldydo-cyber.github.io/d7-dj/download.html
+Odświeżone 2026-10-28. Oferta: wyłącznie aplikacje D7 DJ (Android APK, Desktop Mac/Windows/Linux, PWA, Universal Bots, D7 Visions, voucher PRO). Sklep: https://danieldydo-cyber.github.io/d7-dj/sklep.html · Pobierz: https://danieldydo-cyber.github.io/d7-dj/download.html · Wizje: https://danieldydo-cyber.github.io/d7-dj/visions.html
 
 ## Facebook (PL)
 
 ```
-📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. NOWOŚĆ: D7 Visions – 77 generatorów wizji + MilkDrop do radia i muzyki 🌀 PRO od 19 zł, 🎁 voucher PRO na prezent.
 👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
-#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
+🌀 https://danieldydo-cyber.github.io/d7-dj/visions.html
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #PWA #MC707 #MilkDrop #wizualizacje #Kraków
 ```
 
 ## Facebook (EN)
 
 ```
-📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+📲 D7 DJ apps: Android APK, desktop Mac/Windows/Linux and a free PWA. NEW: D7 Visions – 77 visual generators + MilkDrop that react to radio and music 🌀 PRO from 19 PLN, 🎁 PRO gift voucher.
 👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
-#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
+🌀 https://danieldydo-cyber.github.io/d7-dj/visions.html
+#D7DJ #DJDaX #DJapp #APK #Android #PWA #MC707 #MilkDrop #visuals #techno
 ```
 
 ## Instagram (PL)
 
 ```
-📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. NOWOŚĆ: D7 Visions – 77 generatorów wizji + MilkDrop do radia i muzyki 🌀 PRO od 19 zł, 🎁 voucher PRO na prezent.
 👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
-#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
+🌀 https://danieldydo-cyber.github.io/d7-dj/visions.html
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #PWA #MC707 #MilkDrop #wizualizacje #Kraków
 ```
 
 ## Instagram (EN)
 
 ```
-📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+📲 D7 DJ apps: Android APK, desktop Mac/Windows/Linux and a free PWA. NEW: D7 Visions – 77 visual generators + MilkDrop that react to radio and music 🌀 PRO from 19 PLN, 🎁 PRO gift voucher.
 👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
-#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
+🌀 https://danieldydo-cyber.github.io/d7-dj/visions.html
+#D7DJ #DJDaX #DJapp #APK #Android #PWA #MC707 #MilkDrop #visuals #techno
 ```
 
 ## TikTok (PL)
 
 ```
-📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. NOWOŚĆ: D7 Visions – 77 generatorów wizji + MilkDrop do radia i muzyki 🌀 PRO od 19 zł, 🎁 voucher PRO na prezent.
 👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
-#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
+🌀 https://danieldydo-cyber.github.io/d7-dj/visions.html
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #PWA #MC707 #MilkDrop #wizualizacje #Kraków
 ```
 
 ## TikTok (EN)
 
 ```
-📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
+📲 D7 DJ apps: Android APK, desktop Mac/Windows/Linux and a free PWA. NEW: D7 Visions – 77 visual generators + MilkDrop that react to radio and music 🌀 PRO from 19 PLN, 🎁 PRO gift voucher.
 👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
-#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
+🌀 https://danieldydo-cyber.github.io/d7-dj/visions.html
+#D7DJ #DJDaX #DJapp #APK #Android #PWA #MC707 #MilkDrop #visuals #techno
 ```
 
 ## X (PL)
 
 ```
-📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
-👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
-#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
+📲 D7 DJ: APK, Desktop, PWA + D7 Visions (77 wizji + MilkDrop) 🌀 PRO od 19 zł 👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html #D7DJ #DJDaX #MilkDrop
 ```
 
 ## X (EN)
 
 ```
-🎧 DJ DaX · D7 DJ from Kraków — techno, trance, MC-707, MilkDrop. Free in-browser DJ app + DJ gift voucher 🎁 https://danieldydo-cyber.github.io/d7-dj/ #techno #trance #Krakow
+📲 D7 DJ: APK, desktop, PWA + D7 Visions (77 visuals + MilkDrop) 🌀 PRO from 19 PLN 👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html #D7DJ #DJapp #MilkDrop
 ```
 
-## OLX / Allegro Lokalnie — DJ (PL)
+## OLX / Allegro Lokalnie — aplikacja (PL)
 
 ```
-TYTUŁ: Aplikacje D7 DJ – Android APK, Desktop Mac/Windows/Linux, PWA, PRO
-
-OPIS:
-• D7 DJ ONE PRO (Android APK) – 19 zł
-• D7 Universal Bots PRO (Android APK) – 19 zł
-• D7 DJ Desktop PRO (Mac/Windows/Linux) – 29 zł
-• Pakiet PRO wszystkie aplikacje – 49 zł
-• PWA w przeglądarce – za darmo
-• Voucher prezent na PRO
-Płatność BLIK / przelew.
-Sklep: https://danieldydo-cyber.github.io/d7-dj/sklep.html
+Aplikacja D7 DJ (DJ DaX, Kraków) – Android APK, Desktop Mac/Windows/Linux i darmowa wersja PWA w przeglądarce. W środku: odtwarzacz i miks, radio internetowe, wizualizacje MilkDrop i D7 Visions (77 generatorów), sterowanie Roland MC-707. Wersja PRO od 19 zł. Płatność BLIK lub przelew. Pobierz/kup: https://danieldydo-cyber.github.io/d7-dj/sklep.html · https://danieldydo-cyber.github.io/d7-dj/download.html
 ```
 
 ## OLX / Allegro Lokalnie — voucher (PL)
 
 ```
-TYTUŁ: Aplikacje D7 DJ – Android APK, Desktop Mac/Windows/Linux, PWA, PRO
-
-OPIS:
-• D7 DJ ONE PRO (Android APK) – 19 zł
-• D7 Universal Bots PRO (Android APK) – 19 zł
-• D7 DJ Desktop PRO (Mac/Windows/Linux) – 29 zł
-• Pakiet PRO wszystkie aplikacje – 49 zł
-• PWA w przeglądarce – za darmo
-• Voucher prezent na PRO
-Płatność BLIK / przelew.
-Sklep: https://danieldydo-cyber.github.io/d7-dj/sklep.html
+Voucher PRO D7 DJ na prezent – kod do pełnej wersji aplikacji D7 DJ (APK, Desktop, PWA, D7 Visions, MilkDrop). Od 19 zł, płatność BLIK lub przelew, wysyłka kodu od ręki. Szczegóły: https://danieldydo-cyber.github.io/d7-dj/prezent.html · Sklep: https://danieldydo-cyber.github.io/d7-dj/sklep.html
 ```
 
-## OLX / Allegro Lokalnie — DJ (EN)
+## OLX / Allegro Lokalnie — app (EN)
 
 ```
-TYTUŁ: Aplikacje D7 DJ – Android APK, Desktop Mac/Windows/Linux, PWA, PRO
-
-OPIS:
-• D7 DJ ONE PRO (Android APK) – 19 zł
-• D7 Universal Bots PRO (Android APK) – 19 zł
-• D7 DJ Desktop PRO (Mac/Windows/Linux) – 29 zł
-• Pakiet PRO wszystkie aplikacje – 49 zł
-• PWA w przeglądarce – za darmo
-• Voucher prezent na PRO
-Płatność BLIK / przelew.
-Sklep: https://danieldydo-cyber.github.io/d7-dj/sklep.html
+D7 DJ app (DJ DaX, Kraków) – Android APK, desktop Mac/Windows/Linux and a free in-browser PWA. Includes player and mixing, internet radio, MilkDrop visuals and D7 Visions (77 generators), Roland MC-707 control. PRO from 19 PLN. Pay by BLIK or bank transfer. Get it: https://danieldydo-cyber.github.io/d7-dj/sklep.html · https://danieldydo-cyber.github.io/d7-dj/download.html
 ```
 
 ## WhatsApp status (PL)
 
 ```
-📲 Aplikacje D7 DJ: Android APK, Desktop Mac/Windows/Linux, darmowa PWA. PRO od 19 zł 🎁 voucher PRO na prezent.
-👉 https://danieldydo-cyber.github.io/d7-dj/sklep.html
-#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
+📲 D7 DJ – aplikacje DJ DaX + nowe D7 Visions (77 wizji) 🌀 https://danieldydo-cyber.github.io/d7-dj/sklep.html
 ```
 
 ## WhatsApp status (EN)
 
 ```
-🎧 DJing parties in Kraków! Techno/trance + DJ gift vouchers 🎁 https://danieldydo-cyber.github.io/d7-dj/promo.html
+📲 D7 DJ apps by DJ DaX + new D7 Visions (77 visuals) 🌀 https://danieldydo-cyber.github.io/d7-dj/sklep.html
 ```
 
 ## Hashtagi (PL)
 
 ```
-#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
+#D7DJ #DJDaX #aplikacjaDJ #APK #Android #PWA #MC707 #MilkDrop #wizualizacje #Kraków
 ```
 
 ## Hashtags (EN)
 
 ```
-#D7DJ #DJDaX #aplikacjaDJ #APK #Android #DJsoftware #PWA #MC707 #MilkDrop #Kraków
+#D7DJ #DJDaX #DJapp #APK #Android #PWA #MC707 #MilkDrop #visuals #techno
 ```
