@@ -1,6 +1,6 @@
 # D7 DJ · promo-pack (tylko aplikacje)
 
-Odświeżone 2026-10-28. Oferta: wyłącznie aplikacje D7 DJ (Android APK, Desktop Mac/Windows/Linux, PWA, Universal Bots, D7 Visions, voucher PRO). Sklep: https://danieldydo-cyber.github.io/d7-dj/sklep.html · Pobierz: https://danieldydo-cyber.github.io/d7-dj/download.html · Wizje: https://danieldydo-cyber.github.io/d7-dj/visions.html
+Odświeżone 2026-10-30. Oferta: wyłącznie aplikacje D7 DJ (Android APK, Desktop Mac/Windows/Linux, PWA, Universal Bots, D7 Visions, voucher PRO). Sklep: https://danieldydo-cyber.github.io/d7-dj/sklep.html · Pobierz: https://danieldydo-cyber.github.io/d7-dj/download.html · Wizje: https://danieldydo-cyber.github.io/d7-dj/visions.html · Wizje GL (WebGL): https://danieldydo-cyber.github.io/d7-dj/visions-gl.html · iPhone: https://danieldydo-cyber.github.io/d7-dj/ios.html · Radio + generator techno: https://danieldydo-cyber.github.io/d7-dj/radio-gen.html
 
 ## Facebook (PL)
 
