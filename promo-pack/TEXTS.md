@@ -109,3 +109,13 @@ D7 DJ app (DJ DaX, Kraków) – Android APK, desktop Mac/Windows/Linux and a fre
 ```
 #D7DJ #DJDaX #DJapp #APK #Android #PWA #MC707 #MilkDrop #visuals #techno
 ```
+
+## Nowości 2026-11-11
+
+```
+💳 Płatności D7 DJ w jednym miejscu: BLIK, przelew Nest Bank z kodem QR, WhatsApp 👉 https://danieldydo-cyber.github.io/d7-dj/pay/ · Bot Factory 777 👉 https://danieldydo-cyber.github.io/d7-dj/botfactory.html #D7DJ #DJDaX
+```
+
+```
+💳 D7 DJ payments in one place: BLIK, Nest Bank transfer with QR, WhatsApp 👉 https://danieldydo-cyber.github.io/d7-dj/pay/ · KALI LIVE 👉 https://danieldydo-cyber.github.io/d7-dj/kali-live.html #D7DJ
+```

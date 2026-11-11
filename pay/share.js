@@ -1,7 +1,7 @@
 /* D7 Udostępnij — Web Share API + plain intent links (no auto-posting) */
 (function(){
 function mount(el){
- var path=el.getAttribute('data-d7share')||'/mobile/',url=location.origin+path,txt='D7 DJ · D-BOT Mobile Sync – Daniel Dydo';
+ var path=el.getAttribute('data-d7share')||'/mobile/',url=new URL(path,location.href).href,txt='D7 DJ · D-BOT Mobile Sync – Daniel Dydo';
  var e=encodeURIComponent,u=e(url),t=e(txt);
  el.classList.add('d7share');
  el.innerHTML='<h3>🔗 Udostępnij</h3><div class="row">'+
