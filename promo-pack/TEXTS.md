@@ -119,3 +119,10 @@ D7 DJ app (DJ DaX, Kraków) – Android APK, desktop Mac/Windows/Linux and a fre
 ```
 💳 D7 DJ payments in one place: BLIK, Nest Bank transfer with QR, WhatsApp 👉 https://danieldydo-cyber.github.io/d7-dj/pay/ · KALI LIVE 👉 https://danieldydo-cyber.github.io/d7-dj/kali-live.html #D7DJ
 ```
+
+
+## Nowości 2026-11-17
+- 🏛 D Unit · Super SI — hub wszystkich botów D7 DJ, teraz online: https://danieldydo-cyber.github.io/d7-dj/dunit/
+- 💸 Wesprzyj (BLIK / Nest Bank) prosto ze strony głównej: https://danieldydo-cyber.github.io/d7-dj/pay/
+- 📲 Pobierz D7 DJ na Android / Windows / Mac / iOS: https://danieldydo-cyber.github.io/d7-dj/download.html
+Krótki post: „D7 DJ by DJ DaX — techno ~120 BPM w przeglądarce + hub botów D Unit. Sprawdź: https://danieldydo-cyber.github.io/d7-dj/dunit/ #techno #DJ #Kraków”

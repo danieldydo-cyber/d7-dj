@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b0b0b">
+<title>D Unit · Super SI — hub botów DJ DaX</title>
+<meta name="description" content="D Unit · Super SI: hub wszystkich botów Daniela Dydo (DJ DaX): statusy, shared-brain, szybki start D7 DJ ONE, wizje, radio, Mobile Bridge, Wesprzyj, APK.">
+<!-- seo 2026-11-17 --><link rel="canonical" href="https://danieldydo-cyber.github.io/d7-dj/dunit/"><meta property="og:type" content="website"><meta property="og:title" content="D Unit · Super SI — hub botów DJ DaX"><meta property="og:description" content="Hub wszystkich botów D7 DJ (DJ DaX, Kraków): statusy, D7 DJ ONE, wizje, radio, Wesprzyj."><meta property="og:url" content="https://danieldydo-cyber.github.io/d7-dj/dunit/"><meta property="og:image" content="https://danieldydo-cyber.github.io/d7-dj/og.png"><meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="dunit.css?v=1">
+</head><body>
+<div class="grain"></div>
+<header class="top">
+  <div class="logo"><span class="tag">D</span><span class="tag t2">UNIT</span><span class="sub">SUPER SI</span></div>
+  <div class="vinyl" aria-hidden="true"><i></i></div>
+  <nav><a href="../index.html">D7 DJ</a><a href="../app.html">ONE</a><a href="../visions.html">VISIONS</a><a href="../pay/">WESPRZYJ</a></nav>
+</header>
+<main>
+<section class="boombox">
+  <h1>D UNIT <em>/ SUPER SI</em></h1>
+  <p class="lead">Hub wszystkich botów Daniela&nbsp;(DJ&nbsp;DaX) — jedna ściana, jeden dźwięk. Old-school hip-hop × techno. Tylko prawdziwe statusy: jeśli endpoint odpowiada, widzisz stan na żywo; jeśli nie, wyraźnie oznaczony snapshot.</p>
+  <div class="eq" aria-hidden="true"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
+  <div id="live" class="live" role="status">sprawdzam endpointy…</div>
+</section>
+
+<section>
+  <h2><span>01</span> Najlepsze opcje — launcher</h2>
+  <div class="grid" id="launcher"></div>
+</section>
+
+<section>
+  <h2><span>02</span> Boty <small id="botcount"></small></h2>
+  <div class="legend"><i class="dot on"></i> online (live /api/status) <i class="dot snap"></i> raport w snapshot (hub, <span id="hubdate"></span>) <i class="dot off"></i> brak raportu</div>
+  <div class="bots" id="bots"></div>
+</section>
+
+<section>
+  <h2><span>03</span> Shared brain</h2>
+  <p class="lead sm">Streszczenie wspólnej wiedzy botów (<code>shared-brain/KNOWLEDGE.md</code>) — ostatnie wpisy. Snapshot z <span id="gen"></span>. Reguła: każdy bot po pracy dopisuje wpis (data, bot, pliki, linki).</p>
+  <ul class="brain" id="brain"></ul>
+  <div class="rules">
+    <h3>Zasady stałe</h3>
+    <ul>
+      <li>Tunel Cloudflare prowadzi wyłącznie <code>tunnel-keeper.sh</code> — boty nie startują własnych tuneli ani nie piszą <code>liveUrl</code>.</li>
+      <li>Nie nadpisujemy plików innych botów (np. <code>js/d7-pay.js</code>, <code>js/d7-dock.js</code>) — rozszerzamy nowymi plikami.</li>
+      <li>Darmowe narzędzia; nic nie jest „działa” bez testu.</li>
+    </ul>
+  </div>
+</section>
+</main>
+<footer>D UNIT · SUPER SI · DJ DaX / Daniel Dydo · Kraków · <a href="../index.html">D7 DJ</a> · <a href="../hub/">Hub Bots×Brains</a> · <span id="mode"></span></footer>
+<script src="dunit.js?v=1"></script>
+</body></html>

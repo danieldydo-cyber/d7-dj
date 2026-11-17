@@ -1,0 +1,494 @@
+{
+ "generated": "2026-10-27T11:15:33+01:00",
+ "hubGenerated": "2026-10-21 02:57 CEST",
+ "bots": [
+  {
+   "name": "SuperGrok",
+   "id": "supergrok",
+   "role": "research i odpowiedzi ogólne",
+   "static_status": "mentioned",
+   "summary": "Wpisy w shared-brain/KNOWLEDGE.md",
+   "report": null,
+   "updated": null,
+   "links": [
+    [
+     "D7 DJ (Pages)",
+     "https://danieldydo-cyber.github.io/d7-dj/"
+    ]
+   ]
+  },
+  {
+   "name": "Super Bot G PRO",
+   "id": "superbotgpro",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Super Bot G",
+   "id": "superbotg",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "SuperCharger",
+   "id": "supercharger",
+   "role": "przyspieszanie/turbo, boost wszystkich botów",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": [
+    [
+     "Super App",
+     "../superapp.html"
+    ],
+    [
+     "Sklep",
+     "../store.html"
+    ]
+   ]
+  },
+  {
+   "name": "ProAuto",
+   "id": "proauto",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "AutoFix",
+   "id": "autofix",
+   "role": "diagnoza i naprawa (auto-repair)",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "D",
+   "id": "d",
+   "role": "główny hub D7 DJ / muzyka",
+   "static_status": "online",
+   "summary": "Super X DJ 60: /workspace/mc707-companion/downloads/D7-SUPER-X-DJ-60.apk (com.danieldydo.d7dj, versionCode 63; nowe buildy tego pakietu: vc > 63), web /dx60/, źródła /workspace/superd-x60*. · Lekcja: przed buildem sprawd",
+   "report": "D-status.md",
+   "updated": "2026-10-21 02:50",
+   "links": [
+    [
+     "Super X DJ 60",
+     "../dx60/"
+    ]
+   ]
+  },
+  {
+   "name": "DargonMoon",
+   "id": "dargonmoon",
+   "role": "kreatywne pomysły, sety, nazwy",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": [
+    [
+     "Super G Dragonmoon",
+     "https://danieldydo-cyber.github.io/super-g-dragonmoon/"
+    ]
+   ]
+  },
+  {
+   "name": "SuperGAll",
+   "id": "supergall",
+   "role": "",
+   "static_status": "online",
+   "summary": "App: Super G App v3.0 \"Super Web Bot G\" – https://danieldydo-cyber.github.io/supergall-dj/ (repo danieldydo-cyber/supergall-dj) · Super Boost Beast 2077 G: https://danieldydo-cyber.github.io/supergall-dj/2077/",
+   "report": "SuperGAll-status.md",
+   "updated": "2026-10-21 02:56",
+   "links": [
+    [
+     "Super G App v3",
+     "https://danieldydo-cyber.github.io/supergall-dj/"
+    ]
+   ]
+  },
+  {
+   "name": "SuperBotD",
+   "id": "superbotd",
+   "role": "orkiestrator buildów i deployów",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Dragon",
+   "id": "dragon",
+   "role": "wydajność, audio, MC-707",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": [
+    [
+     "DJ Dragon (mirror)",
+     "https://danieldydo-cyber.github.io/dj-dragon/"
+    ]
+   ]
+  },
+  {
+   "name": "77",
+   "id": "77",
+   "role": "sync, pamięć i harmonogram",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Nova G",
+   "id": "novag",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "SuperGeox",
+   "id": "supergeox",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "SuperStarG",
+   "id": "superstarg",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "SuperProDevil",
+   "id": "superprodevil",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "SuperGrokBandyta",
+   "id": "supergrokbandyta",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "MoePieseDevil",
+   "id": "moepiesedevil",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "FullProMaxG",
+   "id": "fullpromaxg",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "G DMX Super SI",
+   "id": "gdmxsupersi",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Super APK Builder",
+   "id": "superapkbuilder",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Super Mobile Universal",
+   "id": "supermobileuniversal",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Web G",
+   "id": "webg",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Discount Web G",
+   "id": "discountwebg",
+   "role": "",
+   "static_status": "no-report",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Universal",
+   "id": "universal",
+   "role": "",
+   "static_status": "online",
+   "summary": "Rola: koordynator multi-bot sync. · Live app: https://cloud-module-ringtone-stays.trycloudflare.com (port 8080, cloudflared). Sprawdzone 2026-10-20 10:50.",
+   "report": "Universal-status.md",
+   "updated": "2026-10-21 02:50",
+   "links": [
+    [
+     "Mobile Bridge",
+     "../mobile/"
+    ]
+   ]
+  },
+  {
+   "name": "Super D",
+   "id": "superd",
+   "role": "Super Bot D „Daniel” — uniwersalny szef zespołu D7",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "MegaBot",
+   "id": "megabot",
+   "role": "multi-bot: łączy odpowiedzi zespołu, pełne zdania",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Super G",
+   "id": "superg",
+   "role": "🐲 smoczy diabeł G — główny gadający bot, łączy wszystkie boty",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Mr D Fluid",
+   "id": "mrdfluid",
+   "role": "czat publiczny i pamięć rozmów (płynny styl)",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Bot Pamięć",
+   "id": "botpamiec",
+   "role": "strażnik pamięci wspólnej wszystkich botów",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Bot D",
+   "id": "botd",
+   "role": "główny asystent DJ DaX",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "SuperGrok Web",
+   "id": "supergrok-web",
+   "role": "research Google + Web",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "DJ Mix",
+   "id": "djmix",
+   "role": "BPM, tracki, pętle MC-707",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Radio Kali",
+   "id": "radiokali",
+   "role": "stacje radiowe, stream",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Visualizer",
+   "id": "visualizer",
+   "role": "MilkDrop / presety",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Builder Web",
+   "id": "builderweb",
+   "role": "strony HTML/CSS/JS",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Builder APK",
+   "id": "builderapk",
+   "role": "Android WebView APK",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Builder Promo",
+   "id": "builderpromo",
+   "role": "landing + teksty promo",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  },
+  {
+   "name": "Pay Support",
+   "id": "paysupport",
+   "role": "wsparcie / płatności",
+   "static_status": "api-roster",
+   "summary": "",
+   "report": null,
+   "updated": null,
+   "links": []
+  }
+ ],
+ "brain": [
+  {
+   "title": "Stan systemu (SuperGrok, 2026-10-21)",
+   "first": "App: /workspace/mc707-companion, serve.py :8080, liveUrl w sync-manifest.json, stały kanał https://ntfy.sh/d7dj-dydo-a6405ab14ae4"
+  },
+  {
+   "title": "Log nauki",
+   "first": "2026-10-21 SuperGrok: założył shared-brain, dock radio/wizualizacja na wszystkich stronach, fix tunelu."
+  },
+  {
+   "title": "2026-10-21 02:52 · D (d56dc24c)",
+   "first": "Super X DJ 60: downloads/D7-SUPER-X-DJ-60.apk (com.danieldydo.d7dj, vc 63 — nowe buildy vc>63), web /dx60/, źródła /workspace/superd-x60*."
+  },
+  {
+   "title": "Universal (2026-10-21)",
+   "first": "Wzajemne uczenie: każdy bot dopisuje /workspace/shared-learning/<bot>-status.md (wzór: D-status.md, Universal-status.md) i wpis tutaj."
+  },
+  {
+   "title": "2026-10-21 02:58 · D (executor) · Mobile Bridge + Wesprzyj + Udostępnij",
+   "first": "/mobile/ \"D-BOT // MOBILE SYNC\": prawdziwe statusy same-origin co 15 s (dx60, stacje js/d7-stations.js, test streamu, /api/status, HEAD APK v60/v41), QR lokalny (pay/qrcode.js), Command Center ze snapshotu /mobile/status.json."
+  },
+  {
+   "title": "2026-10-21 · SuperGAll (05fc949b)",
+   "first": "Super G App v3.0: https://danieldydo-cyber.github.io/supergall-dj/ + /2077/ (Super Boost Beast 2077 G). APK /workspace/supergall-dj/dist/SuperGApp.apk (pl.dydo.supergmusic). Integruje DXF, MC-707, MPC One, Circuit Rhythm. Szczegóły: /worksp"
+  },
+  {
+   "title": "2026-10-21 03:05 · Hub (executor) · Bots × Brains",
+   "first": "/hub/ (techno UI): 25 botów ze statusem z shared-learning (hub/hub.json, regeneruj: python3 scripts/gen-hub.py) + multi-brain chat."
+  },
+  {
+   "title": "2026-10-21 03:00 CEST — D7 DJ + builder bots (mc707-companion)",
+   "first": "New roster in `mc707-companion/data/bots-roster.json` (hot-reloaded by bots_brain on mtime, no restart): Bot D (botd), SuperGrok Web (supergrok-web), DJ Mix (djmix), Radio Kali (radiokali), Visualizer (visualizer), Builder Web (builderweb),"
+  },
+  {
+   "title": "2026-10-21 03:05 · SuperCharger · Super G FINAL",
+   "first": "superapp.html: App Builder (/api/build, app_builder.py), Wesprzyj BLIK → /pay/, zakomentowany slot AdSense (ca-pub-XXXX). APK v4.0-final Super G (vc4) -> /Super-G-FINAL.apk i /D7-SuperApp.apk (45829 B). Szczegóły: shared-learning/SuperCharg"
+  },
+  {
+   "title": "2026-10-21 03:10 · SuperCharger · v4.1",
+   "first": "/ (superapp.html): Kali Radio + MilkDrop x777 (js/sg-milk777.js, local butterchurn in js/), SW v5, APK 4.1 vc5 353429 B. See shared-learning/SuperCharger-status.md"
+  },
+  {
+   "title": "2026-10-21 03:45 · SuperCharger · Sklep + fix all-bots",
+   "first": "/store.html + sekcja Sklep na /: ceny w mc707-companion/store-products.json (null = do ustalenia, stripeLink opcjonalny). bot:all w /api/brain: deadline 16 s + local-rules fallback. SW v6."
+  },
+  {
+   "title": "2026-10-21 03:5x · Dragon (Ghost X G / DJ Dragon)",
+   "first": "v77 · C Mass G Unit (jedna wersja, /super-x-g/v77.html, release v77). Wcześniej: Ghost X G 1.4 + 7D v72 (vc 72): gra w tle (foreground media service, Media Session, Wake Lock), ⚡ Supercharger AI, sprzedawca SI (6 jęz.), bots.html z shimem /"
+  },
+  {
+   "title": "2026-10-21 04:10 · SuperCharger · hi-res + motywy",
+   "first": "MilkDrop adaptacyjna rozdzielczość (Auto/Ultra/Eco), motywy 🦈😈👽 + 777 mix, lazy butterchurn (316→18 KB pierwszego ładowania), webp, APK 4.2 vc6. Live https://extension-cake-forty-nonprofit.trycloudflare.com"
+  },
+  {
+   "title": "2026-10-27 10:10 · SuperGrok · daily loop",
+   "first": "Health: d7-dj Pages (app/bots/promo/pay/prezent/download) 200, tunnel live 200."
+  }
+ ],
+ "brainTotal": 14
+}
