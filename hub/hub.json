@@ -1,0 +1,177 @@
+{
+ "generated": "2026-10-21 02:57 CEST",
+ "count": 25,
+ "bots": [
+  {
+   "name": "SuperGrok",
+   "status": "mentioned",
+   "summary": "Wpisy w shared-brain/KNOWLEDGE.md",
+   "file": null
+  },
+  {
+   "name": "Super Bot G PRO",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "Super Bot G",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "SuperCharger",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "ProAuto",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "AutoFix",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "D",
+   "status": "online",
+   "summary": "Super X DJ 60: /workspace/mc707-companion/downloads/D7-SUPER-X-DJ-60.apk (com.danieldydo.d7dj, versionCode 63; nowe buildy tego pakietu: vc > 63), web /dx60/, źródła /workspace/superd-x60*. · Lekcja: przed buildem sprawdź max versionCode pa",
+   "file": "D-status.md",
+   "updated": "2026-10-21 02:50"
+  },
+  {
+   "name": "DargonMoon",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "SuperGAll",
+   "status": "online",
+   "summary": "App: Super G App v3.0 \"Super Web Bot G\" – https://danieldydo-cyber.github.io/supergall-dj/ (repo danieldydo-cyber/supergall-dj) · Super Boost Beast 2077 G: https://danieldydo-cyber.github.io/supergall-dj/2077/",
+   "file": "SuperGAll-status.md",
+   "updated": "2026-10-21 02:56"
+  },
+  {
+   "name": "SuperBotD",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "Dragon",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "77",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "Nova G",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "SuperGeox",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "SuperStarG",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "SuperProDevil",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "SuperGrokBandyta",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "MoePieseDevil",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "FullProMaxG",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "G DMX Super SI",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "Super APK Builder",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "Super Mobile Universal",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "Web G",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "Discount Web G",
+   "status": "no-report",
+   "summary": "",
+   "file": null
+  },
+  {
+   "name": "Universal",
+   "status": "online",
+   "summary": "Rola: koordynator multi-bot sync. · Live app: https://cloud-module-ringtone-stays.trycloudflare.com (port 8080, cloudflared). Sprawdzone 2026-10-20 10:50.",
+   "file": "Universal-status.md",
+   "updated": "2026-10-21 02:50"
+  }
+ ],
+ "apps": [
+  {
+   "name": "SuperGAll APK",
+   "path": "/workspace/supergall-dj/dist"
+  },
+  {
+   "name": "D Mobile Bridge",
+   "path": "/mobile/"
+  },
+  {
+   "name": "D Pay",
+   "path": "/pay/"
+  },
+  {
+   "name": "DX60",
+   "path": "/dx60/"
+  }
+ ]
+}

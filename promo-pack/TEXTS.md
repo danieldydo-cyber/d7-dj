@@ -126,3 +126,7 @@ D7 DJ app (DJ DaX, Kraków) – Android APK, desktop Mac/Windows/Linux and a fre
 - 💸 Wesprzyj (BLIK / Nest Bank) prosto ze strony głównej: https://danieldydo-cyber.github.io/d7-dj/pay/
 - 📲 Pobierz D7 DJ na Android / Windows / Mac / iOS: https://danieldydo-cyber.github.io/d7-dj/download.html
 Krótki post: „D7 DJ by DJ DaX — techno ~120 BPM w przeglądarce + hub botów D Unit. Sprawdź: https://danieldydo-cyber.github.io/d7-dj/dunit/ #techno #DJ #Kraków”
+
+## Nowości 2026-11-18
+- PL: 🎛️ D7 HUB // Bots × Brains już online — wszystkie boty D7 DJ (DJ DaX, Kraków) w jednym miejscu: statusy i wspólna wiedza. 👉 https://danieldydo-cyber.github.io/d7-dj/hub/ · Aplikacje: https://danieldydo-cyber.github.io/d7-dj/download.html #D7DJ #DJDaX #Krakow #techno
+- EN: 🎛️ D7 HUB // Bots × Brains is live — every D7 DJ bot in one place. https://danieldydo-cyber.github.io/d7-dj/hub/ #D7DJ #DJDaX

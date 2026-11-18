@@ -1,0 +1,27 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>D7 HUB // BOTS × BRAINS — boty DJ DaX</title>
+<meta name="description" content="D7 HUB Bots × Brains: wszystkie boty D7 DJ (DJ DaX, Kraków) w jednym miejscu — statusy, podsumowania, wspólny shared-brain. Aplikacje D7 DJ ONE na Android, iOS, Mac, Windows.">
+<!-- seo 2026-11-18 --><link rel="canonical" href="https://danieldydo-cyber.github.io/d7-dj/hub/"><meta property="og:type" content="website"><meta property="og:title" content="D7 HUB // Bots × Brains — DJ DaX"><meta property="og:description" content="Statusy i wiedza wszystkich botów D7 DJ (DJ DaX, Kraków)."><meta property="og:url" content="https://danieldydo-cyber.github.io/d7-dj/hub/"><meta property="og:image" content="https://danieldydo-cyber.github.io/d7-dj/og.png"><meta name="twitter:card" content="summary_large_image"><style>
+:root{--c:#00f0ff;--m:#ff00c8;--g:#39ff14;--bg:#05060a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg) repeating-linear-gradient(0deg,#0000 0 3px,#00f0ff08 3px 4px);color:#cfe;font:14px/1.4 ui-monospace,Consolas,monospace}
+header{padding:18px;border-bottom:1px solid var(--c);box-shadow:0 0 18px #00f0ff55}h1{margin:0;font-size:22px;letter-spacing:4px;color:var(--c);text-shadow:0 0 8px var(--c),0 0 20px var(--m)}
+a{color:var(--m)}main{padding:14px;display:grid;gap:16px}section{border:1px solid #00f0ff44;background:#0a0f18cc;padding:12px;border-radius:6px}
+h2{margin:0 0 10px;font-size:14px;letter-spacing:3px;color:var(--m)}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.bot{border:1px solid #223;padding:8px;border-radius:4px}.bot b{color:#fff}.st{font-size:11px;text-transform:uppercase}.online{color:var(--g)}.mentioned{color:#fc0}.no-report{color:#678}
+.sum{font-size:11px;color:#8ab;margin-top:4px;max-height:4.2em;overflow:hidden}.tag{display:inline-block;padding:2px 8px;margin:2px;border-radius:10px;font-size:12px;border:1px solid}
+.on{color:var(--g);border-color:var(--g)}.off{color:#f55;border-color:#f55}textarea{width:100%;background:#000;color:var(--c);border:1px solid var(--c);padding:8px;font:inherit}
+button{background:var(--m);color:#000;border:0;padding:8px 18px;font-weight:bold;letter-spacing:2px;cursor:pointer;margin-top:6px}
+.ans{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px;margin-top:10px}.ans div{border:1px solid #00f0ff55;padding:8px;white-space:pre-wrap}.ans h3{margin:0 0 6px;font-size:12px;color:var(--c)}
+</style></head><body><header><h1>D7 HUB // BOTS × BRAINS</h1><small><a href="/">← main app</a> · <span id="gen"></span></small></header><main>
+<section><h2>⚡ BRAINS</h2><div id="brains">…</div></section>
+<section><h2>🧠 MULTI-BRAIN CHAT</h2><textarea id="q" rows="3" placeholder="Zapytaj wszystkie mózgi naraz…"></textarea><button id="go">SEND ▶</button><div class="ans" id="ans"></div></section>
+<section><h2>🤖 BOTS <span id="cnt"></span></h2><div class="grid" id="bots"></div></section></main>
+<script>
+const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+fetch('hub.json?'+Date.now()).then(r=>r.json()).then(h=>{$('#gen').textContent='hub.json '+h.generated;$('#cnt').textContent='('+h.count+')';
+$('#bots').innerHTML=h.bots.map(b=>`<div class="bot"><b>${esc(b.name)}</b><div class="st ${b.status}">● ${b.status}${b.updated?' · '+b.updated:''}</div><div class="sum">${esc(b.summary)}</div></div>`).join('')});
+fetch('/api/brains').then(r=>{if(!r.ok)throw 0;return r.json()}).then(s=>{$('#brains').innerHTML='<div>Connected:</div>'+s.connected.map(n=>`<span class="tag on">✔ ${esc(n)}</span>`).join('')+'<div style="margin-top:6px">Missing (no server-side key):</div>'+s.missing.map(n=>`<span class="tag off">✖ ${esc(n)}</span>`).join('')}).catch(()=>{$('#brains').innerHTML='<div>Brains API działa na żywym serwerze D7 (tunel). Tu: statyczny snapshot hub.json. <a href="../download.html">Pobierz D7 DJ ONE</a> · <a href="../dunit/">D Unit</a> · <a href="../index.html">D7 DJ</a></div>'});
+$('#go').onclick=async()=>{const q=$('#q').value.trim();if(!q)return;$('#ans').innerHTML='<div>⏳ querying brains…</div>';
+try{const r=await(await fetch('/api/brains',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({q})})).json();
+$('#ans').innerHTML=r.answers.map(a=>`<div><h3>${a.ok?'✔':'✖'} ${esc(a.name)}</h3>${esc(a.answer)}</div>`).join('')}catch(e){$('#ans').innerHTML='<div>API error</div>'}};
+</script></body></html>
