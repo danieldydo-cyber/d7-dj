@@ -1,0 +1,40 @@
+/* D7 MK3 Pads — techno UI */
+.mk3{--bg:#05060c;--fg:#e8f6ff;--c:#ff2bd6;color:var(--fg);font:13px/1.35 system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 20% 0,#1a0730,transparent 60%),var(--bg);padding:10px;border:1px solid #222a;border-radius:14px}
+.mk3 *{box-sizing:border-box}
+.mk3-top{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
+.mk3-logo{font:900 18px/1 'Arial Black',system-ui;letter-spacing:1px;margin-right:8px;text-transform:uppercase}
+.mk3-logo b{color:#ff2bd6;text-shadow:0 0 10px #ff2bd6}.mk3-logo small{display:block;font:600 10px system-ui;color:#8af;letter-spacing:2px}
+.mk3-b{background:#11131f;color:#e8f6ff;border:1px solid #2c3350;border-radius:8px;padding:6px 10px;font:700 12px system-ui;cursor:pointer;text-transform:uppercase}
+.mk3-b:hover{border-color:#00f0ff}.mk3-b.on{background:#00f0ff;color:#000;box-shadow:0 0 12px #00f0ff}
+.mk3-play.on{background:#39ff14;box-shadow:0 0 14px #39ff14}.mk3-rec.on{background:#ff2244;color:#fff;box-shadow:0 0 14px #ff2244}
+.mk3-l{display:inline-flex;gap:4px;align-items:center;font:700 11px system-ui;color:#9ab;text-transform:uppercase}
+.mk3-l input[type=number]{width:62px;background:#0b0d16;color:#fff;border:1px solid #2c3350;border-radius:6px;padding:4px;font:700 14px monospace}
+.mk3 select,.mk3-sel{background:#0b0d16;color:#fff;border:1px solid #2c3350;border-radius:6px;padding:4px}
+.mk3 input[type=range]{accent-color:#ff2bd6;width:90px}
+.mk3-pos{font:700 12px monospace;color:#39ff14;margin-left:auto}.mk3-src{font:11px monospace;color:#8af}
+.mk3-banks{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin-bottom:8px}
+.mk3-bank{background:#0d0f1a;color:#fff;border:2px solid #222;border-radius:8px;padding:5px 0;font:900 16px system-ui;cursor:pointer}
+.mk3-bank small{display:block;font:600 9px system-ui;color:#9ab;text-transform:uppercase}
+.mk3-bank.used{border-color:color-mix(in srgb,var(--c) 45%,#222)}.mk3-bank.on{background:var(--c);color:#000;box-shadow:0 0 14px var(--c)}.mk3-bank.on small{color:#000}
+.mk3-main{display:grid;grid-template-columns:minmax(260px,400px) minmax(0,1fr);gap:12px}.mk3-left,.mk3-right{min-width:0}
+@media(max-width:860px){.mk3-main{grid-template-columns:minmax(0,1fr)}}
+.mk3-pads{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;touch-action:none;user-select:none;-webkit-user-select:none}
+.mk3-pad{position:relative;aspect-ratio:1;border-radius:10px;background:linear-gradient(160deg,#1b1e2e,#0b0c14);border:2px solid #2a2f45;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;padding:6px;transition:background .08s,box-shadow .08s;overflow:hidden}
+.mk3-pad i{position:absolute;top:5px;left:7px;font:900 11px monospace;color:var(--c);font-style:normal}
+.mk3-pad kbd{position:absolute;top:5px;right:7px;font:700 10px monospace;color:#667}
+.mk3-pad span{font:700 11px system-ui;color:#cde;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mk3-pad.sel{border-color:var(--c)}.mk3-pad.smp span{color:#ffcc00}
+.mk3-pad.hit{background:var(--c);box-shadow:0 0 calc(30px * var(--v,1)) var(--c);opacity:calc(.5 + var(--v,1) * .5)}.mk3-pad.hit span,.mk3-pad.hit i{color:#000}
+.mk3-fx{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.mk3-fx label{display:flex;flex-direction:column;font:700 10px system-ui;color:#9ab}
+#mk3-scope{width:100%;border-radius:8px;border:1px solid #222;display:block}
+.mk3-tools{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin:4px 0 8px}
+.mk3-file{position:relative;overflow:hidden}.mk3-file input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.mk3-grid{overflow-x:auto;border:1px solid #1d2135;border-radius:8px;padding:4px;background:#070810}
+.mk3-row{display:grid;grid-template-columns:110px repeat(var(--n,16),minmax(14px,1fr));gap:2px;margin:1px 0;min-width:calc(110px + var(--n,16) * 16px)}
+.mk3-row.sel .mk3-rn{color:var(--c)}
+.mk3-rn{font:600 10px monospace;color:#8899aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;align-self:center}
+.mk3-cell{height:16px;border-radius:3px;background:#151827;cursor:pointer;display:block}.mk3-cell.q{background:#1f2338}
+.mk3-cell.on{background:var(--c)}.mk3-cell.now{outline:2px solid #39ff14;outline-offset:-1px}
+.mk3-midi-box{background:#0b0d16;border:1px solid #2c3350;border-radius:8px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.mk3-hint{font:11px system-ui;color:#8a9ab0;margin-top:6px;width:100%}
+#mk3-smpinfo{width:auto;color:#ffcc00}
