@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26 00:33 CET",
+ "generated": "2026-11-26 00:50 CET",
  "apps": [
   {
    "file": "agents.html",
@@ -435,6 +435,11 @@
    "name": "D7-Universal-Bots.apk",
    "url": "https://danieldydo-cyber.github.io/d7-dj/downloads/D7-Universal-Bots.apk",
    "mb": 4.3
+  },
+  {
+   "name": "D7S-1.0.0.apk",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/downloads/D7S-1.0.0.apk",
+   "mb": 0.2
   },
   {
    "name": "Super-G-DJ-HIPHOP-X-v71.apk",
