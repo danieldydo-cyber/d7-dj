@@ -1,0 +1,460 @@
+{
+ "generated": "2026-11-26 00:32 CET",
+ "apps": [
+  {
+   "file": "agents.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/agents.html",
+   "title": "🧠 Hub 8888 agentów SI · v77",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "app-gen.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/app-gen.html",
+   "title": "🧩 Generator aplikacji · v77",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "app.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/app.html",
+   "title": "D7 DJ ONE · aplikacja DJ online · DJ DaX Kraków",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "autofix.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/autofix.html",
+   "title": "🛠 Super Core Auto-Fix · v77",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "botfactory.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/botfactory.html",
+   "title": "Fabryka 777 botów · wirtualne persony AI · D7 DJ",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "bots.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/bots.html",
+   "title": "D7 Universal Bots · boty AI DJ DaX · D7 DJ",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "classic.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/classic.html",
+   "title": "7D · D7 DJ · Classic · Daniel Dydo · Kraków",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "d.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/d.html",
+   "title": "D7 DJ · Bot D (czat)",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "dd-dj-7777777.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/dd-dj-7777777.html",
+   "title": "DD DJ 7777777 · Trance · PSY PRO FINAL",
+   "cat": "Studio i generatory",
+   "http": 200
+  },
+  {
+   "file": "dj.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/dj.html",
+   "title": "7D · 🎛 Super DJ Bot",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "dj777si.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/dj777si.html",
+   "title": "7D · DJ 777 SI 🧠",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "download.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/download.html",
+   "title": "Pobierz D7 DJ · Android · iPhone · Mac · Windows · DJ DaX",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "dragon71b.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/dragon71b.html",
+   "title": "DJ Dragon 🐲 v71b – 7D v71 + Ghost X G + Sklep",
+   "cat": "Pobierz / APK",
+   "http": 200
+  },
+  {
+   "file": "g-dj-super-pro.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/g-dj-super-pro.html",
+   "title": "7D · G DJ Super Pro",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "g-pro.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/g-pro.html",
+   "title": "7D · Super Bot G Pro · DJ · Daniel Dydo · Kraków",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "g.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/g.html",
+   "title": "7D · 😈 Super Bot G",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "ghostxg.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/ghostxg.html",
+   "title": "C Mass G Unit 🐲 v77 – pobierz (Ghost X G + 7D + DJ Dragon)",
+   "cat": "Pobierz / APK",
+   "http": 200
+  },
+  {
+   "file": "gpro.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/gpro.html",
+   "title": "7D · 😈 Super Bot G Pro",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "hiphopx.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/hiphopx.html",
+   "title": "7D",
+   "cat": "Studio i generatory",
+   "http": 200
+  },
+  {
+   "file": "index.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/",
+   "title": "D7 DJ · DJ DaX Kraków — aplikacja DJ, techno & trance, MilkDrop",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "ios.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/ios.html",
+   "title": "📱 iPhone · 7D",
+   "cat": "Pobierz / APK",
+   "http": 200
+  },
+  {
+   "file": "kali-live-classic.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/kali-live-classic.html",
+   "title": "7D · KALI LIVE · MilkDrop 1080p",
+   "cat": "Wizualizacje",
+   "http": 200
+  },
+  {
+   "file": "kali-live-tile.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/kali-live-tile.html",
+   "title": "7D · KALI LIVE · PRO8 Fluid",
+   "cat": "Wizualizacje",
+   "http": 200
+  },
+  {
+   "file": "kali-live.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/kali-live.html",
+   "title": "KALI LIVE · D7 DJ · PRO8 Fluid",
+   "cat": "Wizualizacje",
+   "http": 200
+  },
+  {
+   "file": "kali.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/kali.html",
+   "title": "7D · KALI RADIO · Butterchurn",
+   "cat": "Wizualizacje",
+   "http": 200
+  },
+  {
+   "file": "mega-show.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/mega-show.html",
+   "title": "D7 Mega Show 777 · Nova technology · wizualizacje muzyki · DJ DaX",
+   "cat": "Wizualizacje",
+   "http": 200
+  },
+  {
+   "file": "mixviz.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/mixviz.html",
+   "title": "🌀 Mix Visuals 778 · C Mass G Unit v77",
+   "cat": "Wizualizacje",
+   "http": 200
+  },
+  {
+   "file": "mk3.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/mk3.html",
+   "title": "D7 MK3 Pads · Maschine / MPC style · D7 DJ · DJ DaX",
+   "cat": "Studio i generatory",
+   "http": 200
+  },
+  {
+   "file": "music-gen.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/music-gen.html",
+   "title": "🎹 Generator muzyki · v77",
+   "cat": "Studio i generatory",
+   "http": 200
+  },
+  {
+   "file": "pay.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/pay.html",
+   "title": "Wsparcie DJ DaX · D7 DJ · BLIK / przelew",
+   "cat": "Sklep i wsparcie",
+   "http": 200
+  },
+  {
+   "file": "prezent.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/prezent.html",
+   "title": "Prezent DJ · voucher DJ DaX Kraków · D7 DJ",
+   "cat": "Sklep i wsparcie",
+   "http": 200
+  },
+  {
+   "file": "pro-dj-classic.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/pro-dj-classic.html",
+   "title": "7D · PRO DJ · Virtual · MilkDrop 1080p · Daniel Dydo",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "pro-dj-tile.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/pro-dj-tile.html",
+   "title": "7D · PRO DJ · PRO8 Fluid",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "pro-dj.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/pro-dj.html",
+   "title": "PRO DJ · D7 DJ · PRO8 Fluid",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "pro8-tile.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/pro8-tile.html",
+   "title": "7D · D7 DJ · PRO8 Fluid · Daniel Dydo · Kraków",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "promo.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/promo.html",
+   "title": "DJ DaX · D7 DJ — techno z Krakowa | aplikacje DJ",
+   "cat": "Sklep i wsparcie",
+   "http": 200
+  },
+  {
+   "file": "public-chat.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/public-chat.html",
+   "title": "D7 DJ · Bot D – czat publiczny",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "radio-gen.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/radio-gen.html",
+   "title": "7D · D7 Radio + Techno Generator",
+   "cat": "Studio i generatory",
+   "http": 200
+  },
+  {
+   "file": "remixlive.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/remixlive.html",
+   "title": "🎛 Remixlive · 7D",
+   "cat": "Studio i generatory",
+   "http": 200
+  },
+  {
+   "file": "shop.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/shop.html",
+   "title": "Ghost X G 🐲 Shop – AI DJ offline · Ghost Open SI · Maxi Ghost SI · DJ DaX Kraków",
+   "cat": "Sklep i wsparcie",
+   "http": 200
+  },
+  {
+   "file": "sklep.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/sklep.html",
+   "title": "Sklep D7 DJ · aplikacje DJ DaX · APK, Desktop, PWA, PRO",
+   "cat": "Sklep i wsparcie",
+   "http": 200
+  },
+  {
+   "file": "store.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/store.html",
+   "title": "D7 Sklep / Store · DJ DaX",
+   "cat": "Sklep i wsparcie",
+   "http": 200
+  },
+  {
+   "file": "super.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/super.html",
+   "title": "7D SUPER",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "superapp.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/superapp.html",
+   "title": "7D · Super G 🐲",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "superbotg.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/superbotg.html",
+   "title": "7D · Super Bot D PRO",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "suto.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/suto.html",
+   "title": "Suto · D7 DJ zadania",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "udostepnij.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/udostepnij.html",
+   "title": "Udostępnij D7 DJ · gotowe teksty reklamowe aplikacji DJ DaX",
+   "cat": "Sklep i wsparcie",
+   "http": 200
+  },
+  {
+   "file": "v51.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/v51.html",
+   "title": "7D · D7 DJ · X7S v51 · Daniel Dydo · Kraków",
+   "cat": "Pobierz / APK",
+   "http": 200
+  },
+  {
+   "file": "v77.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/v77.html",
+   "title": "C Mass G Unit 🐲 v77 – Ghost X G + 7D + DJ Dragon",
+   "cat": "Pobierz / APK",
+   "http": 200
+  },
+  {
+   "file": "visions-gl.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/visions-gl.html",
+   "title": "D7 Visions GL · 77 generatorów wizji (WebGL) + MilkDrop · DJ DaX",
+   "cat": "Wizualizacje",
+   "http": 200
+  },
+  {
+   "file": "visions.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/visions.html",
+   "title": "D7 Visions · 77 generatorów wizji + MilkDrop · DJ DaX",
+   "cat": "Wizualizacje",
+   "http": 200
+  },
+  {
+   "file": "wedj.html",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/wedj.html",
+   "title": "🎚 WeDJ PRO · 7D",
+   "cat": "Studio i generatory",
+   "http": 200
+  },
+  {
+   "file": "supersi/",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/supersi/",
+   "title": "D7 Super SI · hub botów, aplikacji i 7 silników muzyki · DJ DaX",
+   "cat": "Boty i SI",
+   "http": 404
+  },
+  {
+   "file": "hub/",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/hub/",
+   "title": "D7 HUB // BOTS × BRAINS — boty DJ DaX",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "dunit/",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/dunit/",
+   "title": "D Unit · Super SI — hub botów DJ DaX",
+   "cat": "Boty i SI",
+   "http": 200
+  },
+  {
+   "file": "pay/",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/pay/",
+   "title": "Wesprzyj / Płatności · D7 DJ",
+   "cat": "Sklep i wsparcie",
+   "http": 200
+  },
+  {
+   "file": "promo-pack/",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/promo-pack/",
+   "title": "Promo pack · DJ DaX · D7 DJ Kraków",
+   "cat": "Sklep i wsparcie",
+   "http": 200
+  },
+  {
+   "file": "gx/",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/gx/",
+   "title": "C Mass G Unit v77 · Ghost X G 🐲",
+   "cat": "Aplikacje DJ",
+   "http": 200
+  },
+  {
+   "file": "visions/",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/visions/",
+   "title": "D7 Visions · 77 generatorów wizji + MilkDrop · DJ DaX",
+   "cat": "Wizualizacje",
+   "http": 200
+  }
+ ],
+ "apks": [
+  {
+   "name": "7D-v71.apk",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/downloads/7D-v71.apk",
+   "mb": 37.5
+  },
+  {
+   "name": "D7-DJ-ONE.apk",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/downloads/D7-DJ-ONE.apk",
+   "mb": 0.4
+  },
+  {
+   "name": "D7-DJ-latest.apk",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/downloads/D7-DJ-latest.apk",
+   "mb": 0.4
+  },
+  {
+   "name": "D7-Universal-Bots.apk",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/downloads/D7-Universal-Bots.apk",
+   "mb": 4.3
+  },
+  {
+   "name": "Super-G-DJ-HIPHOP-X-v71.apk",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/downloads/Super-G-DJ-HIPHOP-X-v71.apk",
+   "mb": 37.5
+  },
+  {
+   "name": "Super-G-DJ-HIPHOP-X.apk",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/downloads/Super-G-DJ-HIPHOP-X.apk",
+   "mb": 37.5
+  },
+  {
+   "name": "D7-SuperApp.apk",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/D7-SuperApp.apk",
+   "mb": 0.1
+  },
+  {
+   "name": "D7DJ.apk",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/D7DJ.apk",
+   "mb": 30.2
+  }
+ ]
+}

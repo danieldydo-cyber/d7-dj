@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>D7 Super SI · hub botów, aplikacji i 7 silników muzyki · DJ DaX</title>
+<meta name="description" content="D7 Super SI – autonomiczny hub DJ DaX: wszystkie boty i aplikacje D7 w jednym miejscu, czat Bot D, 7 silników muzyki w przeglądarce (synth, beat, loop, bass, FX, generator utworów, wizualizacje + nagrywanie), sync z Google Drive.">
+<link rel="canonical" href="https://danieldydo-cyber.github.io/d7-dj/supersi/">
+<meta property="og:title" content="D7 Super SI · DJ DaX">
+<meta property="og:description" content="Wszystkie boty i aplikacje D7 + 7 silników muzyki online.">
+<meta property="og:image" content="https://danieldydo-cyber.github.io/d7-dj/og.png">
+<meta property="og:url" content="https://danieldydo-cyber.github.io/d7-dj/supersi/">
+<meta name="theme-color" content="#05060a">
+<link rel="icon" href="../favicon.png">
+<link rel="stylesheet" href="supersi.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"D7 Super SI","url":"https://danieldydo-cyber.github.io/d7-dj/supersi/","applicationCategory":"MultimediaApplication","operatingSystem":"Web","inLanguage":"pl","author":{"@type":"Person","name":"Daniel Dydo (DJ DaX)"}}</script>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo">D7</span><div><h1>SUPER SI</h1><small>hub · boty · apki · 7 silników · DJ DaX Kraków</small></div></div>
+  <nav>
+    <a href="#engines">🎛 7 silników</a><a href="#apps">📱 Apki</a><a href="#drive">🗂 Drive</a><a href="#chat">💬 Bot D</a><a href="#wsparcie">💚 Wsparcie</a>
+  </nav>
+</header>
+
+<section class="status" id="status">
+  <div class="pill" id="st-pages">Pages: …</div>
+  <div class="pill" id="st-live">Live: …</div>
+  <div class="pill" id="st-bots">Boty: …</div>
+  <div class="pill" id="st-time">Odświeżenie: …</div>
+  <button id="st-refresh" class="btn sm">↻</button>
+</section>
+
+<section id="engines" class="panel">
+  <div class="phead"><h2>🎛 7 silników · Super SI Engine</h2>
+    <div class="transport">
+      <button id="e-play" class="btn big">▶ START</button>
+      <label>BPM <input id="e-bpm" type="number" min="60" max="190" value="128"></label>
+      <select id="e-style">
+        <option value="techno">Techno</option><option value="hardtechno">Hard Techno</option><option value="house">House</option>
+        <option value="hiphop">Hip-Hop boom bap</option><option value="trap">Trap / Hood</option><option value="trance">Trance</option>
+        <option value="dnb">Drum&amp;Bass</option><option value="shuffle">Shuffle 90s</option>
+      </select>
+      <button id="e-random" class="btn">🎲 Losuj</button>
+      <button id="e-rec" class="btn rec">⏺ Nagraj</button>
+    </div>
+  </div>
+  <div class="tabs" id="e-tabs">
+    <button data-t="1" class="on">1 · Beat</button><button data-t="2">2 · Bass</button><button data-t="3">3 · Synth</button>
+    <button data-t="4">4 · Loopy</button><button data-t="5">5 · FX</button><button data-t="6">6 · Generator utworu</button><button data-t="7">7 · Wizje</button>
+  </div>
+  <div class="tab on" data-t="1"><p class="hint">Sekwencer 16 kroków w stylu klasycznych automatów perkusyjnych. Kliknij kratki, żeby włączyć lub wyłączyć uderzenie.</p><div id="grid" class="grid"></div>
+    <div class="row"><label>Swing <input id="e-swing" type="range" min="0" max="40" value="0"></label><button class="btn sm" id="e-clear">Wyczyść</button></div></div>
+  <div class="tab" data-t="2"><p class="hint">Bas typu acid / sub. Linia generuje się do stylu, a suwaki zmieniają brzmienie na żywo.</p>
+    <div class="row"><label>Cutoff <input id="b-cut" type="range" min="100" max="5000" value="900"></label><label>Rezonans <input id="b-res" type="range" min="0" max="25" value="8"></label>
+    <label>Głośność <input id="b-vol" type="range" min="0" max="100" value="70"></label><label>Fala <select id="b-wave"><option>sawtooth</option><option>square</option><option>sine</option></select></label>
+    <button class="btn" id="b-new">🎲 Nowa linia</button><button class="btn sm tog on" id="b-on">ON</button></div><div id="b-line" class="line"></div></div>
+  <div class="tab" data-t="3"><p class="hint">Polifoniczny synth. Graj padami albo klawiaturą (A S D F G H J K). Akordy wpadają w tonację utworu.</p>
+    <div class="row"><label>Atak <input id="s-att" type="range" min="1" max="100" value="5"></label><label>Release <input id="s-rel" type="range" min="5" max="300" value="60"></label>
+    <label>Detune <input id="s-det" type="range" min="0" max="50" value="12"></label><label>Fala <select id="s-wave"><option>sawtooth</option><option>square</option><option>triangle</option><option>sine</option></select></label>
+    <button class="btn sm tog" id="s-chords">Akordy OFF</button></div><div id="keys" class="keys"></div></div>
+  <div class="tab" data-t="4"><p class="hint">Stacja pętli z 16 padami. Każda pętla startuje od następnego taktu i jest zsynchronizowana z BPM.</p><div id="loops" class="loops"></div></div>
+  <div class="tab" data-t="5"><p class="hint">FX z suwakami: filtr (LP/HP), echo, pogłos, przester, kompresor. Filtr możesz chwycić jak w mikserze klubowym.</p>
+    <div class="faders">
+      <label>Filtr<input id="f-filter" type="range" min="-100" max="100" value="0" orient="vertical"><span>0</span></label>
+      <label>Echo<input id="f-echo" type="range" min="0" max="100" value="15"><span></span></label>
+      <label>Echo czas<select id="f-echot"><option value="0.75">3/16</option><option value="0.5">1/8</option><option value="1">1/4</option></select></label>
+      <label>Pogłos<input id="f-rev" type="range" min="0" max="100" value="20"><span></span></label>
+      <label>Przester<input id="f-dist" type="range" min="0" max="100" value="0"><span></span></label>
+      <label>Master<input id="f-master" type="range" min="0" max="100" value="80"><span></span></label>
+    </div>
+    <div class="row"><button class="btn" id="f-build">⤴ Build-up 8 taktów</button><button class="btn" id="f-drop">💥 Drop</button><button class="btn" id="f-stutter">✂ Stutter</button></div></div>
+  <div class="tab" data-t="6"><p class="hint">Generator utworu: wpisz opis, np. „mroczne techno 132 bpm z acid basem” albo „hip hop 90 bpm chill”. Silnik dobiera styl, tempo, tonację i układa aranżację intro → build → drop → outro. Wszystko syntezuje się w przeglądarce, bez sampli i bez serwera.</p>
+    <div class="row"><input id="g-prompt" class="wide" placeholder="Opisz utwór… (po polsku albo po angielsku)" value="mroczne techno 130 bpm acid"><button class="btn big" id="g-go">✨ Generuj</button></div>
+    <div id="g-out" class="gout"></div><div id="g-arr" class="arr"></div></div>
+  <div class="tab" data-t="7"><p class="hint">Wizualizacje reagują na muzykę i co 7 s zmieniają tryb. Pełny ekran: przycisk ⛶. ⏺ Nagraj zapisuje obraz z dźwiękiem jako plik .webm.</p>
+    <div class="row"><button class="btn" id="v-full">⛶ Pełny ekran</button><button class="btn" id="v-next">⏭ Następna wizja</button><span id="v-name" class="pill"></span></div></div>
+  <canvas id="viz" class="viz"></canvas>
+</section>
+
+<section id="apps" class="panel">
+  <div class="phead"><h2>📱 Wszystkie boty i aplikacje D7</h2><input id="a-q" placeholder="Szukaj…" class="search"></div>
+  <div id="a-cats" class="cats"></div><div id="a-list" class="cards"></div>
+  <h3>📦 APK na Androida</h3><div id="a-apk" class="cards small"></div>
+</section>
+
+<section id="drive" class="panel">
+  <div class="phead"><h2>🗂 Google Drive · D7 Super SI Network</h2><a class="btn sm" id="d-open" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/15cMJ-94HUV-ZAJmOOFJjVLU0LDgl9sMP">Otwórz folder</a></div>
+  <p class="hint" id="d-meta">Ładowanie listy plików…</p><div id="d-list" class="drive"></div>
+</section>
+
+<section id="chat" class="panel">
+  <div class="phead"><h2>💬 Bot D · Super SI</h2><small id="c-mode">tryb: offline (reguły)</small></div>
+  <div id="c-log" class="clog"></div>
+  <form id="c-form" class="row"><input id="c-in" class="wide" placeholder="Napisz: „graj techno 135”, „gdzie pobrać apk”, „BLIK”, „pomoc”…" autocomplete="off"><button class="btn">Wyślij</button></form>
+</section>
+
+<section id="wsparcie" class="panel support">
+  <h2>💚 Wsparcie / zakup PRO</h2>
+  <div class="paygrid">
+    <div class="paybox"><b>BLIK na telefon</b><div class="big2" id="p-blik">730 377 357</div><button class="btn sm" data-copy="730377357">Kopiuj</button></div>
+    <div class="paybox"><b>Przelew · Nest Bank</b><div class="mono" id="p-iban">PL45 1870 1045 2083 1058 7576 0001</div><small>Odbiorca: Daniel Dydo · tytuł: kod zamówienia albo „D7 wsparcie”</small><button class="btn sm" data-copy="PL45187010452083105875760001">Kopiuj IBAN</button></div>
+    <div class="paybox"><b>Sklep z aplikacjami</b><a class="btn" href="../sklep.html">🛒 Sklep D7</a><a class="btn" href="../pay/">💳 Płatności</a></div>
+  </div>
+</section>
+
+<footer class="foot">D7 Super SI · DJ DaX · Daniel Dydo · Kraków · <a href="../">D7 DJ</a> · <a href="../hub/">HUB</a> · <a href="../dunit/">D Unit</a> · <span id="f-gen"></span></footer>
+<div id="toast" class="toast"></div>
+<script src="engines.js?v=1"></script>
+<script src="supersi.js?v=1"></script>
+</body>
+</html>

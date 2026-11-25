@@ -1,0 +1,325 @@
+{
+ "generated": "2026-11-26 00:32 CET",
+ "folderId": "15cMJ-94HUV-ZAJmOOFJjVLU0LDgl9sMP",
+ "folderUrl": "https://drive.google.com/drive/folders/15cMJ-94HUV-ZAJmOOFJjVLU0LDgl9sMP",
+ "name": "D7 Super SI Network",
+ "items": [
+  {
+   "name": "77 Mózgi Super SI",
+   "kind": "folder",
+   "url": "https://drive.google.com/drive/folders/1sdgFeaMPZyhnJZo23jBKEZAounWBsLhz",
+   "modified": "2026-11-14 04:38 UTC",
+   "size": null,
+   "parent": null,
+   "children": [
+    {
+     "name": "77-mozgi-super-si.json",
+     "kind": "json",
+     "url": "https://drive.google.com/file/d/131IuX9JPXhj5LqnVTSCtjEpij8wqKiqa/view?usp=drivesdk",
+     "modified": "2026-11-18 14:45 UTC",
+     "size": 26297,
+     "parent": "77 Mózgi Super SI"
+    },
+    {
+     "name": "Rejestr 77 Mózgów Super SI",
+     "kind": "sheet",
+     "url": "https://docs.google.com/spreadsheets/d/1u2t7pWtjd4oeeHfELifaftTOEQWOgHugcl98GlH_MZQ/edit?usp=drivesdk",
+     "modified": "2026-11-18 14:45 UTC",
+     "size": 6709,
+     "parent": "77 Mózgi Super SI"
+    },
+    {
+     "name": "Rejestr 77 Mózgów Super SI — opis",
+     "kind": "doc",
+     "url": "https://docs.google.com/document/d/1zXSm2p9AYO1r8IWyHKQTQ_FKHW4PEcZUkZOMHyw06B8/edit?usp=drivesdk",
+     "modified": "2026-11-18 14:45 UTC",
+     "size": 9509,
+     "parent": "77 Mózgi Super SI"
+    }
+   ]
+  },
+  {
+   "name": "777 Super SI Agents (7 Core each)",
+   "kind": "folder",
+   "url": "https://drive.google.com/drive/folders/1d0WpcvZm4xpDHXZYjvc9KCFirRWz4Aim",
+   "modified": "2026-11-14 04:38 UTC",
+   "size": null,
+   "parent": null,
+   "children": [
+    {
+     "name": "Rejestr 777 Agentów Super SI",
+     "kind": "sheet",
+     "url": "https://docs.google.com/spreadsheets/d/1KiurcvcE1ajZQny6zoefAfFnd_nwrEjMv1JyGyBUkV8/edit?usp=drivesdk",
+     "modified": "2026-11-18 14:45 UTC",
+     "size": 14883,
+     "parent": "777 Super SI Agents (7 Core each)"
+    }
+   ]
+  },
+  {
+   "name": "Autonomiczny Bot Web + Sieć",
+   "kind": "folder",
+   "url": "https://drive.google.com/drive/folders/1q2R_m-Ar8Q62sAJd0BC64Mu9aQpTEYVu",
+   "modified": "2026-11-14 04:42 UTC",
+   "size": null,
+   "parent": null,
+   "children": [
+    {
+     "name": "Autonomiczny Bot Web - Index & Plan",
+     "kind": "doc",
+     "url": "https://docs.google.com/document/d/1oUYoAM8juBlNjAh_OLISlVOduB5Xyw0gonbpaEFGoOg/edit?usp=drivesdk",
+     "modified": "2026-11-14 04:45 UTC",
+     "size": 2146,
+     "parent": "Autonomiczny Bot Web + Sieć"
+    }
+   ]
+  },
+  {
+   "name": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents",
+   "kind": "folder",
+   "url": "https://drive.google.com/drive/folders/1UJiwX0Rc7O_aYeQnp2tzYY0FVuAvmZVA",
+   "modified": "2026-11-14 21:43 UTC",
+   "size": null,
+   "parent": null,
+   "children": [
+    {
+     "name": "77 Multitask Agents",
+     "kind": "folder",
+     "url": "https://drive.google.com/drive/folders/1fI8i-jdcX6x6nJcRJ5s-ZwFzKjqht26S",
+     "modified": "2026-11-14 21:42 UTC",
+     "size": null,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "configs",
+     "kind": "folder",
+     "url": "https://drive.google.com/drive/folders/13CPDtjxCC-pUiNDUZQfC_5V7BOSaEyGp",
+     "modified": "2026-11-18 10:59 UTC",
+     "size": null,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "Dragon Core Brain",
+     "kind": "folder",
+     "url": "https://drive.google.com/drive/folders/10T6LKzFHpKekSYHvSM5oi17SJAyJ39dL",
+     "modified": "2026-11-14 21:42 UTC",
+     "size": null,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "presets-777",
+     "kind": "folder",
+     "url": "https://drive.google.com/drive/folders/1H0Zcv0AOfPlSMH5glYWR8U5FpUU0Rnlh",
+     "modified": "2026-11-18 10:59 UTC",
+     "size": null,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "Shared Memory & State",
+     "kind": "folder",
+     "url": "https://drive.google.com/drive/folders/1lkpXEwUFdnCyUPrzl4Jufq1r8kbJLinC",
+     "modified": "2026-11-14 21:43 UTC",
+     "size": null,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "Super DJ Loops",
+     "kind": "folder",
+     "url": "https://drive.google.com/drive/folders/1P-lUbu5o7r3GvGDC1pSaPzbmGyleoNZ6",
+     "modified": "2026-11-24 17:45 UTC",
+     "size": null,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "tests",
+     "kind": "folder",
+     "url": "https://drive.google.com/drive/folders/1Oob4Ox-kll74USfu9Up8xf7VtDhMagMr",
+     "modified": "2026-11-18 11:01 UTC",
+     "size": null,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "77_AGENTS_INDEX.md",
+     "kind": "doc",
+     "url": "https://docs.google.com/document/d/10tJQF61-p3CDc4fy_rHckHsKP3yJh4cF87EMaXEID8M/edit?usp=drivesdk",
+     "modified": "2026-11-14 21:42 UTC",
+     "size": 3399,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "DRAGON_ARCHITECTURE.md",
+     "kind": "doc",
+     "url": "https://docs.google.com/document/d/1uVU0gIYXmwBWF2Kv9ouBPPEokWQdNcDOeH1mOXpuQJs/edit?usp=drivesdk",
+     "modified": "2026-11-14 21:42 UTC",
+     "size": 2931,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "FULL_OPTIONS_UPDATE.md",
+     "kind": "doc",
+     "url": "https://docs.google.com/document/d/1F0-JmO77C8OgNf7AWOWSD7vo94-9BDbBdMJdYrLZFRQ/edit?usp=drivesdk",
+     "modified": "2026-11-14 22:14 UTC",
+     "size": 1724,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "index.json",
+     "kind": "json",
+     "url": "https://drive.google.com/file/d/1DqbeB7qkySuiX8MG3a-vCR37jYVlAnEv/view?usp=drivesdk",
+     "modified": "2026-11-18 11:00 UTC",
+     "size": 31379,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "INDEX.md",
+     "kind": "markdown",
+     "url": "https://docs.google.com/document/d/1wp-KX5yeC0WRPt-f3zHEA6kBYRjvhAOI/edit?usp=drivesdk&ouid=116372661464593201153&rtpof=true&sd=true",
+     "modified": "2026-11-25 21:14 UTC",
+     "size": 11447,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "README.md",
+     "kind": "markdown",
+     "url": "https://docs.google.com/document/d/1ahLQhGg0trGzgwvchLwczMLMi1LTrebu/edit?usp=drivesdk&ouid=116372661464593201153&rtpof=true&sd=true",
+     "modified": "2026-11-18 11:00 UTC",
+     "size": 1072,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "Super-DJ-Studio-src.zip",
+     "kind": "zip",
+     "url": "https://drive.google.com/file/d/12iQmmvz2ktnN802eEidA0LW39bvtX_r3/view?usp=drivesdk",
+     "modified": "2026-11-18 11:00 UTC",
+     "size": 166769,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "Super-Studio-7-README.md",
+     "kind": "markdown",
+     "url": "https://docs.google.com/document/d/1pyah0XnuZO75JG2vJ0L4CeqqeP2ZfCi-/edit?usp=drivesdk&ouid=116372661464593201153&rtpof=true&sd=true",
+     "modified": "2026-11-25 21:14 UTC",
+     "size": 2186,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "Super-Studio-7-v1.0.0.zip",
+     "kind": "zip",
+     "url": "https://drive.google.com/file/d/1Uw1JPJm5LX3qSmVRG7X5oc6cF2ClKrWW/view?usp=drivesdk",
+     "modified": "2026-11-25 21:14 UTC",
+     "size": 30626,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "UPDATE_77_AGENTS_INDEX.md",
+     "kind": "doc",
+     "url": "https://docs.google.com/document/d/1lmVwHs34JgPWwJnHsTU_NuN5kZTpgBRVMIEHZN-vZ-s/edit?usp=drivesdk",
+     "modified": "2026-11-14 21:44 UTC",
+     "size": 1707,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    }
+   ]
+  },
+  {
+   "name": "BLIK & Reklamy D7-ZWW3",
+   "kind": "folder",
+   "url": "https://drive.google.com/drive/folders/18fpFbg-Uo-ohmH5xHDPwGgZSsLUnYB8z",
+   "modified": "2026-11-14 04:38 UTC",
+   "size": null,
+   "parent": null,
+   "children": [
+    {
+     "name": "BLIK i Reklamy D7-ZWW3 — posty i linki",
+     "kind": "doc",
+     "url": "https://docs.google.com/document/d/1ssysejA-jLyRIShsH9jKgQ9sOK74rGlUV98tWWFIau0/edit?usp=drivesdk",
+     "modified": "2026-11-18 14:45 UTC",
+     "size": 4269,
+     "parent": "BLIK & Reklamy D7-ZWW3"
+    }
+   ]
+  },
+  {
+   "name": "D Bot Autonomiczny",
+   "kind": "folder",
+   "url": "https://drive.google.com/drive/folders/1QV2tgRXsHNcC93SK-Q9bpP63P1Yd5DUg",
+   "modified": "2026-11-18 14:45 UTC",
+   "size": null,
+   "parent": null,
+   "children": [
+    {
+     "name": "77-mozgi-super-si.csv",
+     "kind": "csv",
+     "url": "https://drive.google.com/file/d/1iPoQLl-Aadt9Rp-xQsx5nZiZl0RGcKD5/view?usp=drivesdk",
+     "modified": "2026-11-18 14:45 UTC",
+     "size": 14072,
+     "parent": "D Bot Autonomiczny"
+    },
+    {
+     "name": "777-agenci-super-si.csv",
+     "kind": "csv",
+     "url": "https://drive.google.com/file/d/1NYwRHjOoYuEo5tBvy3tITb0MBOmN_YhB/view?usp=drivesdk",
+     "modified": "2026-11-18 14:45 UTC",
+     "size": 114838,
+     "parent": "D Bot Autonomiczny"
+    },
+    {
+     "name": "android-drive-autonomy.md",
+     "kind": "markdown",
+     "url": "https://docs.google.com/document/d/1HMVXf3F3mFfmr1axSVSEUAJvn7JOuvsT/edit?usp=drivesdk&ouid=116372661464593201153&rtpof=true&sd=true",
+     "modified": "2026-11-18 14:45 UTC",
+     "size": 4217,
+     "parent": "D Bot Autonomiczny"
+    },
+    {
+     "name": "index.html",
+     "kind": "html",
+     "url": "https://drive.google.com/file/d/1z1D2TpmoVx_YYB44hks8ije76uYrCxsz/view?usp=drivesdk",
+     "modified": "2026-11-18 14:45 UTC",
+     "size": 20899,
+     "parent": "D Bot Autonomiczny"
+    },
+    {
+     "name": "README — hosting huba (Drive nie jest WWW)",
+     "kind": "doc",
+     "url": "https://docs.google.com/document/d/1tu-Y8yaUoBWy9VqGHXiduOjyEpyk4oVVH7-uPlWgTGE/edit?usp=drivesdk",
+     "modified": "2026-11-18 14:45 UTC",
+     "size": 2048,
+     "parent": "D Bot Autonomiczny"
+    },
+    {
+     "name": "status.json",
+     "kind": "json",
+     "url": "https://drive.google.com/file/d/1hMX3N8oLEOdvzJQtppPP8vbw4elAzvsn/view?usp=drivesdk",
+     "modified": "2026-11-18 14:45 UTC",
+     "size": 1718,
+     "parent": "D Bot Autonomiczny"
+    }
+   ]
+  },
+  {
+   "name": "Aktualizacja Master Index — 2026-11-18 Bot D",
+   "kind": "doc",
+   "url": "https://docs.google.com/document/d/1YoJzRW9pWAG1Cj_os7-g53aMSNLI3qlElbgKnTSk_AI/edit?usp=drivesdk",
+   "modified": "2026-11-18 14:45 UTC",
+   "size": 3737,
+   "parent": null
+  },
+  {
+   "name": "MASTER INDEX - 77 Mózgi + 777 Agents 7Core",
+   "kind": "doc",
+   "url": "https://docs.google.com/document/d/1zc-WbuKyzYi1EL9e9zRiZ-4yKD3jGE36PHXImbQtG5U/edit?usp=drivesdk",
+   "modified": "2026-11-14 04:38 UTC",
+   "size": 2167,
+   "parent": null
+  },
+  {
+   "name": "Plan Android D Bot + Google Drive",
+   "kind": "doc",
+   "url": "https://docs.google.com/document/d/1zaOZEAM2-NwMaTNlfdjWomgM8RuIiKmAD-ZQXJubX4g/edit?usp=drivesdk",
+   "modified": "2026-11-18 14:45 UTC",
+   "size": 5203,
+   "parent": null
+  }
+ ],
+ "cachedAt": "2026-11-26 00:25 CET"
+}

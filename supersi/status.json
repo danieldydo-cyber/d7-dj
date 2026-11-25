@@ -1,0 +1,41 @@
+{
+ "generated": "2026-11-26 00:32 CET",
+ "bots": {
+  "count": 22,
+  "online": [
+   "supergrok",
+   "d",
+   "superbotd",
+   "autofix",
+   "dragon",
+   "77",
+   "dargonmoon",
+   "supercharger",
+   "superd",
+   "megabot",
+   "superg",
+   "mrdfluid",
+   "botpamiec",
+   "botd",
+   "supergrok-web",
+   "djmix",
+   "radiokali",
+   "visualizer",
+   "builderweb",
+   "builderapk",
+   "builderpromo",
+   "paysupport"
+  ]
+ },
+ "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
+ "liveUrl": "https://education-mit-fate-guarantees.trycloudflare.com",
+ "liveCandidates": [
+  "https://education-mit-fate-guarantees.trycloudflare.com"
+ ],
+ "liveSource": "ntfy",
+ "pagesOk": 58,
+ "pagesTotal": 59,
+ "broken": [
+  "https://danieldydo-cyber.github.io/d7-dj/supersi/"
+ ]
+}
