@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26 00:32 CET",
+ "generated": "2026-11-26 00:33 CET",
  "bots": {
   "count": 22,
   "online": [
@@ -33,9 +33,7 @@
   "https://education-mit-fate-guarantees.trycloudflare.com"
  ],
  "liveSource": "ntfy",
- "pagesOk": 58,
+ "pagesOk": 59,
  "pagesTotal": 59,
- "broken": [
-  "https://danieldydo-cyber.github.io/d7-dj/supersi/"
- ]
+ "broken": []
 }
