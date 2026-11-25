@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#05010d">
+<title>D7S · D DJ Professional · DJ, 40 padów, 77 generatorów, Mega Show 777 · DJ DaX</title>
+<meta name="description" content="D7S – D DJ Professional od DJ DaX: 2 decki z sync, EQ, filtr, echo, reverb, FX z faderami, 40 padów loop station, 77 generatorów muzyki (techno, hip-hop, hood, house, psy, trap), Auto-DJ, radio, MIDI MC-707, wizualizacje Mega Show 777 z nagrywaniem. Web, Windows i Android.">
+<link rel="canonical" href="https://danieldydo-cyber.github.io/d7-dj/d7s/">
+<meta property="og:title" content="D7S · D DJ Professional"><meta property="og:description" content="Cała muzyczna aplikacja DJ DaX w jednym: decki, pady, generatory, FX, radio, wizualizacje."><meta property="og:image" content="https://danieldydo-cyber.github.io/d7-dj/og.png">
+<link rel="icon" href="icon.png"><link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="app.css">
+</head><body>
+<div id="start"><div class="start-box"><div class="logo-big">D7S</div><div class="sub">D DJ PROFESSIONAL · DJ DaX</div><p>Decki · 40 padów · 77 generatorów · FX · Radio · MIDI · Mega Show 777</p><button id="startBtn" class="big">▶ START</button><p class="small">48 kHz · Web Audio · offline</p></div></div>
+<header>
+  <div class="logo">D7S<small>D DJ PRO</small></div>
+  <div class="hgroup"><label>BPM <input id="bpm" type="number" min="40" max="220" step="0.1" value="128" data-midi="bpm"></label><button id="tap">TAP</button><span class="beats" id="beats"><i></i><i></i><i></i><i></i></span></div>
+  <div class="hgroup"><label>Master <input id="mvol" type="range" min="0" max="1.2" step="0.01" value="0.9" data-midi="master"></label><canvas id="mvu" width="90" height="14"></canvas></div>
+  <div class="hgroup"><button id="recMix" title="Nagraj miks (audio)">⏺ REC MIX</button><span id="recTime"></span><button id="fsBtn" title="Pełny ekran">⛶</button></div>
+  <div class="engines" id="engines" title="7 silników D7S"></div>
+</header>
+<nav id="tabs">
+  <button data-t="dj" class="on">🎚 DJ</button><button data-t="pads">🔲 Pady 40</button><button data-t="gen">🧪 Generatory 77</button><button data-t="auto">🤖 Auto-DJ</button><button data-t="radio">📻 Radio · YouTube</button><button data-t="viz">🌌 Mega Show</button><button data-t="midi">🎹 MIDI</button><button data-t="hub">🔗 Hub</button>
+</nav>
+<main>
+<!-- DJ -->
+<section id="t-dj" class="tab on">
+  <div class="dj">
+    <div class="deck" data-d="0"></div>
+    <div class="mixer" id="mixer"></div>
+    <div class="deck" data-d="1"></div>
+  </div>
+  <div class="fxrow"><div class="fx" data-fx="1"></div><div class="fx" data-fx="2"></div></div>
+</section>
+<!-- PADS -->
+<section id="t-pads" class="tab">
+  <div class="bar">
+    <select id="padStyle"></select><button id="padGen" class="hot">⚡ Generuj 40 loopów</button>
+    <button id="padSync" class="tg on">SYNC (takt)</button><button id="padExcl" class="tg on">1 na kolumnę</button><button id="padEdit" class="tg">✏️ Edycja</button>
+    <label>Filtr cutoff <input id="padCut" type="range" min="0" max="1" step="0.001" value="1" data-midi="padcut"></label>
+    <label>Głośność <input id="padVol" type="range" min="0" max="1.2" step="0.01" value="0.9" data-midi="padvol"></label>
+    <button id="padStop">⏹ Stop wszystko</button><button id="padColors">🎨 Kolory</button>
+    <span class="sep"></span><button id="bounceA">Bounce → A</button><button id="bounceB">Bounce → B</button><button id="bounceW">Bounce 💾 WAV</button>
+  </div>
+  <div id="padHead" class="padhead"></div>
+  <div id="padGrid" class="padgrid"></div>
+  <div id="padSel" class="padsel hidden"></div>
+  <p class="hint">Kliknij pad = start/stop (z SYNC startuje od następnego taktu). Kolumna = grupa (jeden pad naraz). MIDI: nuty 36–75 = pady 1–40. Pusty pad: w trybie ✏️ Edycja wczytaj sample, nagraj głos 🎤 albo wygeneruj.</p>
+</section>
+<!-- GENERATORS -->
+<section id="t-gen" class="tab">
+  <div class="genquick" id="genQuick"></div>
+  <div class="bar">
+    <label>Styl <select id="gStyle"></select></label><label>BPM <input id="gBpm" type="number" min="60" max="200" value="" placeholder="auto"></label>
+    <label>Tonacja <select id="gKey"></select></label><label>Typ <select id="gMode"><option value="track">Cały utwór</option><option value="loop">Loop 4 takty</option></select></label>
+    <button id="gGo" class="hot">🧪 Generuj</button><button id="gMagic">🎲 Magic Random</button>
+  </div>
+  <div class="bar"><b>Mega Mix:</b><span id="megaBtns"></span><span class="sep"></span>
+    <b>Remix:</b><select id="rxSrc"><option value="0">z Decka A</option><option value="1">z Decka B</option></select><select id="rxStyle"></select><button id="rxGo">🔀 Remix generator</button>
+    <span class="sep"></span><b>Set:</b><select id="setN"><option>3</option><option selected>5</option><option>7</option></select><button id="setGo">📀 Set generator → Auto-DJ</button></div>
+  <div id="genOut" class="genout"><span class="muted">Wynik generatora pojawi się tutaj.</span></div>
+  <div class="bar"><b>77 Sound Magic</b><select id="pFilter"><option value="">Wszystkie style</option></select><span class="muted">Kliknij preset → generuje i odtwarza podgląd.</span></div>
+  <div id="presets" class="presets"></div>
+</section>
+<!-- AUTO DJ -->
+<section id="t-auto" class="tab">
+  <div class="bar"><button id="adOn" class="tg big">🤖 Auto-DJ: WYŁ</button><label>Długość miksu <input id="adMix" type="range" min="4" max="32" value="12"> <span id="adMixV">12 s</span></label>
+    <label><input type="checkbox" id="adGen" checked> Gdy kolejka pusta — generuj utwory (nieskończony set)</label>
+    <button id="adNow">⏭ Miksuj teraz</button><label class="filebtn">📂 Dodaj pliki<input id="adFiles" type="file" accept="audio/*" multiple hidden></label><button id="adClear">Wyczyść</button></div>
+  <ol id="adQueue" class="queue"></ol>
+  <p class="hint">Auto-DJ: wczytuje następny utwór na wolny deck, dopasowuje tempo (SYNC), robi crossfade z wymianą basu. Działa z plikami MP3/WAV, wygenerowanymi utworami i Set generatorem.</p>
+</section>
+<!-- RADIO / YT -->
+<section id="t-radio" class="tab">
+  <div class="cols2">
+    <div><div class="bar"><input id="rq" placeholder="Szukaj stacji (np. techno, hip hop)…"><button id="rGo">🔎</button><span id="rCount" class="muted"></span></div>
+      <div class="bar" id="rTags"></div>
+      <div id="rList" class="rlist"></div></div>
+    <div><div class="bar"><input id="yt" placeholder="Link YouTube…"><button id="ytGo">▶ Osadź</button><button id="ytOpen">🔗 Otwórz w YouTube</button></div>
+      <div id="ytBox" class="ytbox"><span class="muted">YouTube: tylko odtwarzanie (osadzenie). Bez pobierania. Dźwięk z YouTube nie przechodzi przez mikser.</span></div>
+      <div class="bar"><label class="filebtn">📂 MP3 → Deck A<input type="file" accept="audio/*" data-load="0" hidden></label><label class="filebtn">📂 MP3 → Deck B<input type="file" accept="audio/*" data-load="1" hidden></label></div>
+    </div>
+  </div>
+</section>
+<!-- VIZ -->
+<section id="t-viz" class="tab"><div id="vizMount" class="vizmount"></div></section>
+<!-- MIDI -->
+<section id="t-midi" class="tab">
+  <div class="bar"><button id="midiOn" class="hot">🔌 Połącz MIDI</button><button id="midiLearn" class="tg">🎓 MIDI Learn</button><button id="midiClear">Wyczyść mapę</button>
+    <button id="clkOut" class="tg">⏱ Clock OUT → MC-707</button><button id="clkStart">▶ Start</button><button id="clkStop">⏹ Stop</button><button id="clkIn" class="tg on">⏱ Clock IN</button></div>
+  <div class="cols2"><div><h3>Urządzenia</h3><div id="midiDev" class="muted">Nie połączono.</div><h3>Mapa</h3><div id="midiMap"></div></div><div><h3>Monitor</h3><pre id="midiLog"></pre>
+  <p class="hint">Roland MC-707 przez USB: włącz w MC-707 USB MIDI. Nuty 36–75 grają pady 1–40. MIDI Learn: kliknij 🎓, potem suwak/przycisk w D7S, potem ruszaj gałką na kontrolerze. Clock OUT wysyła tempo D7S do MC-707 (ustaw w MC-707 Sync Source = USB/AUTO).</p></div></div>
+</section>
+<!-- HUB -->
+<section id="t-hub" class="tab">
+  <h3>7 silników D7S</h3><div id="engList" class="englist"></div>
+  <h3>Sieć D7 · wszystkie aplikacje</h3><div id="hubLinks" class="hub"></div>
+  <p class="hint">D7S v1.0 · D DJ Professional · © 2026 Daniel Dydo (DJ DaX, Kraków). Cały dźwięk generowany na żywo (Web Audio, 48 kHz), bez cudzych sampli.</p>
+</section>
+</main>
+<div id="toast"></div>
+<script>window.D7S_NO_BOOT = true;</script>
+<script src="stations.js"></script><script src="gen.js"></script><script src="engine.js"></script><script src="viz.js"></script><script src="ui.js"></script>
+</body></html>
