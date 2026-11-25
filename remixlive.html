@@ -12,6 +12,14 @@ button,select{background:#1c0f38;color:#fff;border:1px solid #8a5cff88;border-ra
 #fx,#inp{display:flex;gap:5px;flex-wrap:wrap;padding:0 8px 8px;align-items:center}#fx button{background:linear-gradient(135deg,#3a0d4a,#1a0b3a)}#fx button.hit{background:#ff2d95}
 h3{margin:6px 8px 4px;font-size:13px;color:#ffd23f}#log{padding:0 8px 8px;color:#a9b4d6;font-size:12px}
 @media (max-width:700px){#grid{grid-template-columns:repeat(5,minmax(58px,1fr));overflow-x:auto}}
+#kosmos{padding:0 8px 10px}.kos-hero{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0}
+.kos-cta{font-weight:800;background:linear-gradient(135deg,#2de2ff,#8a5cff)!important;color:#061018;border:0}
+.kos-cta.on{background:linear-gradient(135deg,#ff2bd6,#8a5cff)!important;color:#fff}
+.kos-layers{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px}
+.kos-pad{min-height:64px;text-align:left;display:flex;flex-direction:column;gap:3px;background:linear-gradient(160deg,#1a0a32,#0c0618);border:1px solid #5a3cff88}
+.kos-pad.on{border-color:#2de2ff;box-shadow:0 0 12px #2de2ff55;opacity:1}
+#kosmos .note{color:#a9b4d6;font-size:11px;margin:6px 0 0}
+
 </style><!-- seo 2026-11-03 -->
 <meta name="description" content="Remixlive w D7 DJ: odpalaj sample i pętle na żywo, remiksuj techno w przeglądarce. Aplikacja od DJ DaX, Kraków.">
 <link rel="canonical" href="https://danieldydo-cyber.github.io/d7-dj/remixlive.html">
@@ -24,10 +32,25 @@ h3{margin:6px 8px 4px;font-size:13px;color:#ffd23f}#log{padding:0 8px 8px;color:
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Remixlive · D7 DJ", "url": "https://danieldydo-cyber.github.io/d7-dj/remixlive.html", "description": "Remixlive w D7 DJ: odpalaj sample i pętle na żywo, remiksuj techno w przeglądarce. Aplikacja od DJ DaX, Kraków.", "inLanguage": "pl", "author": {"@type": "Person", "name": "DJ DaX", "address": {"@type": "PostalAddress", "addressLocality": "Kraków", "addressCountry": "PL"}}, "applicationCategory": "MultimediaApplication", "operatingSystem": "Web, Android"}</script>
 </head><body>
 <div id="top"><b>🎛 Remixlive X</b><span class="beat" id="bt"></span><span class="bpm" id="bpm">124.0</span><span class="small" id="bsrc">zegar</span>
-<select id="genre"><option value="techno">⚡ techno</option><option value="hiphop">🎤 hip-hop</option></select>
+<select id="genre"><option value="techno">⚡ techno</option><option value="hiphop">🎤 hip-hop</option><option value="shuffle90s">Shuffle 90s · Nostalgia</option></select>
 <button id="aigen">🧠 AI generuj pady</button><button id="sync">📻 Radio sync BPM live</button><button id="auto">🔀 Auto remix</button><button id="stopall">⏹ stop pady</button></div>
 <div id="grid"></div>
 <h3>⚡ Special beat FX (zsynchronizowane z zegarem)</h3><div id="fx"></div>
 <h3>🎤 Audio In FX</h3><div id="inp"><button id="mic">🎤 Włącz wejście (mikrofon / line-in)</button><select id="ifx"><option value="clean">czysty</option><option value="space">kosmos (reverb+delay)</option><option value="robot">robot (ring+crush)</option><option value="radio">radio (bandpass+drive)</option><option value="dub">dub echo</option></select><button id="aifx">🧠 AI FX</button><label class="small">monitor <input id="mon" type="range" min="0" max="1" step=".01" value=".6"></label><span id="ilvl" class="small">—</span></div>
+<h3>🪐 Kosmos · Launch</h3>
+<div id="kosmos"></div>
 <div id="log">gotowe · dotknij pad (start na następnym takcie)</div>
-<script src="js/remixlive.js?v=1070"></script><script src="js/version.js?v=77"></script><script src="js/super-core.js?v=77"></script><script src="js/cosmic-layer.js?v=77"></script></body></html>
+<script src="js/kosmos-sounds.js?v=1"></script>
+<script src="js/remixlive.js?v=1072"></script>
+<script>
+(function(){
+  if(!window.Kosmos||!window.RLX)return;
+  var K=window.Kosmos.mountSimple('#kosmos',{
+    getCtx:function(){return RLX.ctx();},
+    getDest:function(){return RLX.out()||null;},
+    getBpm:function(){return RLX.bpm();},
+    getT0:function(){return RLX.t0();}
+  });
+  window._d7Kosmos=K;
+})();
+</script><script src="js/version.js?v=77"></script><script src="js/super-core.js?v=77"></script><script src="js/cosmic-layer.js?v=77"></script></body></html>

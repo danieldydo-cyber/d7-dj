@@ -1,5 +1,5 @@
 /* D7 MK3 Pads — Maschine MK3 / Akai MPC style pads for D7 DJ core (D · 2026-11-18)
-   16 velocity pads x 8 banks (A-H), synthesized WebAudio kits (techno / hip-hop / trance), local samples,
+   16 velocity pads x 8 banks (A-H), synthesized WebAudio kits (techno / hip-hop / trance / Shuffle 90s · Nostalgia), local samples,
    step sequencer 16/32, swing, note repeat, D7Clock/d7bpm sync, Web MIDI in (36-51) + MIDI out notes/clock (MC-707),
    keyboard fallback (1234/QWER/ASDF/ZXCV), localStorage patterns. API: window.D7MK3. Free, no server needed. */
 (function () {
@@ -13,7 +13,8 @@
   var KITS = {
     techno: { name: 'Techno (Berlin)', kick: [150, 42, 0.42, 1], root: 45, swing: 50, bpm: 128, stab: [0, 3, 7], wave: 'sawtooth', hatDec: 0.05 },
     hiphop: { name: 'Hip-Hop (boom bap)', kick: [115, 48, 0.6, 0.7], root: 48, swing: 62, bpm: 90, stab: [0, 3, 7, 10], wave: 'triangle', hatDec: 0.07 },
-    trance: { name: 'Trance (supersaw)', kick: [175, 48, 0.33, 1.1], root: 42, swing: 50, bpm: 138, stab: [0, 3, 7, 12], wave: 'sawtooth', hatDec: 0.04 }
+    trance: { name: 'Trance (supersaw)', kick: [175, 48, 0.33, 1.1], root: 42, swing: 50, bpm: 138, stab: [0, 3, 7, 12], wave: 'sawtooth', hatDec: 0.04 },
+    shuffle90s: { name: 'Shuffle 90s · Nostalgia', kick: [165, 44, 0.36, 1.05], root: 45, swing: 58, bpm: 128, stab: [0, 4, 7, 12], wave: 'sawtooth', hatDec: 0.04 }
   };
   var MINOR = [0, 2, 3, 5, 7, 8, 10];
   function scaleNote(root, i) { return root + MINOR[i % 7] + 12 * Math.floor(i / 7); }
@@ -106,8 +107,8 @@
     var sm = samples[bank + i];
     if (sm) { var s = a.ctx.createBufferSource(), g = a.ctx.createGain(); s.buffer = sm.buf; g.gain.value = v; s.connect(g); g.connect(d); s.start(t); return; }
     if (bank === 'A' || bank === 'B') return drum(bank === 'B' ? i + 16 : i, v, t, d, K);
-    if (bank === 'C') return lpSynth([scaleNote(K.root - 12, i)], t, v * 1.4, d, K.wave === 'triangle' ? 'square' : 'sawtooth', S.kit === 'hiphop' ? 0.5 : 0.22, S.kit === 'trance' ? 500 : 260);
-    if (bank === 'D') { var r = scaleNote(K.root + 12, i); return lpSynth(K.stab.map(function (x) { return r + x; }), t, v * 0.8, d, 'sawtooth', S.kit === 'hiphop' ? 0.6 : 0.28, S.kit === 'trance' ? 2400 : 1100, S.kit === 'trance' ? 14 : 6); }
+    if (bank === 'C') return lpSynth([scaleNote(K.root - 12, i)], t, v * 1.4, d, K.wave === 'triangle' ? 'square' : 'sawtooth', S.kit === 'hiphop' ? 0.5 : (S.kit === 'shuffle90s' ? 0.16 : 0.22), S.kit === 'trance' ? 500 : (S.kit === 'shuffle90s' ? 800 : 260));
+    if (bank === 'D') { var r = scaleNote(K.root + 12, i); return lpSynth(K.stab.map(function (x) { return r + x; }), t, v * 0.8, d, 'sawtooth', S.kit === 'hiphop' ? 0.6 : 0.28, (S.kit === 'trance' || S.kit === 'shuffle90s') ? 2400 : 1100, (S.kit === 'trance' || S.kit === 'shuffle90s') ? 14 : 6); }
     if (bank === 'E') return lpSynth([scaleNote(K.root + 24, i)], t, v, d, S.kit === 'hiphop' ? 'triangle' : 'square', 0.3, 1800, S.kit === 'trance' ? 10 : 0);
     if (bank === 'F') return fx(i, v, t, d);
     osc('sine', 880 + i * 40, t, 0.08, d, v * 0.2, 0.07); // empty user pad blip
@@ -231,6 +232,14 @@
       } else if (style === 'hiphop') {
         if (q === 0 || q === 10 || (q === 7 && r() < 0.6) || (q === 13 && r() < v)) set(0, s, 120); if (q === 4 || q === 12) set(2, s, 118);
         if (q % 2 === 0) set(4, s, 70 + (r() * 35 | 0)); if (q === 14 && r() < v) set(5, s, 80); if (r() < v * 0.2) set(6, s, 60);
+      } else if (style === 'shuffle90s') {
+        /* original 90s/2000s shuffle / hands-up / eurodance-ish pattern (not a ripped sample):
+           4-on-the-floor kick, clap on 2/4, 16th closed hats (swing applied by the clock),
+           offbeat open hat, deterministic so the preset always loads the same groove. */
+        if (q % 4 === 0) set(0, s, 120);
+        if (q === 4 || q === 12) set(3, s, 118);
+        set(4, s, q % 2 === 0 ? 90 : 62);
+        if (q % 4 === 2) set(5, s, 100);
       } else { // trance
         if (q % 4 === 0) set(0, s, 125); if (q % 4 === 2) set(5, s, 100); if (q === 4 || q === 12) set(3, s, 110); set(4, s, 60 + (q % 4 === 2 ? 40 : 0));
         if (q === 14 && r() < v) set(13, s, 70); if (q % 16 === 0 && s === 0) set(11, s, 90);
@@ -239,10 +248,13 @@
     return P;
   }
   function genBass(style) { var P = emptyBank(), n = S.steps, r = Math.random, notes = style === 'hiphop' ? [0, 0, 3, 4] : [0, 0, 0, 3, 4, 7];
-    for (var s = 0; s < n; s++) { var q = s % 16; var hit = style === 'trance' ? q % 4 === 2 || q % 4 === 3 : style === 'hiphop' ? (q === 0 || q === 6 || q === 10) : (q % 4 === 2 || (r() < 0.25 && q % 2)); if (hit) P[notes[(r() * notes.length) | 0]][s] = 100; } return P; }
+    for (var s = 0; s < n; s++) { var q = s % 16; var hit, note;
+      if (style === 'shuffle90s') { hit = q % 4 === 2 || q % 4 === 3; note = q % 4 === 2 ? 0 : 4; if (hit) P[note][s] = 100; continue; }
+      hit = style === 'trance' ? q % 4 === 2 || q % 4 === 3 : style === 'hiphop' ? (q === 0 || q === 6 || q === 10) : (q % 4 === 2 || (r() < 0.25 && q % 2)); if (hit) P[notes[(r() * notes.length) | 0]][s] = 100; } return P; }
   function loadPreset(style, keepKit) {
     style = style || S.kit; if (!keepKit && KITS[style]) S.kit = style;
-    S.pat.A = gen(style, 'A'); S.pat.C = genBass(style); var D = emptyBank(); if (style === 'trance') { D[0][2] = 90; D[0][10] = 90; D[3][14] = 80; } else if (style === 'techno') { if (Math.random() < 0.6) D[(Math.random() * 5) | 0][6] = 85; } else { D[0][0] = 80; D[4][8] = 80; } S.pat.D = D;
+    if (style === 'shuffle90s') { S.steps = 16; S.swing = KITS.shuffle90s.swing; setBpm(KITS.shuffle90s.bpm, 'Shuffle 90s · Nostalgia'); }
+    S.pat.A = gen(style, 'A'); S.pat.C = genBass(style); var D = emptyBank(); if (style === 'shuffle90s') { D[0][0] = 100; D[3][8] = 85; D[0][14] = 70; } else if (style === 'trance') { D[0][2] = 90; D[0][10] = 90; D[3][14] = 80; } else if (style === 'techno') { if (Math.random() < 0.6) D[(Math.random() * 5) | 0][6] = 85; } else { D[0][0] = 80; D[4][8] = 80; } S.pat.D = D;
     save(); renderAll(); emit('pattern', { style: style }); return style;
   }
   function randomize(amount, bank) { var b = BANKS.indexOf(bank) >= 0 ? bank : S.bank, P = S.pat[b]; for (var p = 0; p < 16; p++) for (var s = 0; s < S.steps; s++) if (Math.random() < (amount || 0.08)) P[p][s] = P[p][s] ? 0 : 50 + (Math.random() * 77 | 0); save(); renderGrid(); emit('pattern', { style: 'random', bank: b }); }
@@ -308,7 +320,7 @@
       '<div class="mk3-main"><div class="mk3-left"><div class="mk3-pads" id="mk3-pads"></div>' +
       '<div class="mk3-fx"><label>FILTER<input type="range" id="mk3-filter" min="0" max="1" step="0.01"></label><label>DELAY<input type="range" id="mk3-delay" min="0" max="1" step="0.01"></label><label>REVERB<input type="range" id="mk3-reverb" min="0" max="1" step="0.01"></label><label>VOL<input type="range" id="mk3-vol" min="0" max="1" step="0.01"></label><label class="mk3-l"><input type="checkbox" id="mk3-fullvel"> 100% velocity</label></div>' +
       '<canvas id="mk3-scope" height="90"></canvas></div>' +
-      '<div class="mk3-right"><div class="mk3-tools"><b>Pattern:</b> <button class="mk3-b" data-gen="techno">Techno</button><button class="mk3-b" data-gen="hiphop">Hip-Hop</button><button class="mk3-b" data-gen="trance">Trance</button><button class="mk3-b" id="mk3-rand">🎲 Random bank</button><button class="mk3-b" id="mk3-clr">Wyczyść bank</button><button class="mk3-b" id="mk3-clrall">Wyczyść wszystko</button></div>' +
+      '<div class="mk3-right"><div class="mk3-tools"><b>Pattern:</b> <button class="mk3-b" data-gen="techno">Techno</button><button class="mk3-b" data-gen="hiphop">Hip-Hop</button><button class="mk3-b" data-gen="trance">Trance</button><button class="mk3-b" data-gen="shuffle90s">Shuffle 90s · Nostalgia</button><button class="mk3-b" id="mk3-rand">🎲 Random bank</button><button class="mk3-b" id="mk3-clr">Wyczyść bank</button><button class="mk3-b" id="mk3-clrall">Wyczyść wszystko</button></div>' +
       '<div class="mk3-grid" id="mk3-grid"></div>' +
       '<div class="mk3-tools"><b>Sloty:</b> <select id="mk3-slot" class="mk3-sel"></select><button class="mk3-b" id="mk3-ssave">💾 Zapisz</button><button class="mk3-b" id="mk3-sload">📂 Wczytaj</button><button class="mk3-b" id="mk3-exp">⬇ Eksport JSON</button><label class="mk3-b mk3-file">⬆ Import JSON<input type="file" id="mk3-imp" accept=".json,application/json"></label></div>' +
       '<div class="mk3-tools"><b>Sample:</b> <label class="mk3-b mk3-file">📁 Wczytaj plik do wybranego pada<input type="file" id="mk3-smp" accept="audio/*"></label><button class="mk3-b" id="mk3-smpclr">Usuń sample</button><span class="mk3-hint" id="mk3-smpinfo"></span></div>' +
@@ -406,7 +418,7 @@
   }
 
   window.D7MK3 = {
-    version: 1, banks: BANKS, kits: Object.keys(KITS), mount: mount, start: start, stop: stop, play: play, hit: hit, setBpm: setBpm, setFx: setFx,
+    version: 1, banks: BANKS, kits: Object.keys(KITS), presets: Object.keys(KITS), mount: mount, start: start, stop: stop, play: play, hit: hit, setBpm: setBpm, setFx: setFx,
     loadPreset: loadPreset, randomize: randomize, midi: midiInit, on: on, audio: audio,
     analyser: function () { return A && A.analyser; },
     setBank: function (b) { if (BANKS.indexOf(b) >= 0) { S.bank = b; renderAll(); } },

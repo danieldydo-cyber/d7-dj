@@ -134,6 +134,3 @@ Krótki post: „D7 DJ by DJ DaX — techno ~120 BPM w przeglądarce + hub botó
 ## Nowości 2026-11-24
 - PL: 🥁 D7 MK3 Pads online — 16 padów z dynamiką × 8 banków, sekwencer 16/32, swing, note repeat i Web MIDI (Roland MC-707). Za darmo w przeglądarce, część aplikacji D7 DJ ONE. 👉 https://danieldydo-cyber.github.io/d7-dj/mk3.html · Voucher PRO: BLIK 730 377 357 / Nest Bank PL45 1870 1045 2083 1058 7576 0001 · Pobierz: https://danieldydo-cyber.github.io/d7-dj/download.html #D7DJ #DJDaX #Krakow #techno #MPC
 - EN: 🥁 D7 MK3 Pads is live — 16 velocity pads × 8 banks, 16/32-step sequencer, swing, note repeat, Web MIDI (MC-707). Free in the browser. https://danieldydo-cyber.github.io/d7-dj/mk3.html #D7DJ #DJDaX
-
-## Nowości 2026-11-25
-- Promo-pack strona (index.html) przepisana z texts.json: tylko aplikacje (usunięte teksty „DJ na imprezy”). Nowa grafika promo-1-apps.png. MK3 Pads: https://danieldydo-cyber.github.io/d7-dj/mk3.html
