@@ -57,7 +57,7 @@
   function allItems() { return L.items.concat(L.manifest); }
   function paintLib() { var f = $('#libFilter').value, q = $('#libQ').value.toLowerCase();
     var arr = allItems().filter(function (x) { return (!f || x.src === f) && (!q || x.name.toLowerCase().indexOf(q) >= 0); });
-    $('#libList').innerHTML = arr.length ? arr.slice(0, 400).map(function (x, i) { return '<div class="li" data-i="' + allItems().indexOf(x) + '"><span class="tg2 ' + x.src + '">' + (x.src === 'local' ? 'MOJE' : x.src === 'gen' ? 'GEN' : 'URL') + '</span><span class="nm">' + esc(x.name) + (x.size ? ' <small>' + (x.size / 1048576).toFixed(1) + ' MB</small>' : '') + '</span><button class="lp">▶</button><button class="la">A</button><button class="lb">B</button><button class="lpad">Pad</button>' + (x.src === 'local' ? '<button class="ld">🗑</button>' : '') + '</div>'; }).join('') : '<p class="muted">Brak sampli — zaimportuj pliki albo ZIP.</p>';
+    $('#libList').innerHTML = arr.length ? arr.slice(0, 400).map(function (x, i) { return '<div class="li" data-i="' + allItems().indexOf(x) + '"><span class="tg2 ' + x.src + '">' + (x.src === 'local' ? 'MOJE' : x.src === 'gen' ? 'GEN' : x.src === 'dax' ? 'DaX' : 'URL') + '</span><span class="nm">' + esc(x.name) + (x.size ? ' <small>' + (x.size / 1048576).toFixed(1) + ' MB</small>' : '') + (x.bpm ? ' <small>' + x.bpm + ' BPM</small>' : '') + (x.dur ? ' <small>' + x.dur.toFixed(0) + ' s</small>' : '') + '</span><button class="lp">▶</button><button class="la">A</button><button class="lb">B</button><button class="lpad">Pad</button>' + (x.src === 'local' ? '<button class="ld">🗑</button>' : '') + '</div>'; }).join('') : '<p class="muted">Brak sampli — zaimportuj pliki albo ZIP.</p>';
     $$('#libList .li').forEach(function (row) { var it = allItems()[+row.dataset.i];
       function dec(fn) { need(); row.classList.add('busy'); L.decode(it).then(function (b) { row.classList.remove('busy'); fn(b); }).catch(function (e) { row.classList.remove('busy'); toast('Nie udało się: ' + e.message); E.logMsg('błąd', 'Sample ' + it.name + ': ' + e.message); }); }
       $('.lp', row).onclick = function () { dec(function (b) { U.play({ buffer: b }); }); };
@@ -70,7 +70,23 @@
   function imp(files) { if (!files.length) return; L.importFiles(files, function (i, n, name) { $('#libProg').textContent = '⏳ ' + i + '/' + n + ' ' + name; }).then(function (k) { $('#libProg').textContent = '✅ dodano ' + k; toast('Zaimportowano ' + k + ' sampli'); }).catch(function (e) { $('#libProg').textContent = 'Błąd: ' + e.message; }); }
   $('#libFiles').onchange = function () { imp(this.files); this.value = ''; }; $('#libDir').onchange = function () { imp(this.files); this.value = ''; };
   $('#manGo').onclick = function () { var u = $('#manUrl').value.trim(); if (!u) return; L.loadManifest(u).then(function (it) { toast('Manifest: ' + it.length + ' sampli'); localStorage.setItem('d7s-manifest', u); }).catch(function (e) { toast('Manifest: ' + e.message); }); };
+  var daxReady = L.loadManifest('samples/dax/manifest.json').catch(function (e) { E.logMsg('błąd', 'Bank DJ DaX: ' + e.message); return []; });
   L.loadManifest('samples/samples-manifest.json').catch(function (e) { E.logMsg('info', 'Manifest wbudowany: ' + e.message); });
+  // ---- DJ DaX Drive pad bank: 26 own samples -> pads 1..26 (tempo-matched to master, x2 / /2 when closer) ----
+  var daxBusy = false;
+  function daxBank(quiet) { if (daxBusy) return Promise.resolve(0); need(); daxBusy = true;
+    var btns = [$('#padDax'), $('#libDax')], set = function (t) { btns.forEach(function (b) { if (b) b.textContent = t; }); };
+    return daxReady.then(function () { var it = L.manifest.filter(function (m) { return m.src === 'dax'; }), k = 0;
+      if (!it.length) throw new Error('brak manifestu'); if (quiet || E.clock.bpm < 110 || E.clock.bpm > 135) E.setBpm(123);
+      return it.reduce(function (p, x, i) { return p.then(function () { set('⏳ DaX ' + (i + 1) + '/' + it.length); return L.decode(x).then(function (b) {
+        var bpm = x.bpm || 0, clk = E.clock.bpm; if (bpm) { [bpm * 2, bpm / 2].forEach(function (c) { if (Math.abs(Math.log(clk / c)) < Math.abs(Math.log(clk / bpm))) bpm = c; }); if (Math.abs(Math.log(clk / bpm)) > Math.log(1.2)) bpm = 0; }
+        E.pads.set(i, b, x.name.replace(/^DaX /, 'DaX·'), bpm, '#ffd23f'); k++; }).catch(function (e) { E.logMsg('błąd', 'DaX ' + x.name + ': ' + e.message); }); }); }, Promise.resolve()).then(function () { return k; }); })
+      .then(function (k) { daxBusy = false; set('🎛 Bank DJ DaX (26)'); if ($('#libDax')) $('#libDax').textContent = '🎛 Bank DJ DaX → pady'; if (!quiet) toast('🎛 Bank DJ DaX: ' + k + ' sampli na padach 1–' + k + ' (złote) · ' + E.clock.bpm + ' BPM'); E.emit('daxBank', k); return k; })
+      .catch(function (e) { daxBusy = false; set('🎛 Bank DJ DaX (26)'); toast('Bank DJ DaX: ' + e.message); return 0; }); }
+  E.daxBank = daxBank;
+  $('#padDax').onclick = function () { daxBank(false); };
+  $('#libDax').onclick = function () { daxBank(false).then(function () { U.showTab('pads'); }); };
+  var daxStart = false; E.on('padsFilled', function () { if (!daxStart && E.settings.padBank === 'dax') { daxStart = true; daxBank(true); } });
   var mu = localStorage.getItem('d7s-manifest'); if (mu) { $('#manUrl').value = mu; L.loadManifest(mu).catch(function () {}); }
   L.list(); paintLib();
   document.addEventListener('dragover', function (e) { if ($('#t-samples.on')) e.preventDefault(); }); document.addEventListener('drop', function (e) { if ($('#t-samples.on')) { e.preventDefault(); imp(e.dataTransfer.files); } });
@@ -87,6 +103,7 @@
     ['sr', 'Częstotliwość audio (po restarcie)', [['44100', '44.1 kHz'], ['48000', '48 kHz']]],
     ['wavBits', 'Eksport WAV', [['16', '16-bit'], ['24', '24-bit']]],
     ['latency', 'Opóźnienie audio (po restarcie)', [['interactive', 'Niskie (DJ)'], ['balanced', 'Zbalansowane'], ['playback', 'Stabilne (słabszy telefon)']]],
+    ['padBank', 'Bank padów na start', [['dax', 'DJ DaX Drive (26) + generowane'], ['gen', 'Tylko generowane (40)']]],
     ['big', 'Duże przyciski (dotyk)', [['false', 'Nie'], ['true', 'Tak']]],
     ['aiOnline', 'Bot D: AI online (opcjonalnie)', [['false', 'Wył. (offline)'], ['true', 'Wł. (serwer botów D7)']]]];
   $('#setForm').innerHTML = FIELDS.map(function (f) { return '<label>' + f[1] + '<select data-s="' + f[0] + '">' + f[2].map(function (o) { return '<option value="' + o[0] + '"' + (String(ST[f[0]]) === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label>'; }).join('') +

@@ -118,3 +118,5 @@ input[type=range]::-webkit-slider-thumb{width:20px;height:20px}
 @media(max-width:420px){.cosgrid{grid-template-columns:1fr}}
 @media(orientation:landscape) and (max-height:500px){header{position:static}nav#tabs{position:static;padding:3px 6px}nav#tabs button{flex-direction:row;font-size:13px;min-width:0}main{padding-bottom:8px}.botlog{height:40vh}}
 @media(max-width:700px){#toast{bottom:92px!important}}
+
+.tg2.dax,button.dax{background:linear-gradient(90deg,#ffd23f,#ff8a00);color:#000;border-color:transparent}

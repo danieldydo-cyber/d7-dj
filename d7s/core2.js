@@ -3,7 +3,7 @@
   'use strict';
   var E = window.D7S, G = window.D7Gen;
   // ---------- settings ----------
-  var DEF = { sr: 48000, wavBits: 24, vizRes: 'auto', dpr: 'auto', recRes: 'auto', fps: 60, vbps: 12, abps: 256, latency: 'interactive', aiOnline: false, aiUrl: '', theme: 'cosmos', big: false };
+  var DEF = { sr: 48000, wavBits: 24, vizRes: 'auto', dpr: 'auto', recRes: 'auto', fps: 60, vbps: 12, abps: 256, latency: 'interactive', aiOnline: false, aiUrl: '', theme: 'cosmos', big: false, padBank: 'dax' };
   var ST = Object.assign({}, DEF); try { Object.assign(ST, JSON.parse(localStorage.getItem('d7s-settings') || '{}')); } catch (e) {}
   window.D7S_SETTINGS = ST; E.settings = ST;
   E.saveSettings = function () { localStorage.setItem('d7s-settings', JSON.stringify(ST)); E.emit('settings', ST); };
@@ -35,6 +35,7 @@
     ok('Nagrywanie (MediaRecorder)', !!window.MediaRecorder); ok('Web MIDI', !!navigator.requestMIDIAccess, navigator.requestMIDIAccess ? '' : 'niedostępne (Android/Safari)');
     ok('Mikrofon API', !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)); ok('IndexedDB (biblioteka)', !!window.indexedDB);
     var ls = false; try { localStorage.setItem('d7s-t', '1'); ls = true; } catch (e) {} ok('localStorage', ls);
+    var dax = E.lib.manifest.filter(function (m) { return m.src === 'dax'; }).length; ok('Bank DJ DaX Drive', dax >= 26, dax + ' sampli (wbudowane)');
     ok('Online', navigator.onLine, navigator.onLine ? '' : 'offline — radio/AI wyłączone');
     var p = G.render({ style: 'techno', mode: 'loop', bars: 1, seed: 7 }).then(function (r) { var m = 0, d = r.buffer.getChannelData(0); for (var i = 0; i < d.length; i += 64) m = Math.max(m, Math.abs(d[i])); ok('Render audio offline', m > .1, 'peak ' + m.toFixed(2)); return R; }).catch(function (e) { ok('Render audio offline', false, e.message); return R; });
     return p;
@@ -71,5 +72,5 @@
     return out;
   }
   L.loadManifest = function (url) { return fetch(url).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(function (j) { var base = new URL(url, location.href);
-      var items = (j.items || []).map(function (x) { return Object.assign({}, x, { url: x.url ? new URL(x.url, base).href : null, src: x.gen ? 'gen' : 'url', pack: j.name || 'Manifest' }); }); L.manifest = L.manifest.filter(function (m) { return m.pack !== (j.name || 'Manifest'); }).concat(items); E.emit('lib', L); return items; }); };
+      var items = (j.items || []).map(function (x) { return Object.assign({}, x, { url: x.url ? new URL(x.url, base).href : null, src: x.gen ? 'gen' : (j.name === 'DJ DaX Drive' ? 'dax' : 'url'), pack: j.name || 'Manifest' }); }); L.manifest = L.manifest.filter(function (m) { return m.pack !== (j.name || 'Manifest'); }).concat(items); E.emit('lib', L); return items; }); };
 })();

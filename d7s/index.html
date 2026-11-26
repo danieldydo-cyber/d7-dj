@@ -37,7 +37,7 @@
 <!-- PADS -->
 <section id="t-pads" class="tab">
   <div class="bar">
-    <select id="padStyle"></select><button id="padGen" class="hot">⚡ Generuj 40 loopów</button>
+    <select id="padStyle"></select><button id="padGen" class="hot">⚡ Generuj 40 loopów</button><button id="padDax" class="hot dax">🎛 Bank DJ DaX (26)</button>
     <button id="padSync" class="tg on">SYNC (takt)</button><button id="padExcl" class="tg on">1 na kolumnę</button><button id="padEdit" class="tg">✏️ Edycja</button>
     <label>Filtr cutoff <input id="padCut" type="range" min="0" max="1" step="0.001" value="1" data-midi="padcut"></label>
     <label>Głośność <input id="padVol" type="range" min="0" max="1.2" step="0.01" value="0.9" data-midi="padvol"></label>
@@ -97,7 +97,7 @@
 <section id="t-hub" class="tab">
   <h3>7 silników D7S</h3><div id="engList" class="englist"></div>
   <h3>Sieć D7 · wszystkie aplikacje</h3><div id="hubLinks" class="hub"></div>
-  <p class="hint">D7S v2.0 · G Studio Cosmos · © 2026 Daniel Dydo (DJ DaX, Kraków). Cały dźwięk generowany na żywo (Web Audio, 48 kHz), bez cudzych sampli.</p>
+  <p class="hint">D7S v2.0.1 · G Studio Cosmos · © 2026 Daniel Dydo (DJ DaX, Kraków). Cały dźwięk generowany na żywo (Web Audio, 48 kHz), bez cudzych sampli.</p>
 </section>
 
 <!-- NOVA -->
@@ -116,9 +116,9 @@
 <section id="t-samples" class="tab"><div class="panel"><h3>📦 Biblioteka sampli</h3>
   <div class="bar"><label class="filebtn big">📂 Importuj pliki / ZIP<input id="libFiles" type="file" accept="audio/*,.zip,.mp3,.wav,.ogg,.flac" multiple hidden></label><label class="filebtn">📁 Importuj folder<input id="libDir" type="file" webkitdirectory multiple hidden></label>
     <a class="btnlink" href="https://drive.google.com/drive/folders/1BXIgiUIAzgI21a-r6Euyh4UI0DuA5w3e" target="_blank" rel="noopener">☁️ Google Drive: D7 Samples</a><span id="libProg" class="muted"></span></div>
-  <div class="bar"><input id="manUrl" placeholder="Manifest URL (samples-manifest.json)…" style="flex:1;min-width:220px"><button id="manGo">Wczytaj manifest</button><select id="libFilter"><option value="">Wszystkie</option><option value="local">Moje (import)</option><option value="gen">Wbudowane</option><option value="url">Z manifestu</option></select><input id="libQ" placeholder="Szukaj…"></div>
-  <div id="libList" class="liblist"></div>
-  <p class="hint">Moje sample zapisują się w aplikacji (IndexedDB) i zostają po restarcie. Paczka „D7-Samples-Drive-pack.zip” z Twojego Google Drive (26 sampli) — pobierz ją z folderu D7 Samples i zaimportuj tutaj (ZIP działa bez rozpakowywania).</p></div></section>
+  <div class="bar"><input id="manUrl" placeholder="Manifest URL (samples-manifest.json)…" style="flex:1;min-width:220px"><button id="manGo">Wczytaj manifest</button><select id="libFilter"><option value="">Wszystkie</option><option value="local">Moje (import)</option><option value="dax">DJ DaX Drive (26)</option><option value="gen">Wbudowane</option><option value="url">Z manifestu</option></select><input id="libQ" placeholder="Szukaj…"></div>
+  <div class="bar"><button id="libDax" class="hot dax">🎛 Bank DJ DaX → pady</button><span class="muted">26 własnych sampli DJ DaX z Google Drive — wbudowane, działają offline.</span></div><div id="libList" class="liblist"></div>
+  <p class="hint">Moje sample zapisują się w aplikacji (IndexedDB) i zostają po restarcie. Bank „DJ DaX Drive” (26 sampli z Twojego Google Drive) jest wbudowany — filtr „DJ DaX Drive”. Inne paczki: importuj pliki albo ZIP (bez rozpakowywania).</p></div></section>
 <!-- BOT D -->
 <section id="t-bot" class="tab"><div class="panel botp"><h3>🧠 Bot D · super mózg</h3>
   <div id="botLog" class="botlog"></div>

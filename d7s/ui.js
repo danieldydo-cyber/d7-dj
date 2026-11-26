@@ -168,7 +168,7 @@
     for (var row = 0; row < 5; row++) for (var col = 0; col < 8; col++) jobs.push([row, col]);
     var k = 0;
     (function next() {
-      if (k >= jobs.length) { padBusy = false; btn.disabled = false; btn.textContent = '⚡ Generuj 40 loopów'; if (!quiet) toast('40 loopów gotowe: ' + G.STYLES[style].n + ' · ' + bpm + ' BPM'); return; }
+      if (k >= jobs.length) { padBusy = false; btn.disabled = false; btn.textContent = '⚡ Generuj 40 loopów'; E.emit('padsFilled', style); if (!quiet) toast('40 loopów gotowe: ' + G.STYLES[style].n + ' · ' + bpm + ' BPM'); return; }
       var j = jobs[k++], row = j[0], col = j[1], st = row === 0 ? style : (row < 3 ? style : G.STYLE_KEYS[(G.STYLE_KEYS.indexOf(style) + row * 3) % G.STYLE_KEYS.length]);
       if (G.STYLES[st].bpm[0] < 100 !== G.STYLES[style].bpm[0] < 100) st = style;
       btn.textContent = '⏳ ' + k + '/40';
