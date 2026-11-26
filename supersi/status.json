@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26 15:36 CET",
+ "generated": "2026-11-26 15:52 CET",
  "bots": {
   "count": 22,
   "online": [
@@ -28,12 +28,14 @@
   ]
  },
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://noble-primary-incentives-homework.trycloudflare.com",
+ "liveUrl": "https://usr-commodities-responded-mothers.trycloudflare.com",
  "liveCandidates": [
-  "https://noble-primary-incentives-homework.trycloudflare.com"
+  "https://usr-commodities-responded-mothers.trycloudflare.com"
  ],
  "liveSource": "ntfy",
- "pagesOk": 59,
+ "pagesOk": 58,
  "pagesTotal": 59,
- "broken": []
+ "broken": [
+  "https://danieldydo-cyber.github.io/d7-dj/mixviz.html"
+ ]
 }
