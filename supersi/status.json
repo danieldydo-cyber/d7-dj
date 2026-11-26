@@ -1,39 +1,12 @@
 {
- "generated": "2026-11-26 19:11 CET",
- "bots": {
-  "count": 22,
-  "online": [
-   "supergrok",
-   "d",
-   "superbotd",
-   "autofix",
-   "dragon",
-   "77",
-   "dargonmoon",
-   "supercharger",
-   "superd",
-   "megabot",
-   "superg",
-   "mrdfluid",
-   "botpamiec",
-   "botd",
-   "supergrok-web",
-   "djmix",
-   "radiokali",
-   "visualizer",
-   "builderweb",
-   "builderapk",
-   "builderpromo",
-   "paysupport"
-  ]
- },
+ "generated": "2026-11-26 19:34 CET",
+ "bots": null,
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://professional-korea-viking-trance.trycloudflare.com",
+ "liveUrl": null,
  "liveCandidates": [
-  "https://murphy-dietary-ver-announce.trycloudflare.com",
-  "https://professional-korea-viking-trance.trycloudflare.com"
+  "https://mine-range-sacrifice-investment.trycloudflare.com"
  ],
- "liveSource": "sync-manifest",
+ "liveSource": "offline",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
