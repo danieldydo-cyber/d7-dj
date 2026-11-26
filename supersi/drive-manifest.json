@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26 00:33 CET",
+ "generated": "2026-11-26 10:20 CET",
  "folderId": "15cMJ-94HUV-ZAJmOOFJjVLU0LDgl9sMP",
  "folderUrl": "https://drive.google.com/drive/folders/15cMJ-94HUV-ZAJmOOFJjVLU0LDgl9sMP",
  "name": "D7 Super SI Network",
@@ -78,7 +78,7 @@
    "name": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents",
    "kind": "folder",
    "url": "https://drive.google.com/drive/folders/1UJiwX0Rc7O_aYeQnp2tzYY0FVuAvmZVA",
-   "modified": "2026-11-14 21:43 UTC",
+   "modified": "2026-11-25 23:45 UTC",
    "size": null,
    "parent": null,
    "children": [
@@ -147,6 +147,14 @@
      "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
     },
     {
+     "name": "Cosmos-Bandit-D7-README.md",
+     "kind": "markdown",
+     "url": "https://docs.google.com/document/d/1XOpgxocfR7TuIGIfEv4sGMHX4jpEl1hu/edit?usp=drivesdk&ouid=116372661464593201153&rtpof=true&sd=true",
+     "modified": "2026-11-26 09:04 UTC",
+     "size": 6077,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
      "name": "DRAGON_ARCHITECTURE.md",
      "kind": "doc",
      "url": "https://docs.google.com/document/d/1uVU0gIYXmwBWF2Kv9ouBPPEokWQdNcDOeH1mOXpuQJs/edit?usp=drivesdk",
@@ -163,6 +171,30 @@
      "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
     },
     {
+     "name": "holo7-cosmos-bandit-D7-v2.1.0.zip",
+     "kind": "zip",
+     "url": "https://drive.google.com/file/d/1RMngtbYFwLVvwtpWSYTpYxKhDRxKQZdr/view?usp=drivesdk",
+     "modified": "2026-11-26 00:05 UTC",
+     "size": 58102,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "holo7-cosmos-bandit-D7-v2.2.0.zip",
+     "kind": "zip",
+     "url": "https://drive.google.com/file/d/1s1VCDXdDzNg5nR4gtLUf3td3t6tCM05N/view?usp=drivesdk",
+     "modified": "2026-11-26 09:03 UTC",
+     "size": 69849,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
+     "name": "holo7-cosmos-bandit-D7.zip",
+     "kind": "zip",
+     "url": "https://drive.google.com/file/d/1A3844L58yGTiwa4LYv7V701DwuOKdU7f/view?usp=drivesdk",
+     "modified": "2026-11-25 23:47 UTC",
+     "size": 52812,
+     "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
+    },
+    {
      "name": "index.json",
      "kind": "json",
      "url": "https://drive.google.com/file/d/1DqbeB7qkySuiX8MG3a-vCR37jYVlAnEv/view?usp=drivesdk",
@@ -174,8 +206,8 @@
      "name": "INDEX.md",
      "kind": "markdown",
      "url": "https://docs.google.com/document/d/1wp-KX5yeC0WRPt-f3zHEA6kBYRjvhAOI/edit?usp=drivesdk&ouid=116372661464593201153&rtpof=true&sd=true",
-     "modified": "2026-11-25 21:14 UTC",
-     "size": 11447,
+     "modified": "2026-11-26 09:04 UTC",
+     "size": 17318,
      "parent": "Autonomous Dragon 🐉 · 77 Brains + Multitask Agents"
     },
     {
@@ -297,11 +329,45 @@
    ]
   },
   {
+   "name": "D7 Samples",
+   "kind": "folder",
+   "url": "https://drive.google.com/drive/folders/1BXIgiUIAzgI21a-r6Euyh4UI0DuA5w3e",
+   "modified": "2026-11-26 00:04 UTC",
+   "size": null,
+   "parent": null,
+   "children": [
+    {
+     "name": "D7-Samples-Drive-pack.zip",
+     "kind": "zip",
+     "url": "https://drive.google.com/file/d/1W-s1yj_qvZi0dHINzOzAJ0x77NchfAZJ/view?usp=drivesdk",
+     "modified": "2026-11-26 00:04 UTC",
+     "size": 10875489,
+     "parent": "D7 Samples"
+    },
+    {
+     "name": "README-D7-Samples.txt",
+     "kind": "plain",
+     "url": "https://drive.google.com/file/d/1xvJW42cj67OVYjBm46E7ZfBjS3BUlR6I/view?usp=drivesdk",
+     "modified": "2026-11-26 00:04 UTC",
+     "size": 342,
+     "parent": "D7 Samples"
+    }
+   ]
+  },
+  {
    "name": "Aktualizacja Master Index — 2026-11-18 Bot D",
    "kind": "doc",
    "url": "https://docs.google.com/document/d/1YoJzRW9pWAG1Cj_os7-g53aMSNLI3qlElbgKnTSk_AI/edit?usp=drivesdk",
    "modified": "2026-11-18 14:45 UTC",
    "size": 3737,
+   "parent": null
+  },
+  {
+   "name": "D7-SuperSI-status.md",
+   "kind": "markdown",
+   "url": "https://docs.google.com/document/d/1WcOkoZV5-4wUnfgiz6MvgBCMoP1jXCys/edit?usp=drivesdk&ouid=116372661464593201153&rtpof=true&sd=true",
+   "modified": "2026-11-25 23:36 UTC",
+   "size": 504,
    "parent": null
   },
   {
@@ -319,15 +385,7 @@
    "modified": "2026-11-18 14:45 UTC",
    "size": 5203,
    "parent": null
-  },
-  {
-   "name": "D7-SuperSI-status.md",
-   "kind": "markdown",
-   "url": "https://drive.google.com/file/d/1WcOkoZV5-4wUnfgiz6MvgBCMoP1jXCys/view",
-   "modified": "2026-11-25 23:33 UTC",
-   "size": 504,
-   "parent": null
   }
  ],
- "cachedAt": "2026-11-26 00:33 CET"
+ "cachedAt": "2026-11-26 10:20 CET"
 }
