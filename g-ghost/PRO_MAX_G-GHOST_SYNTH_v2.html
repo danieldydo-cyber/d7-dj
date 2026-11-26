@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>PRO MAX G-GHOST // DJ D7 AUDIO ENGINE v2</title>
+<style>
+  body {
+    background: #090a0f;
+    color: #00ffcc;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+  }
+  .console {
+    background: #12151e;
+    border: 2px solid #00ffcc;
+    border-radius: 12px;
+    padding: 20px;
+    width: 95%;
+    max-width: 800px;
+    box-shadow: 0 0 30px rgba(0,255,204,0.3);
+  }
+  h1 { text-align: center; letter-spacing: 3px; color: #fff; }
+  .btn-main {
+    width: 100%; padding: 15px; font-size: 18px; font-weight: bold;
+    background: #00ffcc; color: #090a0f; border: none; border-radius: 6px;
+    cursor: pointer; margin-bottom: 15px;
+  }
+  .btn-main.active { background: #ff0055; color: #fff; }
+  .module { background: #1a1f2c; padding: 12px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #00ffcc; }
+  .module-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  button.trigger { background: #2b3344; color: #00ffcc; border: 1px solid #00ffcc; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+  input[type="range"] { width: 100%; accent-color: #00ffcc; }
+  canvas { width: 100%; height: 120px; background: #0a0c12; border-radius: 6px; margin-top: 10px; }
+  label { font-size: 12px; color: #8892b0; }
+</style>
+</head>
+<body>
+<div class="console">
+  <h1>G-GHOST // DJ D7 MULTITOOL v2</h1>
+  <button id="powerBtn" class="btn-main">START AUDIO ENGINE</button>
+  <canvas id="vis"></canvas>
+
+  <!-- Cosmos -->
+  <div class="module">
+    <div class="module-header">
+      <span>1. COSMOS & SOLAR DRONE</span>
+      <button id="cosmosBtn" class="trigger">WŁĄCZ / WYŁĄCZ</button>
+    </div>
+    <label>Freq: <span id="cFreq">65</span> Hz</label>
+    <input type="range" id="cosmosFreq" min="30" max="300" value="65">
+  </div>
+
+  <!-- Sonar -->
+  <div class="module">
+    <div class="module-header">
+      <span>2. OCEAN & DOLPHIN SONAR</span>
+      <button id="sonarBtn" class="trigger">IMPULS SONARU</button>
+    </div>
+  </div>
+
+  <!-- Beat -->
+  <div class="module">
+    <div class="module-header">
+      <span>3. JUNGLE / DUB RHYTHM</span>
+      <button id="beatBtn" class="trigger">START / STOP BEAT</button>
+    </div>
+    <label>BPM: <span id="bpmVal">160</span></label>
+    <input type="range" id="bpmSlider" min="80" max="180" value="160">
+  </div>
+
+  <!-- FX -->
+  <div class="module">
+    <div class="module-header"><span>4. SPACE REVERB + DUB DELAY</span></div>
+    <label>Reverb Wet: <span id="revVal">0.3</span></label>
+    <input type="range" id="reverbWet" min="0" max="1" step="0.01" value="0.3">
+    <label>Delay Time: <span id="delVal">0.4</span>s</label>
+    <input type="range" id="delayTime" min="0.1" max="1.5" step="0.01" value="0.4">
+    <label>Delay Feedback: <span id="fbVal">0.4</span></label>
+    <input type="range" id="delayFb" min="0" max="0.9" step="0.01" value="0.4">
+  </div>
+
+  <!-- Samples -->
+  <div class="module">
+    <div class="module-header"><span>5. SAMPLE PLAYER (upload MP3/WAV)</span></div>
+    <input type="file" id="sampleFile" accept="audio/*">
+    <button id="playSample" class="trigger">PLAY SAMPLE</button>
+  </div>
+
+  <div class="module">
+    <label>Master Volume: <span id="masterVal">0.8</span></label>
+    <input type="range" id="masterVol" min="0" max="1" step="0.01" value="0.8">
+  </div>
+</div>
+
+<script>
+let audioCtx, isEngineOn = false;
+let cosmosOsc, cosmosGain, cosmosActive = false;
+let beatInterval, beatActive = false, step = 0;
+let analyser, dataArray, canvas, ctx2d;
+let reverb, delay, delayFbGain, masterGain;
+let sampleBuffer = null;
+
+const powerBtn = document.getElementById('powerBtn');
+const cosmosBtn = document.getElementById('cosmosBtn');
+const cosmosFreq = document.getElementById('cosmosFreq');
+const sonarBtn = document.getElementById('sonarBtn');
+const beatBtn = document.getElementById('beatBtn');
+const bpmSlider = document.getElementById('bpmSlider');
+const bpmVal = document.getElementById('bpmVal');
+const reverbWet = document.getElementById('reverbWet');
+const delayTime = document.getElementById('delayTime');
+const delayFb = document.getElementById('delayFb');
+const masterVol = document.getElementById('masterVol');
+const sampleFile = document.getElementById('sampleFile');
+const playSample = document.getElementById('playSample');
+canvas = document.getElementById('vis');
+ctx2d = canvas.getContext('2d');
+
+function initAudio() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0.8;
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+  // Delay
+  delay = audioCtx.createDelay(2);
+  delay.delayTime.value = 0.4;
+  delayFbGain = audioCtx.createGain();
+  delayFbGain.gain.value = 0.4;
+  delay.connect(delayFbGain);
+  delayFbGain.connect(delay);
+
+  // Simple reverb via convolver (impulse)
+  reverb = audioCtx.createConvolver();
+  const len = audioCtx.sampleRate * 2;
+  const impulse = audioCtx.createBuffer(2, len, audioCtx.sampleRate);
+  for (let c = 0; c < 2; c++) {
+    const ch = impulse.getChannelData(c);
+    for (let i = 0; i < len; i++) ch[i] = (Math.random()*2-1) * Math.pow(1 - i/len, 2);
+  }
+  reverb.buffer = impulse;
+
+  const wet = audioCtx.createGain();
+  wet.gain.value = 0.3;
+  reverb.connect(wet);
+
+  // Routing: everything -> delay + reverb + dry -> analyser -> master
+  // Simplified: connect modules to master, FX in parallel later
+  masterGain.connect(analyser);
+  analyser.connect(audioCtx.destination);
+
+  // Connect delay and reverb to master
+  delay.connect(masterGain);
+  wet.connect(masterGain);
+}
+
+powerBtn.addEventListener('click', () => {
+  initAudio();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  isEngineOn = !isEngineOn;
+  powerBtn.textContent = isEngineOn ? 'SYSTEM AKTYWNY' : 'START AUDIO ENGINE';
+  powerBtn.classList.toggle('active', isEngineOn);
+  if (!isEngineOn) stopAll();
+  else animate();
+});
+
+function stopAll() {
+  if (cosmosActive) toggleCosmos();
+  if (beatActive) toggleBeat();
+}
+
+function connectToFX(node) {
+  const dry = audioCtx.createGain();
+  dry.gain.value = 0.7;
+  node.connect(dry);
+  dry.connect(masterGain);
+  node.connect(delay);
+  node.connect(reverb);
+}
+
+// Cosmos
+function toggleCosmos() {
+  if (!isEngineOn) return alert('Najpierw START AUDIO ENGINE!');
+  if (!cosmosActive) {
+    cosmosOsc = audioCtx.createOscillator();
+    cosmosGain = audioCtx.createGain();
+    cosmosOsc.type = 'sawtooth';
+    cosmosOsc.frequency.value = cosmosFreq.value;
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 200;
+    cosmosGain.gain.value = 0.2;
+    cosmosOsc.connect(filter);
+    filter.connect(cosmosGain);
+    connectToFX(cosmosGain);
+    cosmosOsc.start();
+    cosmosActive = true;
+    cosmosBtn.style.background = '#00ffcc';
+    cosmosBtn.style.color = '#000';
+  } else {
+    cosmosOsc.stop();
+    cosmosActive = false;
+    cosmosBtn.style.background = '#2b3344';
+    cosmosBtn.style.color = '#00ffcc';
+  }
+}
+cosmosBtn.addEventListener('click', toggleCosmos);
+cosmosFreq.addEventListener('input', () => {
+  document.getElementById('cFreq').textContent = cosmosFreq.value;
+  if (cosmosOsc) cosmosOsc.frequency.value = cosmosFreq.value;
+});
+
+// Sonar
+sonarBtn.addEventListener('click', () => {
+  if (!isEngineOn) return alert('Najpierw START!');
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'sine';
+  const now = audioCtx.currentTime;
+  osc.frequency.setValueAtTime(800, now);
+  osc.frequency.exponentialRampToValueAtTime(2200, now + 0.2);
+  osc.frequency.exponentialRampToValueAtTime(600, now + 0.5);
+  gain.gain.setValueAtTime(0.4, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+  osc.connect(gain);
+  connectToFX(gain);
+  osc.start(now);
+  osc.stop(now + 0.8);
+});
+
+// Beat
+function playDrum(type) {
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  if (type === 'kick') {
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(150, now);
+    osc.frequency.exponentialRampToValueAtTime(40, now + 0.18);
+    gain.gain.setValueAtTime(0.7, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+  } else if (type === 'snare') {
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(220, now);
+    gain.gain.setValueAtTime(0.35, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+  } else if (type === 'hat') {
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(7000, now);
+    gain.gain.setValueAtTime(0.06, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+  }
+  osc.connect(gain);
+  connectToFX(gain);
+  osc.start(now);
+  osc.stop(now + 0.3);
+}
+
+function toggleBeat() {
+  if (!isEngineOn) return alert('Najpierw START!');
+  if (!beatActive) {
+    beatActive = true;
+    beatBtn.style.background = '#00ffcc';
+    beatBtn.style.color = '#000';
+    startLoop();
+  } else {
+    beatActive = false;
+    beatBtn.style.background = '#2b3344';
+    beatBtn.style.color = '#00ffcc';
+    clearInterval(beatInterval);
+  }
+}
+function startLoop() {
+  clearInterval(beatInterval);
+  const bpm = +bpmSlider.value;
+  const stepTime = (60 / bpm / 4) * 1000;
+  const pattern = ['kick', 'hat', 'hat', 'kick', 'snare', 'hat', 'kick', 'hat'];
+  beatInterval = setInterval(() => {
+    playDrum(pattern[step % pattern.length]);
+    step++;
+  }, stepTime);
+}
+beatBtn.addEventListener('click', toggleBeat);
+bpmSlider.addEventListener('input', () => {
+  bpmVal.textContent = bpmSlider.value;
+  if (beatActive) startLoop();
+});
+
+// FX controls
+reverbWet.addEventListener('input', () => {
+  document.getElementById('revVal').textContent = reverbWet.value;
+  // wet gain is fixed in code, for full control expand later
+});
+delayTime.addEventListener('input', () => {
+  document.getElementById('delVal').textContent = delayTime.value;
+  if (delay) delay.delayTime.value = +delayTime.value;
+});
+delayFb.addEventListener('input', () => {
+  document.getElementById('fbVal').textContent = delayFb.value;
+  if (delayFbGain) delayFbGain.gain.value = +delayFb.value;
+});
+masterVol.addEventListener('input', () => {
+  document.getElementById('masterVal').textContent = masterVol.value;
+  if (masterGain) masterGain.gain.value = +masterVol.value;
+});
+
+// Sample
+sampleFile.addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file || !audioCtx) return;
+  const arr = await file.arrayBuffer();
+  sampleBuffer = await audioCtx.decodeAudioData(arr);
+  alert('Sample załadowany! Kliknij PLAY');
+});
+playSample.addEventListener('click', () => {
+  if (!sampleBuffer || !isEngineOn) return alert('Załaduj sample i START engine');
+  const src = audioCtx.createBufferSource();
+  src.buffer = sampleBuffer;
+  connectToFX(src);
+  src.start();
+});
+
+// Visualizer
+function animate() {
+  if (!isEngineOn) return;
+  requestAnimationFrame(animate);
+  analyser.getByteFrequencyData(dataArray);
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 120;
+  ctx2d.fillStyle = '#0a0c12';
+  ctx2d.fillRect(0, 0, canvas.width, canvas.height);
+  const barW = canvas.width / dataArray.length * 2.5;
+  let x = 0;
+  for (let i = 0; i < dataArray.length; i++) {
+    const barH = dataArray[i] / 2;
+    ctx2d.fillStyle = `hsl(${i * 2}, 100%, 50%)`;
+    ctx2d.fillRect(x, canvas.height - barH, barW, barH);
+    x += barW + 1;
+  }
+}
+</script>
+</body>
+</html>
