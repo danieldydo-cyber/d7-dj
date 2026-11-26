@@ -1,10 +1,11 @@
-/* DD DJ 3.0.1 · Space X Sound Engine Pro — original Web Audio code (DJ DaX / Daniel Dydo).
+/* DD DJ 3.0.2 · Space X Sound Engine Club Pro — original Web Audio code (DJ DaX / Daniel Dydo).
    Buses: kick → warm sat │ top (hats/snare/perc, HPF 140) │ bass → warm sat → sidechain duck │ synth (HPF 170, mud cut) → duck │ fx/vox (HPF 220) → duck
+   Club: engine/track blend (equal-power) → LR4 isolator (220 Hz / 2.6 kHz, kills) → Color FX → master
    Master: sum → 3-band EQ → DJ LP/HP → [dry + sub enhancer + air] → glue comp → warm saturator → limiter → ceiling −0.5 dB
    Clock: Web Worker heartbeat + 0.25 s lookahead on audioCtx.currentTime. Voices: tracked, auto-disconnected on end, budgeted. */
 (function () {
   'use strict';
-  var A = { ctx: null, ls: {}, version: '3.0.1', _bands: { b: 0, m: 0, h: 0, r: 0 } };
+  var A = { ctx: null, ls: {}, version: '3.0.2', _bands: { b: 0, m: 0, h: 0, r: 0 } };
   A.on = function (e, f) { (A.ls[e] = A.ls[e] || []).push(f); };
   A.emit = function (e, a) { var l = A.ls[e]; if (!l) return; for (var i = 0; i < l.length; i++) { try { l[i](a); } catch (x) { console.error(x); } } };
   var ctx, noiseBuf, hatBuf, shapers = {};
@@ -39,6 +40,7 @@
     var AC = window.AudioContext || window.webkitAudioContext;
     try { ctx = new AC({ latencyHint: 'playback', sampleRate: 48000 }); } catch (e) { try { ctx = new AC({ latencyHint: 'playback' }); } catch (e2) { ctx = new AC(); } }
     A.ctx = ctx;
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {} // iOS 17+: play even with the silent switch on
     var sr = ctx.sampleRate;
     noiseBuf = ctx.createBuffer(1, sr * 2, sr); var nd = noiseBuf.getChannelData(0); for (var i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
     // pre-rendered metallic hat texture (6 square partials + noise) → 1 buffer source per hat instead of 6 oscillators
@@ -62,11 +64,26 @@
     A.fxBus.connect(A.fxHP); A.fxHP.connect(A.fxDuck); A.fxDuck.connect(A.genGain);
     A.instBus = A.synthBus; A.pump = A.synthDuck; // compat
     A.deckBus = ctx.createGain(); A.padBus = ctx.createGain(); A.padBus.gain.value = .85;
-    A.bus = ctx.createGain(); A.genGain.connect(A.bus); A.deckBus.connect(A.bus); A.padBus.connect(A.bus);
+    A.bus = ctx.createGain(); A.genXf = ctx.createGain(); A.trkXf = ctx.createGain();
+    A.genGain.connect(A.genXf); A.genXf.connect(A.bus); A.deckBus.connect(A.trkXf); A.padBus.connect(A.trkXf); A.trkXf.connect(A.bus);
+    // ---- Club isolator: Linkwitz-Riley 24 dB crossovers 220 Hz / 2.6 kHz + allpass compensation → bands sum flat; each band 0 (kill) … +6 dB
+    function lr4(t, f) { var a = biq(t, f, .7071), b = biq(t, f, .7071); a.connect(b); return [a, b]; }
+    var iL = lr4('lowpass', 220), iH = lr4('highpass', 220), iM = lr4('lowpass', 2600), iT = lr4('highpass', 2600), iAP = biq('allpass', 2600, .7071);
+    A.isoLo = ctx.createGain(); A.isoMid = ctx.createGain(); A.isoHi = ctx.createGain(); A.isoSum = ctx.createGain();
+    A.bus.connect(iL[0]); iL[1].connect(iAP); iAP.connect(A.isoLo); A.bus.connect(iH[0]); iH[1].connect(iM[0]); iH[1].connect(iT[0]); iM[1].connect(A.isoMid); iT[1].connect(A.isoHi);
+    A.isoLo.connect(A.isoSum); A.isoMid.connect(A.isoSum); A.isoHi.connect(A.isoSum);
+    // ---- Club Color FX: bipolar resonant HPF/LPF + colour layer (noise / space / crush / dub echo)
+    A.cfHP = biq('highpass', 20, .7); A.cfLP = biq('lowpass', 22000, .7); A.cfDry = ctx.createGain(); A.cfOut = ctx.createGain();
+    A.isoSum.connect(A.cfHP); A.cfHP.connect(A.cfLP); A.cfLP.connect(A.cfDry); A.cfDry.connect(A.cfOut);
+    A.crushSh = shaper((function () { var n = 4096, c = new Float32Array(n), st = 10; for (var i = 0; i < n; i++) { var x = i * 2 / n - 1; c[i] = Math.round(x * st) / st; } return c; })()); A.crushLP = biq('lowpass', 5200, .6);
+    A.crushWet = ctx.createGain(); A.crushWet.gain.value = 0; A.cfLP.connect(A.crushSh); A.crushSh.connect(A.crushLP); A.crushLP.connect(A.crushWet); A.crushWet.connect(A.cfOut);
+    A.cfNoise = ctx.createBufferSource(); A.cfNoise.buffer = noiseBuf; A.cfNoise.loop = true; A.cfNoiseBP = biq('bandpass', 2000, 1.2); A.cfNoiseG = ctx.createGain(); A.cfNoiseG.gain.value = 0;
+    A.cfNoise.connect(A.cfNoiseBP); A.cfNoiseBP.connect(A.cfNoiseG); A.cfNoiseG.connect(A.cfOut); A.cfNoise.start();
+    A.cfRev = ctx.createGain(); A.cfRev.gain.value = 0; A.cfEcho = ctx.createGain(); A.cfEcho.gain.value = 0; A.cfLP.connect(A.cfRev); A.cfLP.connect(A.cfEcho);
     // ---- master EQ + DJ filter
     A.eqLo = biq('lowshelf', 110); A.eqMid = biq('peaking', 1100, .7); A.eqHi = biq('highshelf', 6500);
     A.lpf = biq('lowpass', 22000, .8); A.hpf = biq('highpass', 20, .8);
-    A.bus.connect(A.eqLo); A.eqLo.connect(A.eqMid); A.eqMid.connect(A.eqHi); A.eqHi.connect(A.hpf); A.hpf.connect(A.lpf);
+    A.cfOut.connect(A.eqLo); A.eqLo.connect(A.eqMid); A.eqMid.connect(A.eqHi); A.eqHi.connect(A.hpf); A.hpf.connect(A.lpf);
     A.sum = ctx.createGain(); A.lpf.connect(A.sum);
     // sub enhancer (parallel harmonics of 45–85 Hz so phones "hear" the sub) + air
     var sHP = biq('highpass', 40, .7), sLP = biq('lowpass', 85, .8), sSh = shaper(curve('harm', 2), '2x'), sPost = biq('bandpass', 150, .6);
@@ -84,9 +101,7 @@
     A.springIn = ctx.createGain(); var spr = ctx.createConvolver(); spr.buffer = impulse(1.4, 3.2, .6); var sprBP = biq('bandpass', 1800, .7), sprG = ctx.createGain(); sprG.gain.value = .6; A.springIn.connect(sprBP); sprBP.connect(spr); spr.connect(sprG); sprG.connect(A.sum);
     A.echoThrowG = ctx.createGain(); A.echoThrowG.gain.value = 0; A.revThrowG = ctx.createGain(); A.revThrowG.gain.value = 0;
     [A.topHP, A.synthDuck, A.fxDuck].forEach(function (n) { n.connect(A.echoThrowG); n.connect(A.revThrowG); });
-    A.echoThrowG.connect(A.echoIn); A.revThrowG.connect(A.revIn);
-    A.brIn = ctx.createGain(); A.brIn.gain.value = 0; A.br = ctx.createDelay(2); A.brFb = ctx.createGain(); A.brFb.gain.value = 0; A.brOut = ctx.createGain(); A.brOut.gain.value = 0;
-    A.lpf.connect(A.brIn); A.brIn.connect(A.br); A.br.connect(A.brFb); A.brFb.connect(A.br); A.br.connect(A.brOut);
+    A.echoThrowG.connect(A.echoIn); A.revThrowG.connect(A.revIn); A.cfRev.connect(A.revIn); A.cfEcho.connect(A.echoIn);
     A.dry = ctx.createGain(); A.sum.connect(A.dry);
     // ---- master: glue → makeup → warm saturator → limiter → ceiling −0.5 dB → safety
     A.glue = ctx.createDynamicsCompressor(); A.glue.threshold.value = -14; A.glue.knee.value = 10; A.glue.ratio.value = 2.5; A.glue.attack.value = .015; A.glue.release.value = .16;
@@ -98,19 +113,31 @@
     A.safety = shaper((function () { var n = 2048, c = new Float32Array(n), L = db(-0.5); for (var i = 0; i < n; i++) { var x = i * 2 / n - 1, ax = Math.abs(x), k = .85 * L; c[i] = ax < k ? x : Math.sign(x) * (k + (L - k) * Math.tanh((ax - k) / (L - k))); } return c; })());
     A.analyser = ctx.createAnalyser(); A.analyser.fftSize = 2048; A.analyser.smoothingTimeConstant = .6;
     A.recDest = ctx.createMediaStreamDestination();
-    A.dry.connect(A.glue); A.brOut.connect(A.glue); A.glue.connect(A.makeup); A.makeup.connect(A.satPre); A.satPre.connect(A.sat); A.sat.connect(A.satPost); A.satPost.connect(A.master);
+    // mono sub < 110 Hz (LR4, summed to mono) + M/S stereo width on everything above
+    A.msIn = ctx.createGain(); A.dry.connect(A.msIn);
+    var mL = lr4('lowpass', 110), mH = lr4('highpass', 110); A.monoSub = ctx.createGain(); A.monoSub.channelCount = 1; A.monoSub.channelCountMode = 'explicit'; A.monoSub.channelInterpretation = 'speakers';
+    A.msIn.connect(mL[0]); mL[1].connect(A.monoSub); A.monoSub.connect(A.glue); A.msIn.connect(mH[0]);
+    var spl = ctx.createChannelSplitter(2), mrg = ctx.createChannelMerger(2); A.wLL = ctx.createGain(); A.wLR = ctx.createGain(); A.wRL = ctx.createGain(); A.wRR = ctx.createGain();
+    mH[1].connect(spl); spl.connect(A.wLL, 0); spl.connect(A.wRL, 0); spl.connect(A.wLR, 1); spl.connect(A.wRR, 1);
+    A.wLL.connect(mrg, 0, 0); A.wLR.connect(mrg, 0, 0); A.wRL.connect(mrg, 0, 1); A.wRR.connect(mrg, 0, 1); mrg.connect(A.glue); A.glue.connect(A.makeup); A.makeup.connect(A.satPre); A.satPre.connect(A.sat); A.sat.connect(A.satPost); A.satPost.connect(A.master);
     A.master.connect(A.limiter); A.limiter.connect(A.ceiling); A.ceiling.connect(A.safety); A.safety.connect(A.analyser);
     A.analyser.connect(ctx.destination); A.analyser.connect(A.recDest);
     A.fd = new Uint8Array(A.analyser.frequencyBinCount);
-    A.decks = [new Deck(0), new Deck(1)]; A.xfader(0);
+    A.decks = [new Deck(0), new Deck(1)]; A.xfader(0); A.blend(A.blendVal || 0); A.setWidth(A.width); A.setIso('lo', 0); A.setIso('mid', 0); A.setIso('hi', 0);
     A.loudness(A.settings.punch);
     startClock();
-    ctx.onstatechange = function () { A.emit('state', ctx.state); };
+    ctx.onstatechange = function () { A.emit('state', ctx.state); A.emit('audiostate', ctx.state); if (ctx.state !== 'running' && ctx.state !== 'closed' && !document.hidden && A.want) setTimeout(A.resume, 250); };
+    setInterval(function () { if (!ctx || ctx.state === 'closed') return; if (ctx.state !== 'running' && !document.hidden && A.want) { A.stats.recover = (A.stats.recover || 0) + 1; A.resume(); } }, 1000); // auto-recovery (interruptions, BT switch, focus loss)
     A.emit('ready');
     return ctx;
   };
-  A.resume = function () { if (ctx && ctx.state !== 'running' && ctx.state !== 'closed') return ctx.resume().catch(function () {}); };
-  A.settings = { punch: .5, swing: .1, human: .3, pump: .55 };
+  A.want = false; // user has asked for audio at least once
+  A.resume = function () { if (ctx && ctx.state !== 'running' && ctx.state !== 'closed') return ctx.resume().then(function () { A.emit('audiostate', ctx.state); }).catch(function (e) { A.emit('audiostate', ctx.state); A.emit('audioerr', e && e.message || String(e)); }); };
+  // gesture unlock: resume + 1-sample silent buffer (iOS Safari / Android WebView need a sound started inside the gesture)
+  A.unlock = function () { A.want = true; if (!ctx) return; try { var b = ctx.createBuffer(1, 1, ctx.sampleRate), s = ctx.createBufferSource(); s.buffer = b; s.connect(ctx.destination); s.start(0); s.onended = function () { try { s.disconnect(); } catch (e) {} }; } catch (e) {} return A.resume(); };
+  ['pointerdown', 'touchstart', 'touchend', 'mousedown', 'click', 'keydown'].forEach(function (ev) { document.addEventListener(ev, function () { if (ctx && ctx.state !== 'running') A.unlock(); }, { capture: true, passive: true }); });
+  ['visibilitychange', 'focus', 'pageshow'].forEach(function (ev) { (ev === 'visibilitychange' ? document : window).addEventListener(ev, function () { if (ctx && !document.hidden && A.want) A.resume(); }); });
+  A.settings = { punch: .5, swing: .1, human: .3, pump: .55, trans: .5 };
   A.loudness = function (p) { // 0..1 — clean at 0, club-loud at 1, limiter keeps peaks ≤ −0.5 dBFS
     p = clampN(p, 0, 1, .5); A.settings.punch = p; if (!ctx) return; var t = ctx.currentTime;
     A.glue.threshold.setTargetAtTime(-8 - p * 10, t, .05); A.glue.ratio.setTargetAtTime(1.8 + p * 1.8, t, .05);
@@ -124,6 +151,23 @@
     else if (v > 0.02) { A.hpf.frequency.setTargetAtTime(20 * Math.pow(8000 / 20, v), t, .03); A.lpf.frequency.setTargetAtTime(22000, t, .03); }
     else { A.lpf.frequency.setTargetAtTime(22000, t, .03); A.hpf.frequency.setTargetAtTime(20, t, .03); }
     A.filterVal = v; };
+  // ---- Club API
+  A.iso = { lo: 0, mid: 0, hi: 0 }; A.kill = { lo: false, mid: false, hi: false };
+  function isoGain(v) { return v < 0 ? Math.pow(1 + v, 2) : db(v * 6); }
+  A.setIso = function (b, v) { if (v != null) A.iso[b] = clampN(v, -1, 1, 0); if (!ctx) return; var n = b === 'lo' ? A.isoLo : b === 'mid' ? A.isoMid : A.isoHi; n.gain.setTargetAtTime(A.kill[b] ? 0 : isoGain(A.iso[b]), ctx.currentTime, .006); };
+  A.setKill = function (b, on) { A.kill[b] = on == null ? !A.kill[b] : !!on; A.setIso(b); A.emit('kill', b); return A.kill[b]; };
+  A.color = { v: 0, mode: 'filter', res: .5 };
+  A.setColor = function (v, mode, res) { var c = A.color; if (v != null) c.v = clampN(v, -1, 1, 0); if (mode) c.mode = mode; if (res != null) c.res = clampN(res, 0, 1, .5); if (!ctx) return; var t = ctx.currentTime, x = c.v, ax = Math.abs(x), q = .7 + c.res * 9;
+    var lpF = x < -.01 ? 22000 * Math.pow(90 / 22000, -x) : 22000, hpF = x > .01 ? 20 * Math.pow(9000 / 20, x) : 20;
+    A.cfLP.frequency.setTargetAtTime(lpF, t, .02); A.cfHP.frequency.setTargetAtTime(hpF, t, .02); A.cfLP.Q.setTargetAtTime(x < -.01 ? q : .7, t, .02); A.cfHP.Q.setTargetAtTime(x > .01 ? q : .7, t, .02);
+    var m = c.mode, k = ax > .02 ? ax : 0;
+    A.cfNoiseBP.frequency.setTargetAtTime(x < 0 ? Math.max(200, lpF * .8) : Math.max(400, hpF * 1.2), t, .03);
+    A.cfNoiseG.gain.setTargetAtTime(m === 'noise' ? k * .16 : 0, t, .03); A.cfRev.gain.setTargetAtTime(m === 'space' ? k * .9 : 0, t, .04); A.cfEcho.gain.setTargetAtTime(m === 'dub' ? k * .8 : 0, t, .04);
+    A.crushWet.gain.setTargetAtTime(m === 'crush' ? k : 0, t, .02); A.cfDry.gain.setTargetAtTime(m === 'crush' ? 1 - k * .75 : 1, t, .02); };
+  A.blendVal = 0;
+  A.blend = function (v) { v = clampN(v, -1, 1, 0); A.blendVal = v; if (!ctx) return; var x = (v + 1) / 2, ge = Math.min(1, Math.SQRT2 * Math.cos(x * Math.PI / 2)), gt = Math.min(1, Math.SQRT2 * Math.sin(x * Math.PI / 2)); A.genXf.gain.setTargetAtTime(ge, ctx.currentTime, .012); A.trkXf.gain.setTargetAtTime(gt, ctx.currentTime, .012); return [ge, gt]; };
+  A.width = 1.2;
+  A.setWidth = function (w) { A.width = clampN(w, 0, 2, 1.2); if (!ctx) return; var a = .5 * (1 + A.width), b = .5 * (1 - A.width), t = ctx.currentTime; A.wLL.gain.setTargetAtTime(a, t, .03); A.wRR.gain.setTargetAtTime(a, t, .03); A.wLR.gain.setTargetAtTime(b, t, .03); A.wRL.gain.setTargetAtTime(b, t, .03); };
   var timed = []; function at(t, fn) { timed.push({ t: t, fn: fn }); } A.at = at;
   A.sweep = function (from, to, sec, t0) { t0 = t0 || ctx.currentTime; var steps = Math.max(8, Math.min(32, Math.round(sec * 6)));
     for (var i = 0; i <= steps; i++) (function (v) { at(t0 + sec * i / steps, function () { A.setFilter(v); A.emit('filter', v); }); })(from + (to - from) * i / steps); };
@@ -132,9 +176,17 @@
   A.echoThrow = function (sec, t) { if (!ctx) return; t = t || ctx.currentTime; sec = sec || 2; var f = A.echoFb.gain;
     f.cancelScheduledValues(t); f.setTargetAtTime(.8, t, .02); f.setTargetAtTime(.48, t + sec, .5);
     var g = A.echoThrowG.gain; g.cancelScheduledValues(t); g.setTargetAtTime(.85, t, .01); g.setTargetAtTime(0, t + sec * .5, .15); };
-  A.beatRepeat = function (on, frac, t) { if (!ctx) return; t = t || ctx.currentTime; var len = (frac || .5) * 60 / A.bpm;
-    if (on) { A._br = true; A.br.delayTime.setValueAtTime(Math.min(1.99, len), t); A.brIn.gain.cancelScheduledValues(t); A.brIn.gain.setValueAtTime(1, t); A.brIn.gain.setValueAtTime(0, t + len); A.brFb.gain.setTargetAtTime(.96, t, .003); A.brOut.gain.setTargetAtTime(1, t, .004); A.dry.gain.setTargetAtTime(0, t + len, .006); }
-    else { A._br = false; A.brFb.gain.setTargetAtTime(0, t, .015); A.brOut.gain.setTargetAtTime(0, t, .02); A.dry.gain.setTargetAtTime(1, t, .006); A.brIn.gain.cancelScheduledValues(t); A.brIn.gain.setValueAtTime(0, t); } };
+  // beat repeat / beat loop / beat roll: fresh delay line per engage (no stale audio), quantized start, dry crossfade at loop point
+  A.beatRepeat = function (on, beats, t, fbv) { if (!ctx) return; t = Math.max(t || 0, ctx.currentTime);
+    if (on) { var len = Math.min(15.9, (beats || .5) * 60 / A.bpm); if (A._brN) A._brKill(t);
+      var d = ctx.createDelay(len + .05), fb = ctx.createGain(), gi = ctx.createGain(), out = ctx.createGain(); d.delayTime.value = len; fb.gain.value = 0; gi.gain.value = 0; out.gain.value = 0;
+      A.lpf.connect(gi); gi.connect(d); d.connect(fb); fb.connect(d); d.connect(out); out.connect(A.msIn);
+      gi.gain.setValueAtTime(1, t); gi.gain.setValueAtTime(0, t + len); fb.gain.setValueAtTime(fbv == null ? (beats >= 1 ? .998 : .97) : fbv, t);
+      out.gain.setValueAtTime(0, t + len - .003); out.gain.linearRampToValueAtTime(1, t + len + .003); A.dry.gain.setValueAtTime(1, t + len - .003); A.dry.gain.linearRampToValueAtTime(0, t + len + .003);
+      A._brN = { d: d, fb: fb, gi: gi, out: out, len: len, t: t }; A._br = true; A.loopInfo = { beats: beats, len: len, t: t }; A.emit('loop', A.loopInfo); }
+    else { if (A._brN) A._brKill(t); A._br = false; A.loopInfo = null; A.emit('loop', null); } };
+  A._brKill = function (t) { var n = A._brN; if (!n) return; A._brN = null; n.gi.gain.cancelScheduledValues(t); n.gi.gain.setValueAtTime(0, t); n.out.gain.cancelScheduledValues(t); n.out.gain.setTargetAtTime(0, t, .006); n.fb.gain.setTargetAtTime(0, t, .01);
+    A.dry.gain.cancelScheduledValues(t); A.dry.gain.setTargetAtTime(1, t, .005); at(t + .25, function () { try { A.lpf.disconnect(n.gi); } catch (e) {} [n.gi, n.d, n.fb, n.out].forEach(function (x) { try { x.disconnect(); } catch (e) {} }); }); };
   A.setMaster = function (v) { if (ctx) A.master.gain.setTargetAtTime(clampN(v, 0, 1.2, .9), ctx.currentTime, .03); };
   A.setGen = function (v) { A.genLevel = clampN(v, 0, 1.2, 1); if (ctx && !A._muting) A.genGain.gain.setTargetAtTime(A.genLevel, ctx.currentTime, .02); };
   A.bands = function () { var o = A._bands; if (!ctx) return o; A.analyser.getByteFrequencyData(A.fd); var f = A.fd, bin = ctx.sampleRate / A.analyser.fftSize;
@@ -160,14 +212,15 @@
     o.frequency.exponentialRampToValueAtTime(f1 * 1.6, t + (k.pd || .04) * .45); o.frequency.exponentialRampToValueAtTime(f1, t + (k.pd || .04) * 1.6);
     if (k.tail) o.frequency.exponentialRampToValueAtTime(f1 * .88, t + k.dec);
     g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(vel, t + .0015); g.gain.setTargetAtTime(vel * .75, t + .01, .05); g.gain.exponentialRampToValueAtTime(.0001, t + (k.dec || .42));
-    var cg = G(0, A.kickBus), ch = biq('bandpass', k.tone || 3200, .9); ch.connect(cg); noise(t, .012, ch); env(cg, t, .0004, (k.click == null ? .3 : k.click) * .8 * vel, .01);
+    var cg = G(0, A.kickBus), ch = biq('bandpass', k.tone || 3200, .9); ch.connect(cg); noise(t, .012, ch); env(cg, t, .0004, (k.click == null ? .3 : k.click) * (.55 + A.settings.trans * .55) * vel, .01);
     A.kickAt(t, vel); }, 2);
   V.snare = wrap(function (t, vel, k) { k = k || {}; var g = G(0, A.topBus), bp = biq('bandpass', k.sf || 2000, .7), hp = biq('highpass', 900, .7); bp.connect(hp); hp.connect(g); noise(t, k.sd || .19, bp); env(g, t, .001, .62 * vel, k.sd || .17);
     var tg = G(0, A.topBus), o = osc('triangle', k.st || 195, t, .11, tg); o.frequency.exponentialRampToValueAtTime((k.st || 195) * .62, t + .07); env(tg, t, .001, .42 * vel, .08);
+    var trg = G(0, A.topBus), trh = biq('highpass', 3500, .7); trh.connect(trg); noise(t, .008, trh); env(trg, t, .0003, A.settings.trans * .45 * vel, .006); // transient snap
     if (k.rev) hp.connect(G(.22 * vel, A.revIn)); }, 1);
   V.clap = wrap(function (t, vel, k) { var g = G(0, A.topBus), bp = biq('bandpass', (k && k.cf) || 1350, 1.1); bp.connect(g); noise(t, .3, bp);
     g.gain.setValueAtTime(0.0001, t); [0, .010, .021].forEach(function (o) { g.gain.setValueAtTime(.7 * vel, t + o); g.gain.exponentialRampToValueAtTime(.1 * vel, t + o + .008); });
-    g.gain.setValueAtTime(.55 * vel, t + .03); g.gain.exponentialRampToValueAtTime(.0001, t + .03 + ((k && k.cd) || .17)); bp.connect(G(.14, A.revIn)); }, 1);
+    g.gain.setValueAtTime(.55 * vel, t + .03); g.gain.exponentialRampToValueAtTime(.0001, t + .03 + ((k && k.cd) || .17)); var trg = G(0, A.topBus), trh = biq('highpass', 2800, .7); trh.connect(trg); noise(t, .006, trh); env(trg, t, .0003, A.settings.trans * .35 * vel, .005); bp.connect(G(.14, A.revIn)); }, 1);
   var hatSide = 0;
   V.hat = wrap(function (t, vel, open, k) { k = k || {}; var dur = open ? (k.od || .3) : (k.hd || .042), out = (hatSide++ & 1) ? A.hatR : A.hatL, g = G(0, out), hp = biq('highpass', open ? 6500 : 7800, .7); hp.connect(g);
     noise(t, dur, hp, k.metal ? 1.15 : 1, k.metal || open ? hatBuf : noiseBuf); var pk = (open ? .3 : .26) * (.55 + .45 * vel * vel); env(g, t, .0006, pk, dur); }, 0);
@@ -248,7 +301,7 @@
   A.setBpm = function (b, keepGlide) { if (!keepGlide) A._glide = null; A.bpm = clampN(b, 50, 200, 128); if (ctx && A._echoBeats) A.setEchoBeats(A._echoBeats); A.emit('bpm', A.bpm); };
   A.glideBpm = function (to, bars) { to = clampN(to, 50, 200, A.bpm); if (Math.abs(to - A.bpm) < .05) return; A._glide = { from: A.bpm, to: to, steps: Math.max(1, (bars || 8) * 16), n: 0 }; };
   var taps = []; A.tap = function () { var t = performance.now(); if (taps.length && t - taps[taps.length - 1] > 2000) taps = []; taps.push(t); if (taps.length > 8) taps.shift(); if (taps.length >= 3) { var d = (taps[taps.length - 1] - taps[0]) / (taps.length - 1); A.setBpm(Math.round(60000 / d * 10) / 10); } return A.bpm; };
-  A.start = function () { A.init(); A.resume(); if (A.playing) return; A._muting = false; A.genGain.gain.cancelScheduledValues(ctx.currentTime); A.genGain.gain.setTargetAtTime(A.genLevel, ctx.currentTime, .01); A.playing = true; A.step = 0; A.nextT = ctx.currentTime + .1; A.emit('play', true); };
+  A.start = function () { A.init(); A.want = true; A.resume(); if (A.playing) return; A._muting = false; A.genGain.gain.cancelScheduledValues(ctx.currentTime); A.genGain.gain.setTargetAtTime(A.genLevel, ctx.currentTime, .01); A.playing = true; A.step = 0; A.nextT = ctx.currentTime + .1; A.emit('play', true); };
   A.stop = function () { if (!A.playing) return; A.playing = false; if (ctx) { var t = ctx.currentTime; A._muting = true; A.genGain.gain.cancelScheduledValues(t); A.genGain.gain.setTargetAtTime(0, t, .025); // fade tails of already-scheduled notes
       at(t + A.LOOK + .4, function () { if (!A.playing) { A.genGain.gain.setTargetAtTime(A.genLevel, ctx.currentTime, .01); A._muting = false; } }); if (A._br) A.beatRepeat(false); }
     A.emit('play', false); };
@@ -270,6 +323,7 @@
       var guard = 0;
       while (A.nextT < now + A.LOOK && guard++ < 64) {
         if (A._glide) { var g = A._glide; g.n++; A.bpm = g.from + (g.to - g.from) * Math.min(1, g.n / g.steps); if (g.n >= g.steps) { A._glide = null; A.setBpm(g.to); } }
+        if (A._rephase && A.step % 4 === 0) { A._rephase = false; if (A.step % 16) A.step = (A.step / 16 | 0) * 16 + 16; } // hot cue: this beat becomes a downbeat
         var sd = A.stepDur(); if (A.nextT < now) A.stats.late++;
         if (A.seq) try { A.seq(A.step, A.nextT, sd); } catch (e) { console.error(e); A.emit('error', e); }
         if (A.step % 4 === 0) (function (bn) { at(A.nextT, function () { A.emit('beat', bn); }); })(A.step / 4);
@@ -284,20 +338,58 @@
   A.nextBeatTime = function () { return A.nextGrid(4); }; A.nextBarTime = function () { return A.nextGrid(16); };
 
   // ================= decks (uploaded tracks) =================
-  function Deck(i) { this.i = i; this.out = ctx.createGain(); this.out.gain.value = .9; this.out.connect(A.deckBus); this.x = ctx.createGain(); this.x.connect(this.out); this.buf = null; this.src = null; this.rate = 1; this.off = 0; this.t0 = 0; this.playing = false; this.name = ''; }
+  // BPM estimate from onset envelope autocorrelation (first ≤60 s), folded to 80–170
+  function detectBpm(buf) { try { var sr = buf.sampleRate, hop = Math.round(sr / 100), n = Math.min(buf.length, sr * 60), ch = buf.getChannelData(0), env = [], prev = 0, lp = 0;
+      for (var i = 0; i + hop <= n; i += hop) { var e = 0; for (var j = i; j < i + hop; j += 4) { lp += (ch[j] - lp) * .08; e += lp * lp; } e = Math.sqrt(e); env.push(Math.max(0, e - prev)); prev = e; }
+      var best = 0, bl = 0; for (var L = 35; L <= 75; L++) { var c = 0; for (var k = L; k < env.length; k++) c += env[k] * env[k - L]; if (c > best) { best = c; bl = L; } }
+      if (!bl) return 0; var bpm = 6000 / bl; while (bpm < 80) bpm *= 2; while (bpm > 170) bpm /= 2; return Math.round(bpm * 10) / 10; } catch (e) { return 0; } }
+  A.detectBpm = detectBpm;
+  function Deck(i) { this.i = i; this.out = ctx.createGain(); this.out.gain.value = .9; this.out.connect(A.deckBus); this.x = ctx.createGain(); this.x.connect(this.out); this.buf = null; this.src = null; this.rate = 1; this.off = 0; this.t0 = 0; this.playing = false; this.name = ''; this.bpm = 0; this.el = null; this.direct = false; }
+  Deck.prototype._mkEl = function (url, cors) { var self = this; if (this.el) { try { this.el.pause(); } catch (e) {} } var el = new Audio(); if (cors) el.crossOrigin = 'anonymous'; el.preload = 'auto'; el.src = url; el.preservesPitch = el.mozPreservesPitch = el.webkitPreservesPitch = true;
+    el.onended = function () { if (self.playing && self.mode === 'el') { self.playing = false; self.off = 0; A.emit('deck', self); } }; this.el = el; this.mes = null; return el; };
+  Deck.prototype._route = function () { if (this.mes || !this.el || this.direct) return; try { this.mes = ctx.createMediaElementSource(this.el); this.mes.connect(this.x); } catch (e) { this.direct = true; } };
+  Deck.prototype._ready = function (b, name, url) { this.stop(); if (this.url && this.url.indexOf('blob:') === 0) try { URL.revokeObjectURL(this.url); } catch (e) {} this.buf = b; this.off = 0; this.name = name; this.direct = false; this.url = url; this.bpm = b ? detectBpm(b) : 0; if (url) { this._mkEl(url, url.indexOf('blob:') !== 0); } if (A.syncLock) this.sync(); A.emit('deck', this); return this; };
   Deck.prototype.load = function (file) { var self = this; A.init();
     return file.arrayBuffer().then(function (ab) { return new Promise(function (res, rej) { var p = ctx.decodeAudioData(ab, res, rej); if (p && p.catch) p.catch(rej); }); })
-      .then(function (b) { self.stop(); self.buf = b; self.off = 0; self.name = file.name.replace(/\.[^.]+$/, ''); A.emit('deck', self); return self; }); };
-  Deck.prototype.play = function () { if (!this.buf || this.playing) return; A.resume(); var s = ctx.createBufferSource(), self = this; s.buffer = this.buf; s.playbackRate.value = this.rate; s.connect(this.x);
-    var t = ctx.currentTime + .01; this.x.gain.cancelScheduledValues(t); this.out.gain.setValueAtTime(0, t); this.out.gain.linearRampToValueAtTime(.9, t + .015);
+      .then(function (b) { return self._ready(b, file.name.replace(/\.[^.]+$/, ''), URL.createObjectURL(file)); }); };
+  // link loader: direct/CORS URL → decoded buffer (full FX); Drive/Dropbox links normalised; if the host blocks CORS → plain streaming (audible, no FX/visual sync) — never silent
+  A.normLink = function (u) { u = String(u || '').trim(); var m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:[^#]*&)?id=)([\w-]{20,})/) || u.match(/[?&]id=([\w-]{20,})/);
+    if (m && /google\./.test(u)) return { url: 'https://drive.usercontent.google.com/download?id=' + m[1] + '&export=download&confirm=t', drive: m[1] };
+    if (/dropbox\.com\//.test(u)) { var d = u.replace(/([?&])dl=[01]/, '$1raw=1'); return { url: /raw=1/.test(d) ? d : d + (d.indexOf('?') > 0 ? '&' : '?') + 'raw=1' }; }
+    return { url: u }; };
+  Deck.prototype.loadUrl = function (link) { var self = this; A.init(); var n = A.normLink(link), u = n.url, name = decodeURIComponent((u.split('?')[0].split('/').pop() || 'link')).replace(/\.[^.]+$/, '').slice(0, 40) || 'link';
+    if (n.drive) name = 'Drive ' + n.drive.slice(0, 6);
+    return fetch(u, { mode: 'cors' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+      .then(function (ab) { return new Promise(function (res, rej) { var p = ctx.decodeAudioData(ab, res, rej); if (p && p.catch) p.catch(rej); }); })
+      .then(function (b) { self._ready(b, name, u); self.how = 'buffer'; return self; })
+      .catch(function (err) { // CORS-blocked or not decodable via fetch → stream it through a media element
+        return new Promise(function (res, rej) { self._ready(null, name, null); var el = self._mkEl(u, false); self.direct = true; self.how = 'stream';
+          var done = false; el.oncanplay = function () { if (done) return; done = true; self.dur = el.duration; A.emit('deck', self); res(self); };
+          el.onerror = function () { if (done) return; done = true; rej(new Error('Link nie gra (' + (err && err.message || 'błąd') + '). Plik musi być publiczny (Drive: „Każdy z linkiem”).')); };
+          el.load(); setTimeout(function () { if (!done) { done = true; rej(new Error('Timeout linku — sprawdź udostępnianie')); } }, 15000); }); }); };
+  Deck.prototype.useEl = function () { return !!this.el && (this.direct || (A.masterTempo && Math.abs(this.rate - 1) > .001) || !this.buf); };
+  Deck.prototype.play = function (t) { if ((!this.buf && !this.el) || this.playing) return; A.unlock(); var self = this; t = Math.max(t || 0, ctx.currentTime + .01);
+    if (this.useEl()) { this._route(); var el = this.el; this.mode = 'el'; el.playbackRate = this.rate; try { el.currentTime = this.off || 0; } catch (e) {} var dl = Math.max(0, (t - ctx.currentTime) * 1000);
+      setTimeout(function () { var p = el.play(); if (p && p.catch) p.catch(function (e) { A.emit('toast', '⚠️ Deck ' + 'AB'[self.i] + ': ' + e.message); self.playing = false; A.emit('deck', self); }); }, dl);
+      this.out.gain.setValueAtTime(.9, t); this.playing = true; this.t0 = t; A.emit('deck', this); return; }
+    this.mode = 'buf'; var s = ctx.createBufferSource(); s.buffer = this.buf; s.playbackRate.value = this.rate; s.connect(this.x);
+    this.x.gain.cancelScheduledValues(t); this.out.gain.setValueAtTime(0, t); this.out.gain.linearRampToValueAtTime(.9, t + .015);
     s.start(t, this.off % this.buf.duration); this.src = s; this.t0 = t; this.playing = true;
     s.onended = function () { try { s.disconnect(); } catch (e) {} if (self.src === s && self.playing) { self.playing = false; self.off = 0; self.src = null; A.emit('deck', self); } }; A.emit('deck', this); };
-  Deck.prototype._halt = function () { if (!this.src) return; var s = this.src, t = ctx.currentTime; this.out.gain.setTargetAtTime(0, t, .006); try { s.stop(t + .04); } catch (e) {} this.src = null; var o = this.out; at(t + .06, function () { o.gain.setTargetAtTime(.9, ctx.currentTime, .005); }); };
+  Deck.prototype._halt = function () { if (this.mode === 'el' && this.el) { try { this.el.pause(); } catch (e) {} return; } if (!this.src) return; var s = this.src, t = ctx.currentTime; this.out.gain.setTargetAtTime(0, t, .006); try { s.stop(t + .04); } catch (e) {} this.src = null; var o = this.out; at(t + .06, function () { o.gain.setTargetAtTime(.9, ctx.currentTime, .005); }); };
   Deck.prototype.pause = function () { if (!this.playing) return; this.off = this.pos(); this._halt(); this.playing = false; A.emit('deck', this); };
   Deck.prototype.stop = function () { this._halt(); this.playing = false; this.off = 0; A.emit('deck', this); };
   Deck.prototype.toggle = function () { this.playing ? this.pause() : this.play(); };
-  Deck.prototype.pos = function () { return this.playing ? this.off + Math.max(0, ctx.currentTime - this.t0) * this.rate : this.off; };
-  Deck.prototype.setRate = function (r) { var p = this.pos(); this.rate = clampN(r, .5, 1.5, 1); if (this.playing && this.src) { this.off = p; this.t0 = ctx.currentTime; this.src.playbackRate.setTargetAtTime(this.rate, ctx.currentTime, .02); } };
+  Deck.prototype.pos = function () { if (this.mode === 'el' && this.el && this.playing) return this.el.currentTime; return this.playing ? this.off + Math.max(0, ctx.currentTime - this.t0) * this.rate : this.off; };
+  Deck.prototype.setRate = function (r) { var p = this.pos(), was = this.useEl(); this.rate = clampN(r, .5, 1.5, 1); if (!this.playing) return;
+    if (was !== this.useEl()) { this.off = p; this._halt(); this.playing = false; this.play(); return; } // switch engine (master tempo needs the pitch-preserving element)
+    if (this.mode === 'el') { this.el.playbackRate = this.rate; return; }
+    if (this.src) { this.off = p; this.t0 = ctx.currentTime; this.src.playbackRate.setTargetAtTime(this.rate, ctx.currentTime, .02); } A.emit('deck', this); };
+  Deck.prototype.sync = function () { if (!this.bpm) return false; this.setRate(clampN(A.bpm / this.bpm, .5, 1.5, 1)); A.emit('deck', this); return true; };
+  A.syncLock = false; A.masterTempo = true;
+  A.setSync = function (on) { A.syncLock = on == null ? !A.syncLock : !!on; if (A.syncLock && A.decks) A.decks.forEach(function (d) { d.sync(); }); A.emit('sync', A.syncLock); return A.syncLock; };
+  A.setMasterTempo = function (on) { A.masterTempo = on == null ? !A.masterTempo : !!on; if (A.decks) A.decks.forEach(function (d) { d.setRate(d.rate); }); A.emit('mt', A.masterTempo); return A.masterTempo; };
+  A.on('bpm', function () { if (A.syncLock && A.decks) A.decks.forEach(function (d) { if (d.bpm) d.setRate(clampN(A.bpm / d.bpm, .5, 1.5, 1)); }); });
   A.xfader = function (v) { v = clampN(v, -1, 1, 0); A.xf = v; if (!A.decks) return; var x = (v + 1) / 2; A.decks[0].x.gain.setTargetAtTime(Math.cos(x * Math.PI / 2), ctx.currentTime, .01); A.decks[1].x.gain.setTargetAtTime(Math.sin(x * Math.PI / 2), ctx.currentTime, .01); };
 
   // ================= sample pads =================

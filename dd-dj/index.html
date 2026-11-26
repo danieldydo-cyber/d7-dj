@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="pl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#04010c">
-<title>DD DJ · Space Nova DJ Studio Pro 3.0.1 · DJ DaX</title>
-<meta name="description" content="DD DJ 3.0 od DJ DaX: Space X Sound Engine (punch, sub, limiter), 7×7 stylów + Rasta Techno Magic + Space Nova Magic, Endless Generator, 77 min Set Pro, Autonomic, Space X Visuals 3D z nagrywaniem. Web, Android, Windows.">
+<title>DD DJ · Space Nova DJ Studio Pro 3.0.2 · Club Pro · DJ DaX</title>
+<meta name="description" content="DD DJ 3.0 od DJ DaX: Space X Sound Engine (punch, sub, limiter), 7×7 stylów + Rasta Techno Magic + Space Nova Magic, Endless Generator, 77 min Set Pro, Autonomic, Space X Visuals 3D z nagrywaniem, Club Pro DJ (isolator, Color FX, beat loop, hot cues), 3DFX Magic Holographic. Web, Android, Windows.">
 <link rel="canonical" href="https://danieldydo-cyber.github.io/d7-dj/dd-dj/">
 <meta property="og:title" content="DD DJ · Space Nova DJ Studio Pro 3.0"><meta property="og:description" content="Bangery 7×7, Rasta Techno Magic, 77 min Set Pro, Space X Visuals 3D z nagrywaniem — DJ DaX."><meta property="og:image" content="https://danieldydo-cyber.github.io/d7-dj/og.png">
-<link rel="icon" href="icon.png"><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="app.css?v=301">
+<link rel="icon" href="icon.png"><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="app.css?v=302">
 </head><body>
 <canvas id="vis" aria-hidden="true"></canvas>
-<div id="start"><div class="sbox"><div class="logo-big">DD DJ</div><div class="sub">SPACE NOVA DJ STUDIO · PRO 3.0.1</div><p>Space X Sound · 7×7 stylów · Rasta Techno Magic · Space Nova Magic · 77 min Set Pro · Autonomic · Space X Visuals 3D</p><button id="startBtn" class="big">▶ START</button><p class="small">DJ DaX · Kraków · offline · Web Audio 48 kHz</p></div></div>
+<div id="start"><div class="sbox"><div class="logo-big">DD DJ</div><div class="sub">SPACE NOVA DJ STUDIO · PRO 3.0.2</div><p>Space X Sound · 7×7 stylów · Rasta Techno Magic · Space Nova Magic · 77 min Set Pro · Autonomic · Space X Visuals 3D</p><button id="startBtn" class="big">▶ START 🔊</button><p class="small">DJ DaX · Kraków · offline · Web Audio 48 kHz</p></div></div>
 <header id="top">
-  <div class="logo">DD DJ<small>SPACE NOVA PRO 3.0.1</small></div>
+  <div class="logo">DD DJ<small>SPACE NOVA PRO 3.0.2</small></div>
   <div class="hg bpmg"><button id="bpmDn" aria-label="BPM w dół">−</button><div class="bpm"><b id="bpmV">128</b><small>BPM</small></div><button id="bpmUp" aria-label="BPM w górę">+</button><button id="tap">TAP</button><span class="beats" id="beats"><i></i><i></i><i></i><i></i></span></div>
   <div class="hg"><button id="recQuick" class="rec" title="Nagraj show (wideo + audio)">⏺ <span id="recT">REC</span></button><button id="showBtn" title="Tryb show — same wizualizacje">🌌</button><button id="fsBtn" title="Pełny ekran">⛶</button><button id="fixB" class="fixb" title="Auto-fix">🛠 <span id="fixN">0</span></button></div>
 </header>
@@ -43,7 +43,7 @@
 </main>
 <nav id="dock" aria-label="Okna">
   <button data-w="vis">🌌<b>Visuals</b></button><button data-w="gen">🧪<b>Generatory</b></button><button data-w="set">⏱<b>Set 77</b></button><button data-w="pads">🔲<b>Pady</b></button>
-  <button data-w="sp">🎰<b>777</b></button><button data-w="mix">🎚<b>Mixer FX</b></button><button data-w="rec">⏺<b>Nagraj</b></button><button data-w="bot">🧠<b>Bot D</b></button><button data-w="cfg">⚙️<b>Ustaw.</b></button>
+  <button data-w="sp">🎰<b>777</b></button><button data-w="club">🎛<b>Club Pro</b></button><button data-w="mix">🎚<b>Mixer FX</b></button><button data-w="rec">⏺<b>Nagraj</b></button><button data-w="bot">🧠<b>Bot D</b></button><button data-w="cfg">⚙️<b>Ustaw.</b></button>
 </nav>
 <div id="wl" hidden><div class="backdrop" id="backdrop"></div>
 <section class="win" id="w-vis" role="dialog" aria-label="Space X Visuals" hidden><header><h2>🌌 Space X Visuals</h2><button class="x" aria-label="Zamknij">✕</button></header><div class="wb">
@@ -52,6 +52,7 @@
   <div class="row"><label>Przejścia <select id="visMode"><option value="7+13">7 s + magia 13 s</option><option value="7">co 7 s</option><option value="13">magia co 13 s</option><option value="b2">sync 2 beaty</option><option value="b4">sync 4 beaty</option></select></label>
     <label>Puls <select id="visSync"><option value="1">każdy beat</option><option value="2">co 2 beaty</option><option value="4">co 4 beaty</option></select></label>
     <button id="visAuto" class="tg on">AUTO</button><button id="visLock" class="tg">🔒 Zablokuj</button></div>
+  <div class="row"><button id="holoBtn" class="tg on">👽 3DFX HOLO FX</button><label>Intensywność <input id="holoAmt" type="range" min="0" max="1" step="0.01" value="0.7"></label></div>
   <div class="row"><label>Jakość <select class="resSel"></select></label><span id="visInfo" class="dim"></span></div>
   <div class="row"><label class="filebtn">🖼 Wgraj obraz tła<input id="imgIn" type="file" accept="image/*"></label><label>Mix obrazu <input id="imgMix" type="range" min="0" max="1" step="0.01" value="0.55"></label><button id="imgClr">✕ Usuń obraz</button></div>
 </div></section>
@@ -79,6 +80,36 @@
   <div class="grid scenes" id="spGrid"></div>
   <div class="box"><h3>Ostatnie</h3><pre id="spLog" class="log">—</pre></div>
   <p class="dim">777 zapamiętanych momentów DJ: echo dub, syreny rasta, risery kosmiczne, stutter, breakdown flip, bass drop, sweep, mutacje, lasery, horn, kick-out, tape stop, key lift, snare roll → drop, chant, arp burst. Wszystko w rytmie (beat/takt) i w tonacji.</p>
+</div></section>
+<section class="win" id="w-club" role="dialog" aria-label="Club Pro DJ" hidden><header><h2>🎛 Club Pro DJ</h2><button class="x" aria-label="Zamknij">✕</button></header><div class="wb">
+  <div class="cols">
+    <div class="box"><h3>Isolator EQ 3-band · Kill</h3>
+      <div class="iso"><label>LOW <input data-iso="lo" type="range" min="-1" max="1" step="0.01" value="0"></label><button class="kill" data-kill="lo">KILL</button></div>
+      <div class="iso"><label>MID <input data-iso="mid" type="range" min="-1" max="1" step="0.01" value="0"></label><button class="kill" data-kill="mid">KILL</button></div>
+      <div class="iso"><label>HIGH <input data-iso="hi" type="range" min="-1" max="1" step="0.01" value="0"></label><button class="kill" data-kill="hi">KILL</button></div>
+      <p class="dim">LR 24 dB · 220 Hz / 2.6 kHz · lewo = wycięcie do zera, prawo = +6 dB · dwuklik = 0</p></div>
+    <div class="box"><h3>Club Color FX</h3>
+      <label>LPF ⟵ COLOR ⟶ HPF <input id="cfKnob" type="range" min="-1" max="1" step="0.01" value="0"></label>
+      <label>Rezonans <input id="cfRes" type="range" min="0" max="1" step="0.01" value="0.5"></label>
+      <div class="row seg" id="cfModes"><button data-cf="filter" class="on">Filter</button><button data-cf="noise">Noise</button><button data-cf="space">Space</button><button data-cf="crush">Crush</button><button data-cf="dub">Dub Echo</button></div></div>
+    <div class="box"><h3>Beat Loop · Beat Roll</h3>
+      <div class="row seg"><button id="lpMode" class="tg on">🔁 LOOP</button><button id="lpExit" class="hot">✕ EXIT</button><span id="lpInfo" class="dim">—</span></div>
+      <div class="row seg" id="lpGrid"><button data-lp="0.125">1/8</button><button data-lp="0.25">1/4</button><button data-lp="0.5">1/2</button><button data-lp="1">1</button><button data-lp="2">2</button><button data-lp="4">4</button></div>
+      <p class="dim">Takty. LOOP = zatrzask (dotknij znów = wyjście) · ROLL = trzymaj (slip: miks gra dalej pod spodem). Start na najbliższym beacie/takcie.</p></div>
+    <div class="box"><h3>Hot Cues · Instant Drop</h3>
+      <div class="row seg" id="cueGrid"><button data-cue="intro">Intro</button><button data-cue="groove">Groove</button><button data-cue="build">Build</button><button data-cue="drop" class="hot">DROP</button><button data-cue="break">Break</button></div>
+      <p class="dim">Skok sekcji na następnym beacie (beat staje się „raz”).</p></div>
+    <div class="box"><h3>Club Crossfader · Sync</h3>
+      <label>ENGINE ⟵ BLEND ⟶ TRACKI + SAMPLE <input id="clBlend" type="range" min="-1" max="1" step="0.01" value="0"></label>
+      <div class="row seg"><button id="clSync" class="tg">🔗 SYNC LOCK</button><button id="clMT" class="tg on">🎼 MASTER TEMPO</button><button id="clCut">⇤ Engine</button><button id="clMid">◎ Środek</button><button id="clTrk">Tracki ⇥</button></div>
+      <div class="dim" id="clDecks">Deck A: — · Deck B: —</div>
+      <label>Link audio (MP3/WAV/Drive/Dropbox) <input id="clLink" placeholder="https://…" autocomplete="off"></label>
+      <div class="row seg"><button id="clLinkA">🔗 → Deck A</button><button id="clLinkB">🔗 → Deck B</button></div></div>
+    <div class="box"><h3>Club Sound</h3>
+      <label>Stereo width (góra, sub zawsze mono &lt;110 Hz) <input id="clWidth" type="range" min="0" max="2" step="0.01" value="1.2"></label>
+      <label>Transjenty (kick/snare/clap) <input id="clTrans" type="range" min="0" max="1" step="0.01" value="0.5"></label>
+      <div class="dim" id="clStat">—</div></div>
+  </div>
 </div></section>
 <section class="win" id="w-mix" role="dialog" aria-label="Mixer FX" hidden><header><h2>🎚 Mixer · FX · Decki</h2><button class="x" aria-label="Zamknij">✕</button></header><div class="wb">
   <div class="cols">
@@ -124,10 +155,11 @@
   <div class="row"><button id="cfgBig" class="tg">🔠 Duże przyciski</button><button id="cfg3d" class="tg on">🧊 Konsola 3D</button><button id="cfgTest">🧪 Self-test</button><button id="cfgReset">↺ Reset ustawień</button></div>
   <pre id="cfgOut" class="log"></pre>
   <div class="box"><h3>Autonomic log</h3><pre id="autoLog" class="log"></pre></div>
-  <div class="box"><h3>DD DJ 3.0.1</h3><p>© 2026 Daniel Dydo · DJ DaX · Kraków. Oryginalny kod. Aplikacje: <a href="https://danieldydo-cyber.github.io/d7-dj/download.html" target="_blank" rel="noopener">pobierz (Web · Android · Windows)</a> · <a href="https://danieldydo-cyber.github.io/d7-dj/d7s/" target="_blank" rel="noopener">D7S 2 (poprzednia wersja)</a></p>
+  <div class="box"><h3>DD DJ 3.0.2</h3><p>© 2026 Daniel Dydo · DJ DaX · Kraków. Oryginalny kod. Aplikacje: <a href="https://danieldydo-cyber.github.io/d7-dj/download.html" target="_blank" rel="noopener">pobierz (Web · Android · Windows)</a> · <a href="https://danieldydo-cyber.github.io/d7-dj/d7s/" target="_blank" rel="noopener">D7S 2 (poprzednia wersja)</a></p>
   <p>Wsparcie / zakup aplikacji PRO: BLIK lub przelew Nest Bank — <a href="https://danieldydo-cyber.github.io/d7-dj/pay/" target="_blank" rel="noopener">strona płatności</a>.</p></div>
 </div></section>
 </div>
+<button id="sndPill" hidden aria-live="assertive">🔇 <b>Dźwięk wstrzymany</b> — dotknij, aby włączyć</button>
 <div id="toast" role="status" aria-live="polite"></div>
-<script src="engine.js?v=301"></script><script src="styles.js?v=301"></script><script src="gen.js?v=301"></script><script src="set77.js?v=301"></script><script src="visuals.js?v=301"></script><script src="specials.js?v=301"></script><script src="rec.js?v=301"></script><script src="ui.js?v=301"></script><script src="bot.js?v=301"></script>
+<script src="engine.js?v=302"></script><script src="styles.js?v=302"></script><script src="gen.js?v=302"></script><script src="set77.js?v=302"></script><script src="visuals.js?v=302"></script><script src="specials.js?v=302"></script><script src="rec.js?v=302"></script><script src="ui.js?v=302"></script><script src="bot.js?v=302"></script><script src="club.js?v=302"></script>
 </body></html>
