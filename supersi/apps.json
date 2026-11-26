@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26 13:57 CET",
+ "generated": "2026-11-26 14:12 CET",
  "apps": [
   {
    "file": "agents.html",
@@ -349,7 +349,7 @@
    "url": "https://danieldydo-cyber.github.io/d7-dj/visions-gl.html",
    "title": "D7 Visions GL · 77 generatorów wizji (WebGL) + MilkDrop · DJ DaX",
    "cat": "Wizualizacje",
-   "http": 503
+   "http": 200
   },
   {
    "file": "visions.html",
