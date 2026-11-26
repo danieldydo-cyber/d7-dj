@@ -1,41 +1,13 @@
 {
- "generated": "2026-11-26 15:52 CET",
- "bots": {
-  "count": 22,
-  "online": [
-   "supergrok",
-   "d",
-   "superbotd",
-   "autofix",
-   "dragon",
-   "77",
-   "dargonmoon",
-   "supercharger",
-   "superd",
-   "megabot",
-   "superg",
-   "mrdfluid",
-   "botpamiec",
-   "botd",
-   "supergrok-web",
-   "djmix",
-   "radiokali",
-   "visualizer",
-   "builderweb",
-   "builderapk",
-   "builderpromo",
-   "paysupport"
-  ]
- },
+ "generated": "2026-11-26 16:08 CET",
+ "bots": null,
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://usr-commodities-responded-mothers.trycloudflare.com",
+ "liveUrl": null,
  "liveCandidates": [
-  "https://usr-commodities-responded-mothers.trycloudflare.com"
+  "https://coated-superior-linked-another.trycloudflare.com"
  ],
- "liveSource": "ntfy",
- "pagesOk": 58,
+ "liveSource": "offline",
+ "pagesOk": 59,
  "pagesTotal": 59,
- "broken": [
-  "https://danieldydo-cyber.github.io/d7-dj/mixviz.html"
- ]
+ "broken": []
 }
