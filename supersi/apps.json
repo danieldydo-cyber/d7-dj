@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26 01:35 CET",
+ "generated": "2026-11-26 01:50 CET",
  "apps": [
   {
    "file": "agents.html",
@@ -445,6 +445,11 @@
    "name": "D7S-2.0.0.apk",
    "url": "https://danieldydo-cyber.github.io/d7-dj/downloads/D7S-2.0.0.apk",
    "mb": 0.2
+  },
+  {
+   "name": "D7S-2.0.1.apk",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/downloads/D7S-2.0.1.apk",
+   "mb": 10.6
   },
   {
    "name": "Super-G-DJ-HIPHOP-X-v71.apk",
