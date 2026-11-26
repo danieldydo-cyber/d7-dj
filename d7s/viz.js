@@ -128,8 +128,10 @@
     gl.uniform1i(U.WAVE, 0);
 
     function resize() {
-      var dpr = Math.min(window.devicePixelRatio || 1, 2.5), w = Math.max(2, Math.round(root.clientWidth * dpr)), h = Math.max(2, Math.round(root.clientHeight * dpr));
-      var px = w * h, max = 3840 * 2160; if (px > max) { var k = Math.sqrt(max / px); w = Math.round(w * k); h = Math.round(h * k); }
+      var ST = window.D7S_SETTINGS || {}, cw = Math.max(2, root.clientWidth), ch = Math.max(2, root.clientHeight), dpr = ST.dpr && ST.dpr !== 'auto' ? +ST.dpr : Math.min(window.devicePixelRatio || 1, 2.5);
+      var fixedH = rec && ST.recRes && ST.recRes !== 'auto' ? +ST.recRes : (ST.vizRes && ST.vizRes !== 'auto' ? +ST.vizRes : 0);
+      var w = fixedH ? Math.round(fixedH * cw / ch / 2) * 2 : Math.max(2, Math.round(cw * dpr)), h = fixedH ? fixedH : Math.max(2, Math.round(ch * dpr));
+      var px = w * h, max = 4096 * 2304; if (px > max) { var k = Math.sqrt(max / px); w = Math.round(w * k); h = Math.round(h * k); }
       if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; gl.viewport(0, 0, w, h); }
     }
 
@@ -241,10 +243,10 @@
       ensureCtx(); AC.resume();
       if (!playing) say('Nagrywam obraz — włącz radio lub utwór, żeby nagrać też dźwięk.', 6000);
       else if (audio.dataset.kind === 'radio' && S.warnedSilent) say('Uwaga: ta stacja nie przekazuje dźwięku do nagrania (CORS). Wybierz inną lub własny utwór.', 8000);
-      var vs = cv.captureStream(60), tracks = vs.getVideoTracks().concat(dest.stream.getAudioTracks());
+      var RS = window.D7S_SETTINGS || {}; rec = true; resize(); var vs = cv.captureStream(+RS.fps || 60), tracks = vs.getVideoTracks().concat(dest.stream.getAudioTracks());
       var stream = new MediaStream(tracks);
-      try { rec = new MediaRecorder(stream, { mimeType: mime || undefined, videoBitsPerSecond: 12000000, audioBitsPerSecond: 192000 }); }
-      catch (e) { try { rec = new MediaRecorder(stream); } catch (e2) { say('Nie udało się uruchomić nagrywania: ' + e2.message, 7000); return; } }
+      try { rec = new MediaRecorder(stream, { mimeType: mime || undefined, videoBitsPerSecond: (+RS.vbps || 12) * 1000000, audioBitsPerSecond: (+RS.abps || 256) * 1000 }); }
+      catch (e) { try { rec = new MediaRecorder(stream); } catch (e2) { rec = null; resize(); say('Nie udało się uruchomić nagrywania: ' + e2.message, 7000); return; } }
       recMime = rec.mimeType || mime || 'video/webm'; chunks = [];
       rec.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
       rec.onstop = function () {
@@ -259,7 +261,7 @@
       rec.start(1000); recStart = now();
       $('.d7ms-rec').classList.add('on'); $('.d7ms-rec').textContent = '⏹ Zatrzymaj';
     }
-    function stopRec() { if (rec && rec.state !== 'inactive') rec.stop(); rec = null; $('.d7ms-rec').classList.remove('on'); $('.d7ms-rec').textContent = '⏺ Nagraj'; }
+    function stopRec() { if (rec && rec.state && rec.state !== 'inactive') rec.stop(); rec = null; setTimeout(resize, 50); $('.d7ms-rec').classList.remove('on'); $('.d7ms-rec').textContent = '⏺ Nagraj'; }
 
     // --- fullscreen ---
     function fs(on) {
@@ -319,7 +321,7 @@
     }
     requestAnimationFrame(frame);
     function destroy() { alive = false; stopRec(); if (audio) audio.pause(); if (opts.ctx) { try { opts.input.disconnect(an); } catch (e) {} } else if (AC) AC.close(); fs(false); root.remove(); inst = null; }
-    var api = { root: root, destroy: destroy, mega: mega, fullscreen: fs, startRec: startRec, stopRec: stopRec, next: function () { go(pick(), 0, 1.2); }, preset: preset, state: S };
+    var api = { resize: resize, root: root, destroy: destroy, mega: mega, fullscreen: fs, startRec: startRec, stopRec: stopRec, next: function () { go(pick(), 0, 1.2); }, preset: preset, state: S };
     return api;
   }
 

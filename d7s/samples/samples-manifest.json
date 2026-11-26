@@ -1,0 +1,670 @@
+{
+"name": "D7S wbudowane (generowane)",
+"version": 2,
+"items": [
+{
+"name": "Cosmos · Deszcz",
+"gen": "cosmos:rain:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Burza",
+"gen": "cosmos:storm:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Grzmot",
+"gen": "cosmos:thunder:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Wiatr",
+"gen": "cosmos:wind:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Ocean",
+"gen": "cosmos:ocean:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Ptaki",
+"gen": "cosmos:birds:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Ogień",
+"gen": "cosmos:fire:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Miasto",
+"gen": "cosmos:city:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Tłum",
+"gen": "cosmos:crowd:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Brawa",
+"gen": "cosmos:applause:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Winyl",
+"gen": "cosmos:vinyl:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Serce",
+"gen": "cosmos:heartbeat:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Kosmos dron",
+"gen": "cosmos:space:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Strumień",
+"gen": "cosmos:river:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Świerszcze",
+"gen": "cosmos:crickets:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Zegar",
+"gen": "cosmos:clock:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Pociąg",
+"gen": "cosmos:train:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Helikopter",
+"gen": "cosmos:heli:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Cosmos · Sci-fi",
+"gen": "cosmos:scifi:12",
+"tags": [
+"Cosmos",
+"real life"
+]
+},
+{
+"name": "Techno · Bębny",
+"gen": "stem:techno:0:77",
+"tags": [
+"Techno",
+"loop"
+]
+},
+{
+"name": "Techno · Hi-hat/Perc",
+"gen": "stem:techno:1:77",
+"tags": [
+"Techno",
+"loop"
+]
+},
+{
+"name": "Techno · Kick",
+"gen": "stem:techno:2:77",
+"tags": [
+"Techno",
+"loop"
+]
+},
+{
+"name": "Techno · Bas",
+"gen": "stem:techno:3:77",
+"tags": [
+"Techno",
+"loop"
+]
+},
+{
+"name": "Techno · Akordy/Synth",
+"gen": "stem:techno:4:77",
+"tags": [
+"Techno",
+"loop"
+]
+},
+{
+"name": "Techno · Wokal",
+"gen": "stem:techno:5:77",
+"tags": [
+"Techno",
+"loop"
+]
+},
+{
+"name": "Techno · FX",
+"gen": "stem:techno:6:77",
+"tags": [
+"Techno",
+"loop"
+]
+},
+{
+"name": "Techno · Full loop",
+"gen": "stem:techno:7:77",
+"tags": [
+"Techno",
+"loop"
+]
+},
+{
+"name": "Hip-Hop · Bębny",
+"gen": "stem:hiphop:0:77",
+"tags": [
+"Hip-Hop",
+"loop"
+]
+},
+{
+"name": "Hip-Hop · Hi-hat/Perc",
+"gen": "stem:hiphop:1:77",
+"tags": [
+"Hip-Hop",
+"loop"
+]
+},
+{
+"name": "Hip-Hop · Kick",
+"gen": "stem:hiphop:2:77",
+"tags": [
+"Hip-Hop",
+"loop"
+]
+},
+{
+"name": "Hip-Hop · Bas",
+"gen": "stem:hiphop:3:77",
+"tags": [
+"Hip-Hop",
+"loop"
+]
+},
+{
+"name": "Hip-Hop · Akordy/Synth",
+"gen": "stem:hiphop:4:77",
+"tags": [
+"Hip-Hop",
+"loop"
+]
+},
+{
+"name": "Hip-Hop · Wokal",
+"gen": "stem:hiphop:5:77",
+"tags": [
+"Hip-Hop",
+"loop"
+]
+},
+{
+"name": "Hip-Hop · FX",
+"gen": "stem:hiphop:6:77",
+"tags": [
+"Hip-Hop",
+"loop"
+]
+},
+{
+"name": "Hip-Hop · Full loop",
+"gen": "stem:hiphop:7:77",
+"tags": [
+"Hip-Hop",
+"loop"
+]
+},
+{
+"name": "Hood · Bębny",
+"gen": "stem:hood:0:77",
+"tags": [
+"Hood",
+"loop"
+]
+},
+{
+"name": "Hood · Hi-hat/Perc",
+"gen": "stem:hood:1:77",
+"tags": [
+"Hood",
+"loop"
+]
+},
+{
+"name": "Hood · Kick",
+"gen": "stem:hood:2:77",
+"tags": [
+"Hood",
+"loop"
+]
+},
+{
+"name": "Hood · Bas",
+"gen": "stem:hood:3:77",
+"tags": [
+"Hood",
+"loop"
+]
+},
+{
+"name": "Hood · Akordy/Synth",
+"gen": "stem:hood:4:77",
+"tags": [
+"Hood",
+"loop"
+]
+},
+{
+"name": "Hood · Wokal",
+"gen": "stem:hood:5:77",
+"tags": [
+"Hood",
+"loop"
+]
+},
+{
+"name": "Hood · FX",
+"gen": "stem:hood:6:77",
+"tags": [
+"Hood",
+"loop"
+]
+},
+{
+"name": "Hood · Full loop",
+"gen": "stem:hood:7:77",
+"tags": [
+"Hood",
+"loop"
+]
+},
+{
+"name": "House · Bębny",
+"gen": "stem:house:0:77",
+"tags": [
+"House",
+"loop"
+]
+},
+{
+"name": "House · Hi-hat/Perc",
+"gen": "stem:house:1:77",
+"tags": [
+"House",
+"loop"
+]
+},
+{
+"name": "House · Kick",
+"gen": "stem:house:2:77",
+"tags": [
+"House",
+"loop"
+]
+},
+{
+"name": "House · Bas",
+"gen": "stem:house:3:77",
+"tags": [
+"House",
+"loop"
+]
+},
+{
+"name": "House · Akordy/Synth",
+"gen": "stem:house:4:77",
+"tags": [
+"House",
+"loop"
+]
+},
+{
+"name": "House · Wokal",
+"gen": "stem:house:5:77",
+"tags": [
+"House",
+"loop"
+]
+},
+{
+"name": "House · FX",
+"gen": "stem:house:6:77",
+"tags": [
+"House",
+"loop"
+]
+},
+{
+"name": "House · Full loop",
+"gen": "stem:house:7:77",
+"tags": [
+"House",
+"loop"
+]
+},
+{
+"name": "Trap · Bębny",
+"gen": "stem:trap:0:77",
+"tags": [
+"Trap",
+"loop"
+]
+},
+{
+"name": "Trap · Hi-hat/Perc",
+"gen": "stem:trap:1:77",
+"tags": [
+"Trap",
+"loop"
+]
+},
+{
+"name": "Trap · Kick",
+"gen": "stem:trap:2:77",
+"tags": [
+"Trap",
+"loop"
+]
+},
+{
+"name": "Trap · Bas",
+"gen": "stem:trap:3:77",
+"tags": [
+"Trap",
+"loop"
+]
+},
+{
+"name": "Trap · Akordy/Synth",
+"gen": "stem:trap:4:77",
+"tags": [
+"Trap",
+"loop"
+]
+},
+{
+"name": "Trap · Wokal",
+"gen": "stem:trap:5:77",
+"tags": [
+"Trap",
+"loop"
+]
+},
+{
+"name": "Trap · FX",
+"gen": "stem:trap:6:77",
+"tags": [
+"Trap",
+"loop"
+]
+},
+{
+"name": "Trap · Full loop",
+"gen": "stem:trap:7:77",
+"tags": [
+"Trap",
+"loop"
+]
+},
+{
+"name": "Psy · Bębny",
+"gen": "stem:psy:0:77",
+"tags": [
+"Psy",
+"loop"
+]
+},
+{
+"name": "Psy · Hi-hat/Perc",
+"gen": "stem:psy:1:77",
+"tags": [
+"Psy",
+"loop"
+]
+},
+{
+"name": "Psy · Kick",
+"gen": "stem:psy:2:77",
+"tags": [
+"Psy",
+"loop"
+]
+},
+{
+"name": "Psy · Bas",
+"gen": "stem:psy:3:77",
+"tags": [
+"Psy",
+"loop"
+]
+},
+{
+"name": "Psy · Akordy/Synth",
+"gen": "stem:psy:4:77",
+"tags": [
+"Psy",
+"loop"
+]
+},
+{
+"name": "Psy · Wokal",
+"gen": "stem:psy:5:77",
+"tags": [
+"Psy",
+"loop"
+]
+},
+{
+"name": "Psy · FX",
+"gen": "stem:psy:6:77",
+"tags": [
+"Psy",
+"loop"
+]
+},
+{
+"name": "Psy · Full loop",
+"gen": "stem:psy:7:77",
+"tags": [
+"Psy",
+"loop"
+]
+},
+{
+"name": "Drill · Bębny",
+"gen": "stem:drill:0:77",
+"tags": [
+"Drill",
+"loop"
+]
+},
+{
+"name": "Drill · Hi-hat/Perc",
+"gen": "stem:drill:1:77",
+"tags": [
+"Drill",
+"loop"
+]
+},
+{
+"name": "Drill · Kick",
+"gen": "stem:drill:2:77",
+"tags": [
+"Drill",
+"loop"
+]
+},
+{
+"name": "Drill · Bas",
+"gen": "stem:drill:3:77",
+"tags": [
+"Drill",
+"loop"
+]
+},
+{
+"name": "Drill · Akordy/Synth",
+"gen": "stem:drill:4:77",
+"tags": [
+"Drill",
+"loop"
+]
+},
+{
+"name": "Drill · Wokal",
+"gen": "stem:drill:5:77",
+"tags": [
+"Drill",
+"loop"
+]
+},
+{
+"name": "Drill · FX",
+"gen": "stem:drill:6:77",
+"tags": [
+"Drill",
+"loop"
+]
+},
+{
+"name": "Drill · Full loop",
+"gen": "stem:drill:7:77",
+"tags": [
+"Drill",
+"loop"
+]
+},
+{
+"name": "Melodic · Bębny",
+"gen": "stem:melodic:0:77",
+"tags": [
+"Melodic",
+"loop"
+]
+},
+{
+"name": "Melodic · Hi-hat/Perc",
+"gen": "stem:melodic:1:77",
+"tags": [
+"Melodic",
+"loop"
+]
+},
+{
+"name": "Melodic · Kick",
+"gen": "stem:melodic:2:77",
+"tags": [
+"Melodic",
+"loop"
+]
+},
+{
+"name": "Melodic · Bas",
+"gen": "stem:melodic:3:77",
+"tags": [
+"Melodic",
+"loop"
+]
+},
+{
+"name": "Melodic · Akordy/Synth",
+"gen": "stem:melodic:4:77",
+"tags": [
+"Melodic",
+"loop"
+]
+},
+{
+"name": "Melodic · Wokal",
+"gen": "stem:melodic:5:77",
+"tags": [
+"Melodic",
+"loop"
+]
+},
+{
+"name": "Melodic · FX",
+"gen": "stem:melodic:6:77",
+"tags": [
+"Melodic",
+"loop"
+]
+},
+{
+"name": "Melodic · Full loop",
+"gen": "stem:melodic:7:77",
+"tags": [
+"Melodic",
+"loop"
+]
+}
+]
+}

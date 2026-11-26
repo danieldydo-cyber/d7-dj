@@ -10,7 +10,7 @@
   E.init = function () {
     if (ctx) { if (ctx.state !== 'running') ctx.resume(); return ctx; }
     var AC = window.AudioContext || window.webkitAudioContext;
-    try { ctx = new AC({ sampleRate: 48000, latencyHint: 'interactive' }); } catch (e) { ctx = new AC(); }
+    var SR0 = (window.D7S_SETTINGS && +window.D7S_SETTINGS.sr) || 48000; try { ctx = new AC({ sampleRate: SR0, latencyHint: (window.D7S_SETTINGS && window.D7S_SETTINGS.latency) || 'interactive' }); } catch (e) { ctx = new AC(); }
     E.ctx = ctx;
     // master chain: bus -> FX1 -> FX2 -> master -> limiter -> analyser -> out
     E.bus = ctx.createGain();
@@ -342,7 +342,7 @@
   E.rec = { r: null, chunks: [], t0: 0,
     start: function () { var R = this; if (!window.MediaRecorder) { E.emit('toast', 'Nagrywanie niedostępne w tej przeglądarce.'); return; }
       var mt = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg'].filter(function (m) { return MediaRecorder.isTypeSupported(m); })[0];
-      R.r = new MediaRecorder(E.recDest.stream, mt ? { mimeType: mt, audioBitsPerSecond: 256000 } : {}); R.chunks = []; R.r.ondataavailable = function (e) { if (e.data.size) R.chunks.push(e.data); };
+      R.r = new MediaRecorder(E.recDest.stream, mt ? { mimeType: mt, audioBitsPerSecond: ((window.D7S_SETTINGS && +window.D7S_SETTINGS.abps) || 256) * 1000 } : {}); R.chunks = []; R.r.ondataavailable = function (e) { if (e.data.size) R.chunks.push(e.data); };
       R.r.onstop = function () { var b = new Blob(R.chunks, { type: (R.r.mimeType || 'audio/webm').split(';')[0] }); E.save(b, 'D7S-mix-' + stamp() + (/mp4/.test(b.type) ? '.m4a' : /ogg/.test(b.type) ? '.ogg' : '.webm')); R.r = null; E.emit('rec', R); };
       R.r.start(1000); R.t0 = Date.now(); E.emit('rec', R); },
     stop: function () { if (this.r) this.r.stop(); }

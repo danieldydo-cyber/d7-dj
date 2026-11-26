@@ -2,7 +2,7 @@
    77 presets (loops + full tracks), 21 styles, stems for 40 pads, remix, mega-mix, WAV export. */
 (function () {
   'use strict';
-  var SR = 48000;
+  var SR = 48000; try { var _st = JSON.parse(localStorage.getItem('d7s-settings') || '{}'); if (_st.sr) SR = +_st.sr; } catch (e) {}
   function rng(seed) { var s = (seed >>> 0) || 7; return function () { s ^= s << 13; s >>>= 0; s ^= s >>> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; }; }
   function pickR(r, a) { return a[Math.floor(r() * a.length) % a.length]; }
   function hz(n) { return 440 * Math.pow(2, (n - 69) / 12); }
@@ -31,6 +31,12 @@
     phonk:    { n: 'Phonk', bpm: [128, 136], sc: 'phryg', kick: ['x.....x...x.....'], snare: ['....x.......x...'], hat: ['x.x.x.x.x.x.x.x.'], bass: '808', mus: ['bell', 'vox'], pump: 0, cowbell: 1 },
     hardstyle:{ n: 'Hardstyle', bpm: [150, 154], sc: 'minor', kick: ['x...x...x...x...'], snare: ['................'], clap: 1, hat: ['..x...x...x...x.'], bass: 'none', mus: ['lead', 'chord'], pump: .5, hardkick: 1 },
     trance:   { n: 'Trance', bpm: [136, 140], sc: 'minor', kick: ['x...x...x...x...'], snare: ['....x.......x...'], clap: 1, hat: ['..x...x...x...x.'], ohat: ['..o...o...o...o.'], bass: 'offbeat', mus: ['arp', 'chord', 'lead'], pump: .5 },
+    synthwave:{ n: 'Synthwave', bpm: [100, 112], sc: 'minor', kick: ['x...x...x...x...', 'x.......x.......'], snare: ['....x.......x...'], hat: ['x.x.x.x.x.x.x.x.'], bass: 'octave', mus: ['arp', 'pad', 'lead'], pump: .35 },
+    reggae:   { n: 'Reggae', bpm: [70, 80], sc: 'major', kick: ['........x.......'], snare: ['........x.......'], hat: ['..x...x...x...x.'], bass: 'follow', mus: ['stab', 'keys'], pump: 0 },
+    disco:    { n: 'Funk / Disco', bpm: [114, 120], swing: .08, sc: 'dorian', kick: ['x...x...x...x...'], snare: ['....x.......x...'], hat: ['x.x.x.x.x.x.x.x.'], ohat: ['..o...o...o...o.'], bass: 'octave', mus: ['chord', 'keys', 'vox'], pump: .25 },
+    drill:    { n: 'Drill', bpm: [140, 144], half: 1, sc: 'harm', kick: ['x.........x..x..', 'x......x..x.....'], snare: ['........x.....x.'], hat: ['x..x..x.x..x..x.', 'x.xx..x.x..xx.x.'], roll: 1, bass: '808', mus: ['bell', 'pad'], pump: 0 },
+    techhouse:{ n: 'Tech House', bpm: [124, 128], sc: 'minor', kick: ['x...x...x...x...'], snare: ['....x.......x...'], clap: 1, hat: ['..x...x...x...x.', '.xxx.xxx.xxx.xxx'], ohat: ['..o...o...o...o.'], perc: ['...x..x.x.....x.'], bass: 'rolling', mus: ['vox', 'stab'], pump: .45 },
+    melodic:  { n: 'Melodic Techno', bpm: [120, 124], sc: 'minor', kick: ['x...x...x...x...'], snare: ['................'], clap: 1, hat: ['..x...x...x...x.'], perc: ['.x.....x...x....'], bass: 'rolling', mus: ['arp', 'pad', 'lead'], pump: .5 },
     ambient:  { n: 'Ambient', bpm: [84, 92], sc: 'major', kick: ['................'], snare: ['................'], hat: ['................'], bass: 'pad', mus: ['pad', 'bell', 'fx'], pump: 0 }
   };
   var STYLE_KEYS = Object.keys(STYLES);
@@ -164,6 +170,7 @@
   }
   // sections: which elements play (k kick, s snare, h hats, p perc, b bass, m music, v vox, f fx)
   function arrangement(bars, mode) {
+    if (mode && mode.plan) { var pl = mode.plan; return function (b) { return pl[b] ? pl[b].el : ''; }; }
     if (mode === 'loop') return function () { return 'kshpbmvf'; };
     var plan = [];
     var parts = [['kh', 'khp'], ['khpb', 'khspb'], ['kshpbmv', 'kshpbmvf'], ['mf', 'mvf'], ['kshpbmv', 'kshpbmvf'], ['khp', 'kh']];
@@ -173,7 +180,7 @@
   }
 
   function schedule(c, bus, P, o) {
-    var S = P.S, bpm = o.bpm, beat = 60 / bpm, step = beat / 4, bars = o.bars, arr = arrangement(bars, o.mode), stems = o.stems || 'kshpbmvf';
+    var S = P.S, bpm = o.bpm, beat = 60 / bpm, step = beat / 4, bars = o.bars, arr = arrangement(bars, o.plan ? o : o.mode), stems = o.stems || 'kshpbmvf';
     var half = S.half ? 2 : 1; // half-time: musical bar spans 2 drum bars? keep drums per 16 steps but bass/music slower
     var r = rng(o.seed + 99);
     for (var b = 0; b < bars; b++) {
@@ -193,8 +200,11 @@
         if (has('m')) musicStep(c, bus.mus, P, S, b, s, t, step, chordDeg, half);
         if (has('v') && S.mus.indexOf('vox') >= 0 && P.voxSeq[s] != null && (b % 2 === 1)) V.vox(c, bus.mus, t, P.deg(chordDeg + P.voxSeq[s], 2), step * 2, .5, P.vowel);
       }
-      if (has('f') && o.mode !== 'loop' && (b % 8) === 7) V.riser(c, bus.fx, bt, 16 * step, .9);
-      if (has('f') && o.mode !== 'loop' && (b % 8) === 0 && b > 0 && el.indexOf('k') >= 0) V.crash(c, bus.fx, bt, .9);
+      if (o.plan && o.plan[b] && o.plan[b].roll && stems.indexOf('s') >= 0) for (var rs = 0; rs < 16; rs++) { if (rs < 8 && rs % 2) continue; if (S.clap) V.clap(c, bus.drum, bt + rs * step, .3 + rs / 22); else V.snare(c, bus.drum, bt + rs * step, .3 + rs / 22); }
+      if (o.plan && o.plan[b] && o.plan[b].riser && stems.indexOf('f') >= 0) V.riser(c, bus.fx, bt, 16 * step, .9);
+      if (o.plan && o.plan[b] && o.plan[b].crash && stems.indexOf('f') >= 0) V.crash(c, bus.fx, bt, .9);
+      if (!o.plan && has('f') && o.mode !== 'loop' && (b % 8) === 7) V.riser(c, bus.fx, bt, 16 * step, .9);
+      if (!o.plan && has('f') && o.mode !== 'loop' && (b % 8) === 0 && b > 0 && el.indexOf('k') >= 0) V.crash(c, bus.fx, bt, .9);
       if (has('f') && o.mode === 'loop' && S.mus.indexOf('fx') >= 0 && b === bars - 1) V.riser(c, bus.fx, bt, 16 * step, .6);
     }
   }
@@ -208,6 +218,7 @@
     else if (m === 'follow') { if (P.kick[s] === 'x' || (s === 14 && P.bassSeq[s])) V.bass(c, o, t, root + P.bassSeq[s] % 3, step * 3, .9, { cut: 180, env: 300, wave: 'triangle' }); }
     else if (m === 'reese') { if (s === 0 || s === 8) V.bass(c, o, t, root, step * 7.5, .9, { reese: 1, cut: 400, env: 300 }); }
     else if (m === 'wobble') { if (s === 0 || s === 8) V.bass(c, o, t, root, step * 7.8, .9, { wobble: [2, 4, 3, 6][b % 4] * (60 / (step * 16)) / 4, cut: 400 }); }
+    else if (m === 'octave') { if (s % 2 === 0) V.bass(c, o, t, root + 12 + (s % 4 === 2 ? 12 : 0), step * .9, .85, { cut: 500, env: 1200, wave: 'square', decay: .1 }); }
     else if (m === 'pad') { if (s === 0 && b % 2 === 0) V.chord(c, o, t, [root], step * 31, .9, true); }
   }
   function musicStep(c, o, P, S, b, s, t, step, cd, half) {
@@ -227,7 +238,12 @@
 
   function buildBus(c) {
     var master = c.createDynamicsCompressor(); master.threshold.value = -12; master.ratio.value = 4; master.attack.value = .005; master.release.value = .15;
-    var out = c.createGain(); out.gain.value = .9; master.connect(out); out.connect(c.destination);
+    // mastering: glue comp -> tilt EQ (sub + air) -> brickwall-ish limiter -> soft clip
+    var lowS = c.createBiquadFilter(); lowS.type = 'lowshelf'; lowS.frequency.value = 70; lowS.gain.value = 1.5;
+    var air = c.createBiquadFilter(); air.type = 'highshelf'; air.frequency.value = 10000; air.gain.value = 2;
+    var lim = c.createDynamicsCompressor(); lim.threshold.value = -2; lim.knee.value = 0; lim.ratio.value = 20; lim.attack.value = .001; lim.release.value = .08;
+    var clip = c.createWaveShaper(); clip.curve = curve(1.3); clip.oversample = '2x';
+    var out = c.createGain(); out.gain.value = .9; master.connect(lowS); lowS.connect(air); air.connect(lim); lim.connect(clip); clip.connect(out); out.connect(c.destination);
     var pump = c.createGain(); pump.connect(master);
     var rv = c.createConvolver(); rv.buffer = impulse(c, 2.2, 3); var rvg = c.createGain(); rvg.gain.value = .22; rv.connect(rvg); rvg.connect(master);
     var dl = c.createDelay(2); dl.delayTime.value = .375; var fb = c.createGain(); fb.gain.value = .3; var dg = c.createGain(); dg.gain.value = .15; dl.connect(fb); fb.connect(dl); dl.connect(dg); dg.connect(master);
@@ -316,5 +332,44 @@
     return new Blob([ab], { type: 'audio/wav' });
   }
 
-  window.D7Gen = { SR: SR, STYLES: STYLES, STYLE_KEYS: STYLE_KEYS, PRESETS: PRESETS, STEM_COLS: STEM_COLS, render: render, renderPreset: renderPreset, renderStem: renderStem, megaMix: megaMix, remix: remix, concat: concat, wav: wav, normalize: normalize, impulse: impulse, curve: curve, rng: rng };
+  // ---------- NOVA: prompt -> structured song (original, rule-based "Suno-like" workflow) ----------
+  var KW = [['tech house', 'techhouse'], ['techhouse', 'techhouse'], ['melodic', 'melodic'], ['melodyjn', 'melodic'], ['techno', 'techno'], ['house', 'house'], ['hip hop', 'hiphop'], ['hip-hop', 'hiphop'], ['hiphop', 'hiphop'], ['rap', 'hiphop'], ['boom bap', 'classic'], ['classic', 'classic'], ['klasycz', 'classic'], ['hood', 'hood'], ['trap', 'trap'], ['drill', 'drill'], ['psy', 'psy'], ['trance', 'trance'], ['drum and bass', 'dnb'], ['drum n bass', 'dnb'], ['dnb', 'dnb'], ['jungle', 'dnb'], ['dubstep', 'dubstep'], ['lofi', 'lofi'], ['lo-fi', 'lofi'], ['acid', 'acid'], ['minimal', 'minimal'], ['electro', 'electro'], ['garage', 'garage'], ['reggaeton', 'dembow'], ['dembow', 'dembow'], ['afro', 'afro'], ['jersey', 'jersey'], ['phonk', 'phonk'], ['hardstyle', 'hardstyle'], ['ambient', 'ambient'], ['chill', 'lofi'], ['synthwave', 'synthwave'], ['retro', 'synthwave'], ['80s', 'synthwave'], ['reggae', 'reggae'], ['funk', 'disco'], ['disco', 'disco']];
+  function parsePrompt(p) {
+    var q = ' ' + String(p || '').toLowerCase() + ' ', st = [], m;
+    KW.forEach(function (k) { if (q.indexOf(k[0]) >= 0 && st.indexOf(k[1]) < 0 && st.length < 2) st.push(k[1]); });
+    if (!st.length) st.push(STYLE_KEYS[Math.floor(Math.random() * 21)]);
+    var o = { styles: st, prompt: p, vox: /wokal|vocal|vox|głos|glos|śpiew/.test(q), dark: /mroczn|dark|ciemn|evil|horror/.test(q), happy: /wesoł|wesol|happy|radosn|letni|summer/.test(q), sad: /smut|sad|melanchol/.test(q),
+      hard: /hard|mocn|ostr|agres|szyb|fast|rave/.test(q), soft: /chill|spokoj|soft|wolno|slow|relax/.test(q) };
+    if ((m = q.match(/(\d{2,3})\s*bpm/))) o.bpm = Math.max(60, Math.min(200, +m[1]));
+    if ((m = q.match(/(\d+(?:[.,]\d+)?)\s*min/))) o.minutes = Math.min(8, Math.max(.5, parseFloat(m[1].replace(',', '.'))));
+    else if (/krótk|short/.test(q)) o.minutes = 1; else if (/dług|long|extended/.test(q)) o.minutes = 4;
+    if ((m = q.match(/(?:tonacj\w*|key)\s+([a-g])(#|is)?/))) o.key = (['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'].indexOf(m[1] + (m[2] ? '#' : '')) + 12) % 12;
+    return o;
+  }
+  function novaPlan(o, bpm) {
+    var hip = ['hiphop', 'classic', 'lofi', 'reggae', 'dembow', 'trap', 'hood', 'drill', 'phonk'].indexOf(o.styles[0]) >= 0, minutes = o.minutes || (hip ? 2.2 : 3), barSec = 240 / bpm, total = Math.max(16, Math.round(minutes * 60 / barSec / 4) * 4);
+    var secs = hip ? [['Intro', 4, 'hmf'], ['Zwrotka 1', 16, 'kshpb' + (o.vox ? 'v' : '')], ['Refren', 8, 'kshpbmvf'], ['Zwrotka 2', 16, 'kshpbm' + (o.vox ? 'v' : '')], ['Refren', 8, 'kshpbmvf'], ['Bridge', 8, 'mvf'], ['Refren', 8, 'kshpbmvf'], ['Outro', 4, 'kmh']]
+      : [['Intro', 8, 'khf'], ['Groove', 16, 'kshpb'], ['Build-up', 8, 'kshpbm'], ['Drop', 16, 'kshpbm' + (o.vox ? 'v' : '') + 'f'], ['Break', 8, 'mvf'], ['Build-up', 8, 'shpbm'], ['Drop 2', 16, 'kshpbmvf'], ['Outro', 8, 'khp']];
+    var base = secs.reduce(function (a, s) { return a + s[1]; }, 0), k = total / base, plan = [], sections = [];
+    secs.forEach(function (s, i) { var n = Math.max(2, Math.round(s[1] * k / 2) * 2); sections.push({ name: s[0], bars: n, start: plan.length });
+      for (var b = 0; b < n; b++) plan.push({ el: s[2], tag: s[0], roll: /Build/.test(s[0]) && b === n - 1, riser: (/Build|Break|Bridge/.test(s[0]) && b === n - 1) || (/Intro/.test(s[0]) && b === n - 1), crash: b === 0 && i > 0 && s[2].indexOf('k') >= 0 }); });
+    return { plan: plan, sections: sections };
+  }
+  function nova(prompt, extra) {
+    var o = parsePrompt(prompt); extra = extra || {};
+    var A = STYLES[o.styles[0]], B = STYLES[o.styles[1] || o.styles[0]];
+    var mix = Object.assign({}, A, { mus: B.mus.slice(), n: A.n + (o.styles[1] ? ' × ' + B.n : '') });
+    if (o.vox && mix.mus.indexOf('vox') < 0) mix.mus.push('vox');
+    if (o.dark) mix.sc = 'phryg'; else if (o.happy) mix.sc = 'major'; else if (o.sad) mix.sc = 'minor';
+    STYLES.__nova = mix;
+    var bpm = o.bpm || Math.round((A.bpm[0] + A.bpm[1]) / 2 + (o.hard ? 6 : 0) - (o.soft ? 6 : 0));
+    var np = novaPlan(o, bpm), seed = extra.seed || Math.floor(Math.random() * 1e9);
+    var title = (o.dark ? 'Dark ' : o.happy ? 'Sunny ' : '') + mix.n + ' · ' + ADJ[seed % ADJ.length] + ' ' + NOUN[(seed >> 5) % NOUN.length];
+    var base = { style: '__nova', seed: seed, mode: 'track', bpm: bpm, key: o.key, bars: np.plan.length, plan: np.plan, name: 'NOVA · ' + title };
+    return render(Object.assign({}, base, extra.stems ? { stems: extra.stems } : {})).then(function (r) { r.sections = np.sections; r.prompt = prompt; r.parsed = o; r.novaOpts = base; return r; });
+  }
+  var STEM_GROUPS = [['Bębny', 'kshp'], ['Bas', 'b'], ['Muzyka', 'm'], ['Wokal', 'v'], ['FX', 'f']];
+  function stems(opts, onProg) { var out = [], ch = Promise.resolve(); STEM_GROUPS.forEach(function (g, i) { ch = ch.then(function () { onProg && onProg(i, STEM_GROUPS.length, g[0]); return render(Object.assign({}, opts, { stems: g[1] })).then(function (r) { out.push({ name: g[0], buffer: r.buffer }); }); }); }); return ch.then(function () { return out; }); }
+
+  window.D7Gen = { parsePrompt: parsePrompt, nova: nova, stems: stems, STEM_GROUPS: STEM_GROUPS, setSR: function (x) { SR = +x || 48000; }, getSR: function () { return SR; }, SR: SR, STYLES: STYLES, STYLE_KEYS: STYLE_KEYS, PRESETS: PRESETS, STEM_COLS: STEM_COLS, render: render, renderPreset: renderPreset, renderStem: renderStem, megaMix: megaMix, remix: remix, concat: concat, wav: wav, normalize: normalize, impulse: impulse, curve: curve, rng: rng };
 })();

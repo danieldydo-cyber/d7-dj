@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="pl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#05010d">
-<title>D7S · D DJ Professional · DJ, 40 padów, 77 generatorów, Mega Show 777 · DJ DaX</title>
+<title>D7S v2 · G Studio Cosmos · D DJ Professional · DJ, Nova, Cosmos, 40 padów, Mega Show · DJ DaX</title>
 <meta name="description" content="D7S – D DJ Professional od DJ DaX: 2 decki z sync, EQ, filtr, echo, reverb, FX z faderami, 40 padów loop station, 77 generatorów muzyki (techno, hip-hop, hood, house, psy, trap), Auto-DJ, radio, MIDI MC-707, wizualizacje Mega Show 777 z nagrywaniem. Web, Windows i Android.">
 <link rel="canonical" href="https://danieldydo-cyber.github.io/d7-dj/d7s/">
 <meta property="og:title" content="D7S · D DJ Professional"><meta property="og:description" content="Cała muzyczna aplikacja DJ DaX w jednym: decki, pady, generatory, FX, radio, wizualizacje."><meta property="og:image" content="https://danieldydo-cyber.github.io/d7-dj/og.png">
 <link rel="icon" href="icon.png"><link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="app.css">
 </head><body>
-<div id="start"><div class="start-box"><div class="logo-big">D7S</div><div class="sub">D DJ PROFESSIONAL · DJ DaX</div><p>Decki · 40 padów · 77 generatorów · FX · Radio · MIDI · Mega Show 777</p><button id="startBtn" class="big">▶ START</button><p class="small">48 kHz · Web Audio · offline</p></div></div>
+<div id="start"><div class="start-box"><div class="logo-big">D7S</div><div class="sub">G STUDIO COSMOS · v2 · DJ DaX</div><p>Decki · 40 padów · Nova · Cosmos · 77 generatorów · Sample · Bot D · Mega Show 777</p><button id="startBtn" class="big">▶ START</button><p class="small">48 kHz · Web Audio · offline</p></div></div>
 <header>
-  <div class="logo">D7S<small>D DJ PRO</small></div>
+  <div class="logo">D7S<small>G STUDIO COSMOS</small></div>
   <div class="hgroup"><label>BPM <input id="bpm" type="number" min="40" max="220" step="0.1" value="128" data-midi="bpm"></label><button id="tap">TAP</button><span class="beats" id="beats"><i></i><i></i><i></i><i></i></span></div>
   <div class="hgroup"><label>Master <input id="mvol" type="range" min="0" max="1.2" step="0.01" value="0.9" data-midi="master"></label><canvas id="mvu" width="90" height="14"></canvas></div>
-  <div class="hgroup"><button id="recMix" title="Nagraj miks (audio)">⏺ REC MIX</button><span id="recTime"></span><button id="fsBtn" title="Pełny ekran">⛶</button></div>
+  <div class="hgroup"><button id="recMix" title="Nagraj miks (audio)">⏺ REC MIX</button><span id="recTime"></span><button id="fsBtn" title="Pełny ekran">⛶</button><button id="fixBadge" class="fixb" title="Auto-fix: log i self-test">🛠 <span id="fixN">0</span></button></div>
   <div class="engines" id="engines" title="7 silników D7S"></div>
 </header>
 <nav id="tabs">
-  <button data-t="dj" class="on">🎚 DJ</button><button data-t="pads">🔲 Pady 40</button><button data-t="gen">🧪 Generatory 77</button><button data-t="auto">🤖 Auto-DJ</button><button data-t="radio">📻 Radio · YouTube</button><button data-t="viz">🌌 Mega Show</button><button data-t="midi">🎹 MIDI</button><button data-t="hub">🔗 Hub</button>
+  <span class="grp">GRAJ</span><button data-t="dj" class="on">🎚<b>DJ</b></button><button data-t="pads">🔲<b>Pady 40</b></button><button data-t="auto">🤖<b>Auto-DJ</b></button>
+  <span class="grp">TWÓRZ</span><button data-t="nova">✨<b>Nova</b></button><button data-t="cosmos">🪐<b>Cosmos</b></button><button data-t="gen">🧪<b>Generatory 77</b></button>
+  <span class="grp">ŹRÓDŁA</span><button data-t="samples">📦<b>Sample</b></button><button data-t="radio">📻<b>Radio · YT</b></button>
+  <span class="grp">SHOW</span><button data-t="viz">🌌<b>Mega Show</b></button>
+  <span class="grp">MÓZG</span><button data-t="bot">🧠<b>Bot D</b></button>
+  <span class="grp">SYSTEM</span><button data-t="settings">⚙️<b>Ustawienia</b></button><button data-t="midi">🎹<b>MIDI</b></button><button data-t="hub">🔗<b>Hub</b></button>
 </nav>
 <main>
 <!-- DJ -->
@@ -92,10 +97,41 @@
 <section id="t-hub" class="tab">
   <h3>7 silników D7S</h3><div id="engList" class="englist"></div>
   <h3>Sieć D7 · wszystkie aplikacje</h3><div id="hubLinks" class="hub"></div>
-  <p class="hint">D7S v1.0 · D DJ Professional · © 2026 Daniel Dydo (DJ DaX, Kraków). Cały dźwięk generowany na żywo (Web Audio, 48 kHz), bez cudzych sampli.</p>
+  <p class="hint">D7S v2.0 · G Studio Cosmos · © 2026 Daniel Dydo (DJ DaX, Kraków). Cały dźwięk generowany na żywo (Web Audio, 48 kHz), bez cudzych sampli.</p>
 </section>
+
+<!-- NOVA -->
+<section id="t-nova" class="tab"><div class="panel">
+  <h3>✨ Nova · prompt → utwór</h3>
+  <textarea id="novaPrompt" rows="2" placeholder="Opisz utwór, np.: mroczne techno z wokalem 132 bpm, 3 min · hip hop hood x trap · chill lofi 80 bpm · wesoły house tonacja A"></textarea>
+  <div class="bar" id="novaIdeas"></div>
+  <div class="bar"><button id="novaGo" class="hot big">✨ Twórz utwór</button><button id="novaAgain">🔁 Inna wersja</button><button id="novaStems">🎛 Eksport stemów (5× WAV)</button><button id="novaStemsPads">→ Stemy na pady</button></div>
+  <div id="novaPlan" class="novaplan muted">Nova rozpozna styl (27 stylów, można łączyć dwa: „techno x hip hop”), BPM, tonację, nastrój (mroczny/wesoły/smutny), długość, wokal. Buduje strukturę: intro, zwrotki/groove, build-up z werblem, drop/refren, break, outro. Mastering: kompresor + EQ + limiter.</div>
+</div><div id="novaOut" class="genout"><span class="muted">Wynik pojawi się tutaj.</span></div></section>
+<!-- COSMOS -->
+<section id="t-cosmos" class="tab"><div class="panel"><h3>🪐 Cosmos · dźwięki z prawdziwego świata (syntezowane)</h3>
+  <div class="bar"><label>Długość pętli <select id="cosLen"><option>8</option><option selected>12</option><option>20</option><option>30</option></select> s</label><label>Głośność warstw <input id="cosVol" type="range" min="0" max="1.5" step="0.01" value="0.8"></label><button id="cosStop">⏹ Zatrzymaj warstwy</button><button id="cosScene">🎲 Losowa scena (3 warstwy)</button></div>
+  <div id="cosGrid" class="cosgrid"></div><p class="hint">▶ = warstwa w tle (loop, idzie przez mikser i nagrywanie). → Pad wstawia do wybranego padu w kolumnie FX. Wszystko generowane syntezą, bez nagrań.</p></div></section>
+<!-- SAMPLES -->
+<section id="t-samples" class="tab"><div class="panel"><h3>📦 Biblioteka sampli</h3>
+  <div class="bar"><label class="filebtn big">📂 Importuj pliki / ZIP<input id="libFiles" type="file" accept="audio/*,.zip,.mp3,.wav,.ogg,.flac" multiple hidden></label><label class="filebtn">📁 Importuj folder<input id="libDir" type="file" webkitdirectory multiple hidden></label>
+    <a class="btnlink" href="https://drive.google.com/drive/folders/1BXIgiUIAzgI21a-r6Euyh4UI0DuA5w3e" target="_blank" rel="noopener">☁️ Google Drive: D7 Samples</a><span id="libProg" class="muted"></span></div>
+  <div class="bar"><input id="manUrl" placeholder="Manifest URL (samples-manifest.json)…" style="flex:1;min-width:220px"><button id="manGo">Wczytaj manifest</button><select id="libFilter"><option value="">Wszystkie</option><option value="local">Moje (import)</option><option value="gen">Wbudowane</option><option value="url">Z manifestu</option></select><input id="libQ" placeholder="Szukaj…"></div>
+  <div id="libList" class="liblist"></div>
+  <p class="hint">Moje sample zapisują się w aplikacji (IndexedDB) i zostają po restarcie. Paczka „D7-Samples-Drive-pack.zip” z Twojego Google Drive (26 sampli) — pobierz ją z folderu D7 Samples i zaimportuj tutaj (ZIP działa bez rozpakowywania).</p></div></section>
+<!-- BOT D -->
+<section id="t-bot" class="tab"><div class="panel botp"><h3>🧠 Bot D · super mózg</h3>
+  <div id="botLog" class="botlog"></div>
+  <div class="bar"><input id="botIn" placeholder="Napisz polecenie, np.: zrób mroczne techno 132 bpm · graj · miksuj · deszcz · nagrywaj · 1080p · test" style="flex:1"><button id="botSend" class="hot">➤</button><button id="botMic" title="Mów (jeśli przeglądarka wspiera)">🎤</button></div>
+  <div class="bar" id="botChips"></div>
+  <p class="hint">Bot D działa offline (reguły). Opcjonalnie: tryb online (Ustawienia → AI online) łączy z serwerem botów D7, gdy jest dostępny.</p></div></section>
+<!-- SETTINGS -->
+<section id="t-settings" class="tab"><div class="cols2">
+  <div class="panel"><h3>🖥 Wizualizacje i nagrywanie</h3><div class="form" id="setForm"></div></div>
+  <div class="panel"><h3>🛠 Auto-fix</h3><div class="bar"><button id="selfTest" class="hot">✅ Self-test</button><button id="fixNow">🔧 Napraw audio</button><button id="restartAudio">♻️ Restart audio</button><button id="logClear">Wyczyść log</button></div><div id="testOut"></div><pre id="fixLog" class="fixlog"></pre></div>
+</div></section>
 </main>
 <div id="toast"></div>
 <script>window.D7S_NO_BOOT = true;</script>
-<script src="stations.js"></script><script src="gen.js"></script><script src="engine.js"></script><script src="viz.js"></script><script src="ui.js"></script>
+<script src="stations.js"></script><script src="gen.js"></script><script src="cosmos.js"></script><script src="engine.js"></script><script src="core2.js"></script><script src="viz.js"></script><script src="ui.js"></script><script src="ui2.js"></script><script src="bot.js"></script>
 </body></html>
