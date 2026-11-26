@@ -55,7 +55,7 @@
     setup(); V.resize(); window.addEventListener('resize', V.resize); requestAnimationFrame(frame);
   };
   function setup() {
-    gl = cv.getContext('webgl', { antialias: false, preserveDrawingBuffer: true, powerPreference: 'high-performance' }) || cv.getContext('experimental-webgl');
+    gl = cv.getContext('webgl', { antialias: false, preserveDrawingBuffer: false, powerPreference: 'high-performance' }) || cv.getContext('experimental-webgl');
     V.gl = gl; if (!gl) { V.fallback = cv.getContext('2d'); return; }
     function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { V.err = gl.getShaderInfoLog(s); console.error(V.err); } return s; }
     prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(prog);
@@ -75,7 +75,8 @@
   V.clearImage = function () { V.img = false; V._imgEl = null; };
   // resolution / quality: auto · 720 · 1080 · 4k · eco
   V.scaleFor = function (res, cssW, cssH) { var dpr = window.devicePixelRatio || 1, mob = /Android|iPhone|iPad/i.test(navigator.userAgent);
-    var h = (res === 'auto' ? (V.dyn || 1) : 1) * (res === '720' ? 720 : res === '1080' ? 1080 : res === '4k' ? 2160 : res === 'eco' ? Math.min(cssH * .5, 480) : cssH * Math.min(dpr, mob ? 1.25 : 2)); return Math.min(h / cssH, 4096 / Math.max(cssW, cssH)); };
+    var small = Math.min(cssW, cssH) < 520, cap = small ? 1 : mob ? 1.25 : 1.75;
+    var h = (res === 'auto' ? (V.dyn || 1) : 1) * (res === '720' ? 720 : res === '1080' ? 1080 : res === '4k' ? 2160 : res === 'eco' ? Math.min(cssH * .5, 480) : cssH * Math.min(dpr, cap)); return Math.min(h / cssH, 4096 / Math.max(cssW, cssH)); };
   V.resize = function () { if (!cv) return; var w = cv.clientWidth || innerWidth, h = cv.clientHeight || innerHeight, s = V.scaleFor(V.res, w, h); cv.width = Math.max(2, Math.round(w * s)); cv.height = Math.max(2, Math.round(h * s)); V.size = cv.width + '×' + cv.height; A.emit('visres', V.size); };
   V.setRes = function (r) { V.res = r; V.resize(); };
   function rv() { return Math.floor(Math.random() * 777); }
@@ -85,12 +86,16 @@
     if (!V.auto || V.lock) return; var bl = V.mode === 'b2' ? 8 : V.mode === 'b4' ? 16 : 0; if (bl && n % bl === 0 && n > 0) V.next(V.mode === 'b4', (V.mode === 'b2' ? 2 : 4) * 60 / A.bpm); });
   A.on('drop', function () { V.pulse = 1.4; if (V.auto && !V.lock) V.next(true, 1.2); });
   A.on('vischange', function () { if (!V.lock) V.next(true); });
-  var lastF = 0, fc = 0, fpsT = 0;
-  function frame(now) {
-    requestAnimationFrame(frame);
-    if (V.res === 'eco' && now - lastF < 32) return; var dt = Math.min(.1, (now - lastF) / 1000); lastF = now;
+  A.on('special', function (e) { V.pulse = 1.3; if (V.auto && !V.lock && /Riser|Drop|Flip|Slam|Arp/.test(e.name)) V.next(true, 1.5); });
+  V.snap = function () { if (!gl) return null; frame(performance.now() + 20, true); var px = new Uint8Array(4); gl.readPixels(cv.width >> 1, cv.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); return [px[0], px[1], px[2], gl.getError()]; };
+  var lastF = 0, fc = 0, fpsT = 0, ftAcc = 0, ftN = 0;
+  function frame(now, force) {
+    if (!force) requestAnimationFrame(frame); else lastF = 0;
+    if (V.capFps && now - lastF < 1000 / V.capFps - 2) return; var dt = Math.min(.1, (now - lastF) / 1000); if (lastF) { ftAcc += now - lastF; ftN++; } lastF = now;
     fc++; if (now - fpsT > 1000) { V.fps = fc; fc = 0; fpsT = now; // adaptive quality in Auto: keep it smooth on weak GPUs
-      if (V.res === 'auto' && !document.hidden) { V.dyn = V.dyn || 1; if (V.fps < 24 && V.dyn > .4) { V.dyn = Math.max(.4, V.dyn * .8); V.good = 0; V.resize(); } else if (V.fps > 50 && V.dyn < 1 && ++V.good > 5) { V.dyn = Math.min(1, V.dyn * 1.15); V.good = 0; V.resize(); } } }
+      V.ft = ftAcc / Math.max(1, ftN); ftAcc = 0; ftN = 0; // avg frame time (ms)
+      if (V.res === 'auto' && !document.hidden) { V.dyn = V.dyn || 1; if (V.ft > 25 && V.dyn > .35) { V.dyn = Math.max(.35, V.dyn * .78); V.good = 0; V.resize(); } else if (V.ft < 19 && V.dyn < 1 && ++V.good > 5) { V.dyn = Math.min(1, V.dyn * 1.12); V.good = 0; V.resize(); } }
+      V.capFps = V.res === 'eco' ? 30 : (V.ft > 30 && V.dyn <= .36 ? 30 : 0); }
     var bd = A.bands ? A.bands() : { b: 0, m: 0, h: 0 }; V.bands = bd;
     if (!A.playing) { if (bd.b > avgB * 1.45 && bd.b > .25 && V.pulse < .3) V.pulse = .9; avgB += (bd.b - avgB) * .05; } // onset for uploaded tracks
     V.pulse *= Math.pow(.02, dt);

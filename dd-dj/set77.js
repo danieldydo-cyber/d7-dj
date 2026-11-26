@@ -41,7 +41,7 @@
   // ---------- Autonomic ----------
   var AU = { on: false, log: [], fixes: 0 };
   AU.note = function (m) { AU.log.unshift(new Date().toLocaleTimeString('pl-PL') + ' · ' + m); AU.log.length = Math.min(AU.log.length, 40); A.emit('autolog', AU.log); };
-  AU.toggle = function (v) { AU.on = v == null ? !AU.on : !!v; AU.note(AU.on ? 'Autonomic ON' : 'Autonomic OFF'); if (AU.on && !A.playing && !SET.on) G.play(G.random().id, { now: true }); A.emit('auto', AU.on); };
+  AU.toggle = function (v) { AU.on = v == null ? !AU.on : !!v; if (window.DDSpecials) { DDSpecials.auto = AU.on; A.emit('spauto', AU.on); } AU.note(AU.on ? 'Autonomic ON' : 'Autonomic OFF'); if (AU.on && !A.playing && !SET.on) G.play(G.random().id, { now: true }); A.emit('auto', AU.on); };
   A.on('section', function (sec) { if (!AU.on) return; if (sec === 'drop' || sec === 'break') A.emit('vischange', sec); });
   var barsOnStyle = 0;
   A.on('bar', function (b) { if (!AU.on || SET.on) return; barsOnStyle++;
@@ -54,6 +54,8 @@
     try { [A.master.gain, A.genGain.gain, A.pump.gain].forEach(function (p) { if (!isFinite(p.value)) { p.cancelScheduledValues(0); p.value = 1; fixed.push('NaN gain naprawiony'); } }); } catch (e) {}
     if (!isFinite(A.bpm) || A.bpm < 50 || A.bpm > 200) { A.setBpm(128); fixed.push('BPM przywrócone'); }
     if (A.playing && A.nextT < A.ctx.currentTime - 1) { A.nextT = A.ctx.currentTime + .05; fixed.push('Zegar zsynchronizowany'); }
+    if (!A.playing && A.active > A.CAP * .9) { A.active = 0; fixed.push('Licznik głosów zresetowany'); }
+    if (A.ctx.state === 'running' && !A.playing && A._muting && A.genGain.gain.value < .01) { A._muting = false; A.genGain.gain.setTargetAtTime(A.genLevel, A.ctx.currentTime, .01); }
     if (window.DDVis && DDVis.lost) { DDVis.recover(); fixed.push('WebGL odzyskany'); }
     if (fixed.length) { AU.fixes += fixed.length; fixed.forEach(AU.note); A.emit('fix', AU.fixes); }
   }, 2000);
