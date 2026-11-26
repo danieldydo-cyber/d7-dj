@@ -1,4 +1,4 @@
-const C='dd-dj-v300';const F=['./','index.html','app.css','engine.js','styles.js','gen.js','set77.js','visuals.js','rec.js','ui.js','bot.js','icon.png','manifest.webmanifest','samples/dax/manifest.json'];
+const C='dd-dj-v301';const F=['./','index.html','app.css','engine.js','styles.js','gen.js','set77.js','visuals.js','specials.js','rec.js','ui.js','bot.js','icon.png','manifest.webmanifest','samples/dax/manifest.json'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(F)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x.startsWith('dd-dj')&&x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(u.origin!==location.origin||e.request.method!=='GET'||!u.pathname.includes('/dd-dj/'))return;e.respondWith(fetch(e.request).then(r=>{if(r.ok){const c=r.clone();caches.open(C).then(x=>x.put(e.request,c));}return r}).catch(()=>caches.match(e.request,{ignoreSearch:true})))});

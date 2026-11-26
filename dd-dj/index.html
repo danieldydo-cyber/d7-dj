@@ -5,7 +5,7 @@
 <meta name="description" content="DD DJ 3.0 od DJ DaX: Space X Sound Engine (punch, sub, limiter), 7×7 stylów + Rasta Techno Magic + Space Nova Magic, Endless Generator, 77 min Set Pro, Autonomic, Space X Visuals 3D z nagrywaniem. Web, Android, Windows.">
 <link rel="canonical" href="https://danieldydo-cyber.github.io/d7-dj/dd-dj/">
 <meta property="og:title" content="DD DJ · Space Nova DJ Studio Pro 3.0"><meta property="og:description" content="Bangery 7×7, Rasta Techno Magic, 77 min Set Pro, Space X Visuals 3D z nagrywaniem — DJ DaX."><meta property="og:image" content="https://danieldydo-cyber.github.io/d7-dj/og.png">
-<link rel="icon" href="icon.png"><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="app.css">
+<link rel="icon" href="icon.png"><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="app.css?v=301">
 </head><body>
 <canvas id="vis" aria-hidden="true"></canvas>
 <div id="start"><div class="sbox"><div class="logo-big">DD DJ</div><div class="sub">SPACE NOVA DJ STUDIO · PRO 3.0.1</div><p>Space X Sound · 7×7 stylów · Rasta Techno Magic · Space Nova Magic · 77 min Set Pro · Autonomic · Space X Visuals 3D</p><button id="startBtn" class="big">▶ START</button><p class="small">DJ DaX · Kraków · offline · Web Audio 48 kHz</p></div></div>
@@ -37,7 +37,7 @@
   <div class="chips" id="catChips"></div>
   <div class="macros">
     <label>Filtr <input id="mFilter" type="range" min="-1" max="1" step="0.01" value="0"></label>
-    <label>Punch <input id="mPunch" type="range" min="0" max="1" step="0.01" value="0.65"></label>
+    <label>Punch <input id="mPunch" type="range" min="0" max="1" step="0.01" value="0.5"></label>
     <button id="mBuild">📈 Build</button><button id="mDrop" class="hot">💥 Drop</button><button id="mThrow">🌊 Dub Echo</button><button id="mRepeat">🔁 Repeat</button><button id="mMutate">🧬 Mutuj</button>
   </div>
 </main>
@@ -90,11 +90,11 @@
       <label>EQ High <input data-eq="hi" type="range" min="-24" max="12" step="0.5" value="0"></label>
       <label>Filtr LP⟷HP <input id="xFilter" type="range" min="-1" max="1" step="0.01" value="0"></label></div>
     <div class="box"><h3>Space X Sound</h3>
-      <label>Punch / głośność klubowa <input id="xPunch" type="range" min="0" max="1" step="0.01" value="0.65"></label>
+      <label>Punch / głośność klubowa <input id="xPunch" type="range" min="0" max="1" step="0.01" value="0.5"></label>
       <label>Sidechain pump <input id="xPump" type="range" min="0" max="1" step="0.01" value="0.55"></label>
       <label>Swing / groove <input id="xSwing" type="range" min="0" max="0.6" step="0.01" value="0.12"></label>
       <label>Humanizacja <input id="xHuman" type="range" min="0" max="1" step="0.01" value="0.35"></label>
-      <p class="dim">Sub enhancer 45–80 Hz · glue comp · soft-clip · limiter −0.3 dB</p></div>
+      <p class="dim">Sub enhancer 45–80 Hz · glue comp · soft-clip · limiter −0.5 dB</p></div>
     <div class="box"><h3>FX</h3>
       <label>Echo (dub) <input id="xEcho" type="range" min="0" max="1" step="0.01" value="0.7"></label>
       <label>Czas echo <select id="xEchoT"><option value="0.25">1/4</option><option value="0.375">3/8</option><option value="0.5">1/2</option><option value="0.75" selected>3/4</option><option value="1">1</option></select></label>
@@ -129,5 +129,5 @@
 </div></section>
 </div>
 <div id="toast" role="status" aria-live="polite"></div>
-<script src="engine.js"></script><script src="styles.js"></script><script src="gen.js"></script><script src="set77.js"></script><script src="visuals.js"></script><script src="specials.js"></script><script src="rec.js"></script><script src="ui.js"></script><script src="bot.js"></script>
+<script src="engine.js?v=301"></script><script src="styles.js?v=301"></script><script src="gen.js?v=301"></script><script src="set77.js?v=301"></script><script src="visuals.js?v=301"></script><script src="specials.js?v=301"></script><script src="rec.js?v=301"></script><script src="ui.js?v=301"></script><script src="bot.js?v=301"></script>
 </body></html>

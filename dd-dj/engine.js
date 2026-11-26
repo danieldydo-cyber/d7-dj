@@ -4,7 +4,7 @@
    Clock: Web Worker heartbeat + 0.25 s lookahead on audioCtx.currentTime. Voices: tracked, auto-disconnected on end, budgeted. */
 (function () {
   'use strict';
-  var A = { ctx: null, ls: {}, version: '3.0.1' };
+  var A = { ctx: null, ls: {}, version: '3.0.1', _bands: { b: 0, m: 0, h: 0, r: 0 } };
   A.on = function (e, f) { (A.ls[e] = A.ls[e] || []).push(f); };
   A.emit = function (e, a) { var l = A.ls[e]; if (!l) return; for (var i = 0; i < l.length; i++) { try { l[i](a); } catch (x) { console.error(x); } } };
   var ctx, noiseBuf, hatBuf, shapers = {};
@@ -101,7 +101,7 @@
     A.dry.connect(A.glue); A.brOut.connect(A.glue); A.glue.connect(A.makeup); A.makeup.connect(A.satPre); A.satPre.connect(A.sat); A.sat.connect(A.satPost); A.satPost.connect(A.master);
     A.master.connect(A.limiter); A.limiter.connect(A.ceiling); A.ceiling.connect(A.safety); A.safety.connect(A.analyser);
     A.analyser.connect(ctx.destination); A.analyser.connect(A.recDest);
-    A.fd = new Uint8Array(A.analyser.frequencyBinCount); A._bands = { b: 0, m: 0, h: 0, r: 0 };
+    A.fd = new Uint8Array(A.analyser.frequencyBinCount);
     A.decks = [new Deck(0), new Deck(1)]; A.xfader(0);
     A.loudness(A.settings.punch);
     startClock();
@@ -110,11 +110,11 @@
     return ctx;
   };
   A.resume = function () { if (ctx && ctx.state !== 'running' && ctx.state !== 'closed') return ctx.resume().catch(function () {}); };
-  A.settings = { punch: .6, swing: .1, human: .3, pump: .55 };
+  A.settings = { punch: .5, swing: .1, human: .3, pump: .55 };
   A.loudness = function (p) { // 0..1 — clean at 0, club-loud at 1, limiter keeps peaks ≤ −0.5 dBFS
-    p = clampN(p, 0, 1, .6); A.settings.punch = p; if (!ctx) return; var t = ctx.currentTime;
+    p = clampN(p, 0, 1, .5); A.settings.punch = p; if (!ctx) return; var t = ctx.currentTime;
     A.glue.threshold.setTargetAtTime(-8 - p * 10, t, .05); A.glue.ratio.setTargetAtTime(1.8 + p * 1.8, t, .05);
-    A.makeup.gain.setTargetAtTime(db(p * 4.5), t, .05); A.satPre.gain.setTargetAtTime(.6 + p * .35, t, .05); A.satPost.gain.setTargetAtTime(1 / (.75 + p * .25), t, .05);
+    A.makeup.gain.setTargetAtTime(db(p * 3.5), t, .05); A.satPre.gain.setTargetAtTime(.6 + p * .35, t, .05); A.satPost.gain.setTargetAtTime(1 / (.75 + p * .25), t, .05);
     A.subAmt.gain.setTargetAtTime(.1 + p * .18, t, .05); A.excAmt.gain.setTargetAtTime(.03 + p * .04, t, .05);
   };
   A.setEQ = function (band, v) { if (!ctx) return; v = clampN(v, -26, 12, 0); var n = band === 'lo' ? A.eqLo : band === 'mid' ? A.eqMid : A.eqHi; n.gain.setTargetAtTime(v, ctx.currentTime, .02); };
