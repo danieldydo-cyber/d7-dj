@@ -66,11 +66,13 @@
     A.deckBus = ctx.createGain(); A.padBus = ctx.createGain(); A.padBus.gain.value = .85;
     A.bus = ctx.createGain(); A.genXf = ctx.createGain(); A.trkXf = ctx.createGain();
     A.genGain.connect(A.genXf); A.genXf.connect(A.bus); A.deckBus.connect(A.trkXf); A.padBus.connect(A.trkXf); A.trkXf.connect(A.bus);
-    // ---- Club isolator: Linkwitz-Riley 24 dB crossovers 220 Hz / 2.6 kHz + allpass compensation → bands sum flat; each band 0 (kill) … +6 dB
-    function lr4(t, f) { var a = biq(t, f, .7071), b = biq(t, f, .7071); a.connect(b); return [a, b]; }
-    var iL = lr4('lowpass', 220), iH = lr4('highpass', 220), iM = lr4('lowpass', 2600), iT = lr4('highpass', 2600), iAP = biq('allpass', 2600, .7071);
+    // ---- Club isolator: Linkwitz-Riley crossovers 220 Hz / 2.6 kHz + allpass compensation → bands sum flat; each band 0 (kill) … +6 dB
+    function lr4(t, f) { var a = biq(t, f, -3.0103), b = biq(t, f, -3.0103); /* Web Audio LP/HP Q is in dB: −3.01 dB = Butterworth .7071 */ a.connect(b); return [a, b]; }
+    // LR8 (48 dB/oct = Butterworth-4 squared, Q .5412 / 1.3066) → kills are deep; LP+HP sums to an allpass, low band gets the matching 2.6 kHz allpass pair
+    function lr8(t, f) { var n = [biq(t, f, -5.333), biq(t, f, 2.322), biq(t, f, -5.333), biq(t, f, 2.322)]; n[0].connect(n[1]); n[1].connect(n[2]); n[2].connect(n[3]); return [n[0], n[3]]; }
+    var iL = lr8('lowpass', 220), iH = lr8('highpass', 220), iM = lr8('lowpass', 2600), iT = lr8('highpass', 2600), iAP = biq('allpass', 2600, .5412), iAP2 = biq('allpass', 2600, 1.3066); iAP.connect(iAP2);
     A.isoLo = ctx.createGain(); A.isoMid = ctx.createGain(); A.isoHi = ctx.createGain(); A.isoSum = ctx.createGain();
-    A.bus.connect(iL[0]); iL[1].connect(iAP); iAP.connect(A.isoLo); A.bus.connect(iH[0]); iH[1].connect(iM[0]); iH[1].connect(iT[0]); iM[1].connect(A.isoMid); iT[1].connect(A.isoHi);
+    A.bus.connect(iL[0]); iL[1].connect(iAP); iAP2.connect(A.isoLo); A.bus.connect(iH[0]); iH[1].connect(iM[0]); iH[1].connect(iT[0]); iM[1].connect(A.isoMid); iT[1].connect(A.isoHi);
     A.isoLo.connect(A.isoSum); A.isoMid.connect(A.isoSum); A.isoHi.connect(A.isoSum);
     // ---- Club Color FX: bipolar resonant HPF/LPF + colour layer (noise / space / crush / dub echo)
     A.cfHP = biq('highpass', 20, .7); A.cfLP = biq('lowpass', 22000, .7); A.cfDry = ctx.createGain(); A.cfOut = ctx.createGain();
@@ -381,8 +383,8 @@
   Deck.prototype.stop = function () { this._halt(); this.playing = false; this.off = 0; A.emit('deck', this); };
   Deck.prototype.toggle = function () { this.playing ? this.pause() : this.play(); };
   Deck.prototype.pos = function () { if (this.mode === 'el' && this.el && this.playing) return this.el.currentTime; return this.playing ? this.off + Math.max(0, ctx.currentTime - this.t0) * this.rate : this.off; };
-  Deck.prototype.setRate = function (r) { var p = this.pos(), was = this.useEl(); this.rate = clampN(r, .5, 1.5, 1); if (!this.playing) return;
-    if (was !== this.useEl()) { this.off = p; this._halt(); this.playing = false; this.play(); return; } // switch engine (master tempo needs the pitch-preserving element)
+  Deck.prototype.setRate = function (r) { var p = this.pos(); this.rate = clampN(r, .5, 1.5, 1); if (!this.playing) return;
+    if (this.mode !== (this.useEl() ? 'el' : 'buf')) { this.off = p; this._halt(); this.playing = false; this.play(); return; } // switch engine (master tempo needs the pitch-preserving element)
     if (this.mode === 'el') { this.el.playbackRate = this.rate; return; }
     if (this.src) { this.off = p; this.t0 = ctx.currentTime; this.src.playbackRate.setTargetAtTime(this.rate, ctx.currentTime, .02); } A.emit('deck', this); };
   Deck.prototype.sync = function () { if (!this.bpm) return false; this.setRate(clampN(A.bpm / this.bpm, .5, 1.5, 1)); A.emit('deck', this); return true; };
