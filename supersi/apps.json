@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26 01:50 CET",
+ "generated": "2026-11-26 09:20 CET",
  "apps": [
   {
    "file": "agents.html",
@@ -449,6 +449,11 @@
   {
    "name": "D7S-2.0.1.apk",
    "url": "https://danieldydo-cyber.github.io/d7-dj/downloads/D7S-2.0.1.apk",
+   "mb": 10.6
+  },
+  {
+   "name": "DD-DJ-3.0.0.apk",
+   "url": "https://danieldydo-cyber.github.io/d7-dj/downloads/DD-DJ-3.0.0.apk",
    "mb": 10.6
   },
   {
