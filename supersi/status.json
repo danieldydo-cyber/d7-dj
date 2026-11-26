@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26 13:27 CET",
+ "generated": "2026-11-26 13:57 CET",
  "bots": {
   "count": 22,
   "online": [
@@ -33,7 +33,9 @@
   "https://keyword-comments-bumper-firewire.trycloudflare.com"
  ],
  "liveSource": "ntfy",
- "pagesOk": 59,
+ "pagesOk": 58,
  "pagesTotal": 59,
- "broken": []
+ "broken": [
+  "https://danieldydo-cyber.github.io/d7-dj/visions-gl.html"
+ ]
 }
