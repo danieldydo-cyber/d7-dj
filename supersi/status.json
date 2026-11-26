@@ -1,12 +1,39 @@
 {
- "generated": "2026-11-26 22:30 CET",
- "bots": null,
+ "generated": "2026-11-26 23:04 CET",
+ "bots": {
+  "count": 22,
+  "online": [
+   "supergrok",
+   "d",
+   "superbotd",
+   "autofix",
+   "dragon",
+   "77",
+   "dargonmoon",
+   "supercharger",
+   "superd",
+   "megabot",
+   "superg",
+   "mrdfluid",
+   "botpamiec",
+   "botd",
+   "supergrok-web",
+   "djmix",
+   "radiokali",
+   "visualizer",
+   "builderweb",
+   "builderapk",
+   "builderpromo",
+   "paysupport"
+  ]
+ },
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": null,
+ "liveUrl": "https://factor-fitted-milan-tiffany.trycloudflare.com",
  "liveCandidates": [
-  "https://explaining-snap-intelligence-lamp.trycloudflare.com"
+  "https://stationery-secretariat-tulsa-schedule.trycloudflare.com",
+  "https://factor-fitted-milan-tiffany.trycloudflare.com"
  ],
- "liveSource": "offline",
+ "liveSource": "sync-manifest",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
