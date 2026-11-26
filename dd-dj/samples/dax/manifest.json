@@ -1,0 +1,320 @@
+{
+ "name": "DJ DaX Drive",
+ "version": 2,
+ "author": "DJ DaX (Daniel Dydo)",
+ "license": "Własne sample DJ DaX — wbudowane w D7S",
+ "items": [
+  {
+   "name": "DaX 7El_051",
+   "url": "DaX-7El_051.mp3",
+   "dur": 36.19,
+   "bpm": 98,
+   "phase": 0.021,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX RAMP_062",
+   "url": "DaX-RAMP_062.mp3",
+   "dur": 20.43,
+   "bpm": 122.5,
+   "phase": 0.309,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_005",
+   "url": "DaX-SAMP_005.mp3",
+   "dur": 14.79,
+   "bpm": 119.5,
+   "phase": 0.032,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_013",
+   "url": "DaX-SAMP_013.mp3",
+   "dur": 21.66,
+   "bpm": 125,
+   "phase": 0.085,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_017",
+   "url": "DaX-SAMP_017.mp3",
+   "dur": 16.4,
+   "bpm": 124,
+   "phase": 0.128,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_019",
+   "url": "DaX-SAMP_019.mp3",
+   "dur": 11.94,
+   "bpm": 124,
+   "phase": 0.149,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_020",
+   "url": "DaX-SAMP_020.mp3",
+   "dur": 19.44,
+   "bpm": 122.5,
+   "phase": 0.107,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_023",
+   "url": "DaX-SAMP_023.mp3",
+   "dur": 14.09,
+   "bpm": 122.5,
+   "phase": 0.256,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_030",
+   "url": "DaX-SAMP_030.mp3",
+   "dur": 17.36,
+   "bpm": 123.5,
+   "phase": 0.448,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_031",
+   "url": "DaX-SAMP_031.mp3",
+   "dur": 11.54,
+   "bpm": 127.5,
+   "phase": 0.096,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_032",
+   "url": "DaX-SAMP_032.mp3",
+   "dur": 15.7,
+   "bpm": 97.5,
+   "phase": 0.256,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_036",
+   "url": "DaX-SAMP_036.mp3",
+   "dur": 10.58,
+   "bpm": 128,
+   "phase": 0.267,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_037",
+   "url": "DaX-SAMP_037.mp3",
+   "dur": 12.89,
+   "bpm": 128,
+   "phase": 0.277,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_039",
+   "url": "DaX-SAMP_039.mp3",
+   "dur": 11.44,
+   "bpm": 128,
+   "phase": 0.181,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_042",
+   "url": "DaX-SAMP_042.mp3",
+   "dur": 10.3,
+   "bpm": 123.5,
+   "phase": 0.075,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_047",
+   "url": "DaX-SAMP_047.mp3",
+   "dur": 20.34,
+   "bpm": 170.5,
+   "phase": 0.224,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_048",
+   "url": "DaX-SAMP_048.mp3",
+   "dur": 18.73,
+   "bpm": 130.5,
+   "phase": 0.085,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_049",
+   "url": "DaX-SAMP_049.mp3",
+   "dur": 20.06,
+   "bpm": 158,
+   "phase": 0.117,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_055",
+   "url": "DaX-SAMP_055.mp3",
+   "dur": 12.04,
+   "bpm": 140.5,
+   "phase": 0.149,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_058",
+   "url": "DaX-SAMP_058.mp3",
+   "dur": 16.74,
+   "bpm": 122.5,
+   "phase": 0,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_059",
+   "url": "DaX-SAMP_059.mp3",
+   "dur": 21.75,
+   "bpm": 122.5,
+   "phase": 0.267,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX SAMP_061",
+   "url": "DaX-SAMP_061.mp3",
+   "dur": 22.23,
+   "bpm": 122.5,
+   "phase": 0.064,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX TAMP_066",
+   "url": "DaX-TAMP_066.mp3",
+   "dur": 16,
+   "bpm": 87.5,
+   "phase": 0.501,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX UAMP_063",
+   "url": "DaX-UAMP_063.mp3",
+   "dur": 19.81,
+   "bpm": 123.5,
+   "phase": 0.117,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX UAMP_493",
+   "url": "DaX-UAMP_493.mp3",
+   "dur": 16.74,
+   "bpm": 168,
+   "phase": 0.288,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  },
+  {
+   "name": "DaX XAMP_062",
+   "url": "DaX-XAMP_062.mp3",
+   "dur": 21.88,
+   "bpm": 122.5,
+   "phase": 0.16,
+   "tags": [
+    "DJ DaX",
+    "Drive"
+   ],
+   "source": "Google Drive · DJ DaX (własne)"
+  }
+ ]
+}

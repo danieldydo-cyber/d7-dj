@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#04010c">
+<title>DD DJ · Space Nova DJ Studio Pro 3.0 · DJ DaX</title>
+<meta name="description" content="DD DJ 3.0 od DJ DaX: Space X Sound Engine (punch, sub, limiter), 7×7 stylów + Rasta Techno Magic + Space Nova Magic, Endless Generator, 77 min Set Pro, Autonomic, Space X Visuals 3D z nagrywaniem. Web, Android, Windows.">
+<link rel="canonical" href="https://danieldydo-cyber.github.io/d7-dj/dd-dj/">
+<meta property="og:title" content="DD DJ · Space Nova DJ Studio Pro 3.0"><meta property="og:description" content="Bangery 7×7, Rasta Techno Magic, 77 min Set Pro, Space X Visuals 3D z nagrywaniem — DJ DaX."><meta property="og:image" content="https://danieldydo-cyber.github.io/d7-dj/og.png">
+<link rel="icon" href="icon.png"><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="app.css">
+</head><body>
+<canvas id="vis" aria-hidden="true"></canvas>
+<div id="start"><div class="sbox"><div class="logo-big">DD DJ</div><div class="sub">SPACE NOVA DJ STUDIO · PRO 3.0</div><p>Space X Sound · 7×7 stylów · Rasta Techno Magic · Space Nova Magic · 77 min Set Pro · Autonomic · Space X Visuals 3D</p><button id="startBtn" class="big">▶ START</button><p class="small">DJ DaX · Kraków · offline · Web Audio 48 kHz</p></div></div>
+<header id="top">
+  <div class="logo">DD DJ<small>SPACE NOVA PRO 3.0</small></div>
+  <div class="hg bpmg"><button id="bpmDn" aria-label="BPM w dół">−</button><div class="bpm"><b id="bpmV">128</b><small>BPM</small></div><button id="bpmUp" aria-label="BPM w górę">+</button><button id="tap">TAP</button><span class="beats" id="beats"><i></i><i></i><i></i><i></i></span></div>
+  <div class="hg"><button id="recQuick" class="rec" title="Nagraj show (wideo + audio)">⏺ <span id="recT">REC</span></button><button id="showBtn" title="Tryb show — same wizualizacje">🌌</button><button id="fsBtn" title="Pełny ekran">⛶</button><button id="fixB" class="fixb" title="Auto-fix">🛠 <span id="fixN">0</span></button></div>
+</header>
+<main id="studio">
+  <div class="console3d"><div class="console" id="console">
+    <div class="jog" id="jogA"><div class="ring"></div><div class="disc"><span>A</span></div></div>
+    <div class="center">
+      <div class="now"><span id="secBadge" class="badge">STOP</span><b id="styleName">Wybierz styl albo ⚡ BANGER</b><span id="catName"></span></div>
+      <div class="phrase"><i id="phraseBar"></i></div>
+      <canvas id="ring" width="360" height="360"></canvas>
+      <div class="energy"><span>ENERGIA</span><i><b id="energyBar"></b></i></div>
+      <div class="bigrow">
+        <button id="playBtn" class="pbig">▶ GRAJ</button>
+        <button id="bangerBtn" class="hot">⚡ BANGER</button>
+        <button id="rastaBtn" class="rasta">🌀 RASTA TECHNO</button>
+        <button id="novaBtn" class="nova">✨ SPACE NOVA</button>
+        <button id="set77Btn" class="setb">⏱ SET 77</button>
+        <button id="autoBtn" class="tg">🤖 AUTONOMIC</button>
+      </div>
+    </div>
+    <div class="jog" id="jogB"><div class="ring"></div><div class="disc"><span>B</span></div></div>
+  </div></div>
+  <div class="chips" id="catChips"></div>
+  <div class="macros">
+    <label>Filtr <input id="mFilter" type="range" min="-1" max="1" step="0.01" value="0"></label>
+    <label>Punch <input id="mPunch" type="range" min="0" max="1" step="0.01" value="0.65"></label>
+    <button id="mBuild">📈 Build</button><button id="mDrop" class="hot">💥 Drop</button><button id="mThrow">🌊 Dub Echo</button><button id="mRepeat">🔁 Repeat</button><button id="mMutate">🧬 Mutuj</button>
+  </div>
+</main>
+<nav id="dock" aria-label="Okna">
+  <button data-w="vis">🌌<b>Visuals</b></button><button data-w="gen">🧪<b>Generatory</b></button><button data-w="set">⏱<b>Set 77</b></button><button data-w="pads">🔲<b>Pady</b></button>
+  <button data-w="mix">🎚<b>Mixer FX</b></button><button data-w="rec">⏺<b>Nagraj</b></button><button data-w="bot">🧠<b>Bot D</b></button><button data-w="cfg">⚙️<b>Ustaw.</b></button>
+</nav>
+<div id="wl" hidden><div class="backdrop" id="backdrop"></div>
+<section class="win" id="w-vis" role="dialog" aria-label="Space X Visuals" hidden><header><h2>🌌 Space X Visuals</h2><button class="x" aria-label="Zamknij">✕</button></header><div class="wb">
+  <div class="row"><b id="visNow">—</b><span class="sep"></span><button id="visNext">⏭ Następna</button><button id="visMagic" class="nova">✨ Magiczne przejście</button><button id="visShow" class="hot">⛶ Full show</button></div>
+  <div class="grid scenes" id="sceneGrid"></div>
+  <div class="row"><label>Przejścia <select id="visMode"><option value="7+13">7 s + magia 13 s</option><option value="7">co 7 s</option><option value="13">magia co 13 s</option><option value="b2">sync 2 beaty</option><option value="b4">sync 4 beaty</option></select></label>
+    <label>Puls <select id="visSync"><option value="1">każdy beat</option><option value="2">co 2 beaty</option><option value="4">co 4 beaty</option></select></label>
+    <button id="visAuto" class="tg on">AUTO</button><button id="visLock" class="tg">🔒 Zablokuj</button></div>
+  <div class="row"><label>Jakość <select class="resSel"></select></label><span id="visInfo" class="dim"></span></div>
+  <div class="row"><label class="filebtn">🖼 Wgraj obraz tła<input id="imgIn" type="file" accept="image/*"></label><label>Mix obrazu <input id="imgMix" type="range" min="0" max="1" step="0.01" value="0.55"></label><button id="imgClr">✕ Usuń obraz</button></div>
+</div></section>
+<section class="win" id="w-gen" role="dialog" aria-label="Generatory" hidden><header><h2>🧪 Generatory 7×7 + Magic</h2><button class="x" aria-label="Zamknij">✕</button></header><div class="wb">
+  <div class="tabs" id="genCats"></div>
+  <div class="grid styles" id="styleGrid"></div>
+  <div class="row"><button id="gEndless" class="tg on">♾ Endless</button><label>Energia <input id="gEnergy" type="range" min="0" max="1" step="0.01" value="0.7"></label><label>BPM <input id="gBpm" type="number" min="50" max="200" placeholder="auto"></label><button id="gRandom">🎲 Losuj</button><button id="gMut">🧬 Mutuj</button></div>
+  <div class="row layers" id="layers"></div>
+  <div class="row"><span class="dim">Sekcja:</span><button data-j="intro">Intro</button><button data-j="groove">Groove</button><button data-j="build">Build</button><button data-j="drop" class="hot">Drop</button><button data-j="break">Break</button></div>
+</div></section>
+<section class="win" id="w-set" role="dialog" aria-label="77 min Set Pro" hidden><header><h2>⏱ 77 min Set Pro</h2><button class="x" aria-label="Zamknij">✕</button></header><div class="wb">
+  <div class="row"><button id="setGo" class="hot big2">▶ Start 77 min</button><button id="setStop">⏹ Stop</button><button id="setNew">🎲 Nowy plan</button><b class="settime"><span id="setT">00:00</span> / 77:00</b></div>
+  <div class="timeline" id="setTl"><i id="setHead"></i></div>
+  <canvas id="setCurve" width="900" height="120"></canvas>
+  <div class="row"><b id="setPhase">—</b><span id="setNow" class="dim"></span></div>
+  <ol class="seglist" id="segList"></ol>
+</div></section>
+<section class="win" id="w-pads" role="dialog" aria-label="Pady" hidden><header><h2>🔲 Pady · 26 sampli DJ DaX + FX</h2><button class="x" aria-label="Zamknij">✕</button></header><div class="wb">
+  <div class="row"><button id="padQ" class="tg on">Quant (beat)</button><label>Głośność <input id="padVol" type="range" min="0" max="1.2" step="0.01" value="0.9"></label><button id="padStop">⏹ Stop pady</button><span id="padInfo" class="dim"></span></div>
+  <div class="grid pads" id="padGrid"></div>
+</div></section>
+<section class="win" id="w-mix" role="dialog" aria-label="Mixer FX" hidden><header><h2>🎚 Mixer · FX · Decki</h2><button class="x" aria-label="Zamknij">✕</button></header><div class="wb">
+  <div class="cols">
+    <div class="box"><h3>Master</h3>
+      <label>Głośność <input id="xMaster" type="range" min="0" max="1.2" step="0.01" value="0.9"></label>
+      <label>Generator <input id="xGen" type="range" min="0" max="1.2" step="0.01" value="1"></label>
+      <label>EQ Low <input data-eq="lo" type="range" min="-24" max="12" step="0.5" value="0"></label>
+      <label>EQ Mid <input data-eq="mid" type="range" min="-24" max="12" step="0.5" value="0"></label>
+      <label>EQ High <input data-eq="hi" type="range" min="-24" max="12" step="0.5" value="0"></label>
+      <label>Filtr LP⟷HP <input id="xFilter" type="range" min="-1" max="1" step="0.01" value="0"></label></div>
+    <div class="box"><h3>Space X Sound</h3>
+      <label>Punch / głośność klubowa <input id="xPunch" type="range" min="0" max="1" step="0.01" value="0.65"></label>
+      <label>Sidechain pump <input id="xPump" type="range" min="0" max="1" step="0.01" value="0.55"></label>
+      <label>Swing / groove <input id="xSwing" type="range" min="0" max="0.6" step="0.01" value="0.12"></label>
+      <label>Humanizacja <input id="xHuman" type="range" min="0" max="1" step="0.01" value="0.35"></label>
+      <p class="dim">Sub enhancer 45–80 Hz · glue comp · soft-clip · limiter −0.3 dB</p></div>
+    <div class="box"><h3>FX</h3>
+      <label>Echo (dub) <input id="xEcho" type="range" min="0" max="1" step="0.01" value="0.7"></label>
+      <label>Czas echo <select id="xEchoT"><option value="0.25">1/4</option><option value="0.375">3/8</option><option value="0.5">1/2</option><option value="0.75" selected>3/4</option><option value="1">1</option></select></label>
+      <label>Reverb <input id="xRev" type="range" min="0" max="1" step="0.01" value="0.55"></label>
+      <div class="row"><span class="dim">Beat repeat (trzymaj):</span><button data-br="0.25">1/4</button><button data-br="0.5">1/2</button><button data-br="1">1</button></div>
+      <div class="row"><button id="xThrow">🌊 Dub throw</button><button id="xSiren">🚨 Syrena dub</button></div></div>
+    <div class="box"><h3>Decki (Twoje utwory)</h3>
+      <div class="deck" data-d="0"><b>A</b> <span class="dn dim">pusty</span><div class="row"><label class="filebtn">📂 Wgraj<input type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a"></label><button class="dp">▶/❚❚</button><button class="ds">⏹</button></div><label>Tempo <input class="dr" type="range" min="0.85" max="1.15" step="0.001" value="1"></label></div>
+      <div class="deck" data-d="1"><b>B</b> <span class="dn dim">pusty</span><div class="row"><label class="filebtn">📂 Wgraj<input type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a"></label><button class="dp">▶/❚❚</button><button class="ds">⏹</button></div><label>Tempo <input class="dr" type="range" min="0.85" max="1.15" step="0.001" value="1"></label></div>
+      <label>Crossfader A⟷B <input id="xXf" type="range" min="-1" max="1" step="0.01" value="0"></label></div>
+  </div>
+</div></section>
+<section class="win" id="w-rec" role="dialog" aria-label="Nagraj i wgraj" hidden><header><h2>⏺ Nagrywanie · Wgrywanie</h2><button class="x" aria-label="Zamknij">✕</button></header><div class="wb">
+  <div class="row"><button id="recAV" class="hot big2">⏺ Nagraj show (wideo + audio)</button><button id="recA" class="big2">🎙 Nagraj sam miks (audio)</button><button id="recStop" class="big2">⏹ Stop i zapisz</button><b id="recTime" class="settime">00:00</b></div>
+  <p class="dim" id="recInfo">Nagrywa wizualizacje Space X + master audio (WebM). Rozdzielczość = Jakość z ustawień.</p>
+  <div class="row"><label class="filebtn">🎵 Wgraj utwór → Deck A<input id="upA" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a"></label><label class="filebtn">🎵 Wgraj utwór → Deck B<input id="upB" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a"></label><label class="filebtn">🖼 Wgraj obraz → Visuals<input id="upImg" type="file" accept="image/*"></label></div>
+  <p class="dim">MP3 / WAV / OGG / M4A. Wgrany utwór gra na decku i steruje wizualizacjami (detekcja basu).</p>
+  <div id="recLast" class="dim"></div>
+</div></section>
+<section class="win" id="w-bot" role="dialog" aria-label="Bot D" hidden><header><h2>🧠 Bot D · pomocnik offline</h2><button class="x" aria-label="Zamknij">✕</button></header><div class="wb">
+  <div class="botlog" id="botLog"></div>
+  <form class="row" id="botForm"><input id="botIn" placeholder="np. graj rasta techno · set 77 · banger · nagrywaj · pomoc" autocomplete="off"><button class="hot">Wyślij</button></form>
+  <div class="row" id="botQuick"></div>
+</div></section>
+<section class="win" id="w-cfg" role="dialog" aria-label="Ustawienia" hidden><header><h2>⚙️ Ustawienia</h2><button class="x" aria-label="Zamknij">✕</button></header><div class="wb">
+  <div class="row"><label>Jakość / rozdzielczość <select class="resSel"></select></label><span class="dim" id="cfgRes"></span></div>
+  <div class="row"><button id="cfgBig" class="tg">🔠 Duże przyciski</button><button id="cfg3d" class="tg on">🧊 Konsola 3D</button><button id="cfgTest">🧪 Self-test</button><button id="cfgReset">↺ Reset ustawień</button></div>
+  <pre id="cfgOut" class="log"></pre>
+  <div class="box"><h3>Autonomic log</h3><pre id="autoLog" class="log"></pre></div>
+  <div class="box"><h3>DD DJ 3.0.0</h3><p>© 2026 Daniel Dydo · DJ DaX · Kraków. Oryginalny kod. Aplikacje: <a href="https://danieldydo-cyber.github.io/d7-dj/download.html" target="_blank" rel="noopener">pobierz (Web · Android · Windows)</a> · <a href="https://danieldydo-cyber.github.io/d7-dj/d7s/" target="_blank" rel="noopener">D7S 2 (poprzednia wersja)</a></p>
+  <p>Wsparcie / zakup aplikacji PRO: BLIK lub przelew Nest Bank — <a href="https://danieldydo-cyber.github.io/d7-dj/pay/" target="_blank" rel="noopener">strona płatności</a>.</p></div>
+</div></section>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="engine.js"></script><script src="styles.js"></script><script src="gen.js"></script><script src="set77.js"></script><script src="visuals.js"></script><script src="rec.js"></script><script src="ui.js"></script><script src="bot.js"></script>
+</body></html>
