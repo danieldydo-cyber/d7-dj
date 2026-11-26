@@ -1,39 +1,12 @@
 {
- "generated": "2026-11-26 23:04 CET",
- "bots": {
-  "count": 22,
-  "online": [
-   "supergrok",
-   "d",
-   "superbotd",
-   "autofix",
-   "dragon",
-   "77",
-   "dargonmoon",
-   "supercharger",
-   "superd",
-   "megabot",
-   "superg",
-   "mrdfluid",
-   "botpamiec",
-   "botd",
-   "supergrok-web",
-   "djmix",
-   "radiokali",
-   "visualizer",
-   "builderweb",
-   "builderapk",
-   "builderpromo",
-   "paysupport"
-  ]
- },
+ "generated": "2026-11-26 23:24 CET",
+ "bots": null,
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://factor-fitted-milan-tiffany.trycloudflare.com",
+ "liveUrl": null,
  "liveCandidates": [
-  "https://stationery-secretariat-tulsa-schedule.trycloudflare.com",
-  "https://factor-fitted-milan-tiffany.trycloudflare.com"
+  "https://tony-convertible-drainage-happy.trycloudflare.com"
  ],
- "liveSource": "sync-manifest",
+ "liveSource": "offline",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
