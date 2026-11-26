@@ -99,3 +99,12 @@ body.big button{min-height:48px;font-size:17px}body.big #dock button{min-width:8
  #wl{padding:0 0 calc(76px + env(safe-area-inset-bottom));align-items:flex-end}.win{border-radius:20px 20px 0 0;max-height:calc(100% - 100px);width:100%}
  #dock{justify-content:flex-start}#dock button{min-width:62px;font-size:18px}
 }
+
+/* 3.0.2 Club Pro + sound status */
+#sndPill{position:fixed;left:50%;top:calc(64px + env(safe-area-inset-top));transform:translateX(-50%);z-index:80;background:linear-gradient(90deg,#ff3b5c,#ff8a00);color:#fff;border:0;border-radius:30px;padding:12px 20px;font-size:15px;box-shadow:0 0 30px rgba(255,59,92,.7);animation:sndp 1.2s ease-in-out infinite;max-width:92vw}
+@keyframes sndp{50%{box-shadow:0 0 50px rgba(255,138,0,.9)}}
+.iso{display:flex;align-items:center;gap:8px}.iso label{flex:1}.kill{min-width:64px;font-weight:800;letter-spacing:.5px}.kill.on{background:linear-gradient(180deg,#ff3b5c,#9c0d2c)!important;border-color:#ff8aa0;box-shadow:0 0 16px rgba(255,59,92,.7)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}.seg button{flex:1 1 auto;min-width:52px;font-weight:700}
+#lpGrid button.on{background:linear-gradient(180deg,#2bff88,#0b8a4a);border-color:#9effc8;color:#021}
+#cueGrid button{min-height:46px}
+#holoBtn.on{background:linear-gradient(90deg,#2bff88,#00d5ff,#ff4fd8);color:#020}

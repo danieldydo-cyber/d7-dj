@@ -1,4 +1,4 @@
-/* DD DJ 3.0 · Smart Simple UI — rock-solid window manager (X / Esc / backdrop / dock / Android back), studio, panels. Original code. */
+/* DD DJ 3.0.2 · Smart Simple UI — rock-solid window manager (X / Esc / backdrop / dock / Android back), studio, panels. Original code. */
 (function () {
   'use strict';
   var A = window.DDA, G = window.DDGen, ST = window.DDStyles, SET = window.DDSet, AU = window.DDAuto, V = window.DDVis, REC = window.DDRec, SP = window.DDSpecials;
@@ -11,7 +11,7 @@
   function fmt(s) { s = Math.max(0, Math.floor(s)); return (s / 60 < 10 ? '0' : '') + Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + s % 60; }
   U.fmt = fmt;
   // ---------- settings ----------
-  var CFG = { res: 'auto', big: false, flat: false, visMode: '7+13', visSync: 1 };
+  var CFG = { res: 'auto', big: false, flat: false, visMode: '7+13', visSync: 1, holo: true, holoAmt: .7 };
   try { Object.assign(CFG, JSON.parse(localStorage.getItem('ddj3') || '{}')); } catch (e) {}
   function saveCfg() { try { localStorage.setItem('ddj3', JSON.stringify(CFG)); } catch (e) {} }
 
@@ -45,7 +45,7 @@
 
   // ================= START =================
   function start() {
-    if (U.started) return; U.started = true; A.init(); A.resume(); $('#start').hidden = true; loadPads(); toast('🚀 DD DJ gotowy — wybierz styl albo ⚡ BANGER');
+    if (U.started) return; U.started = true; A.init(); A.unlock(); $('#start').hidden = true; loadPads(); toast('🚀 DD DJ gotowy — wybierz styl albo ⚡ BANGER');
   }
   U.start = start; U.isStarted = function () { return U.started; };
   $('#startBtn').addEventListener('click', start);
@@ -154,6 +154,8 @@
   $('#upImg').addEventListener('change', function (e) { loadImg(e.target.files[0]); e.target.value = ''; });
   $('#imgMix').addEventListener('input', function (e) { V.imgMix = +e.target.value; });
   $('#imgClr').addEventListener('click', function () { V.clearImage(); });
+  $('#holoBtn').addEventListener('click', function (e) { V.holo = CFG.holo = !V.holo; saveCfg(); e.currentTarget.classList.toggle('on', V.holo); toast(V.holo ? '👽 3DFX Holo FX ON' : '3DFX Holo FX OFF'); });
+  $('#holoAmt').addEventListener('input', function (e) { V.holoAmt = CFG.holoAmt = +e.target.value; saveCfg(); });
 
   // ================= GENERATORS WINDOW =================
   var genCat = 'magic';
@@ -246,28 +248,29 @@
 
   // ================= SETTINGS / SELF-TEST =================
   function applyCfg() { document.body.classList.toggle('big', !!CFG.big); document.body.classList.toggle('flat', !!CFG.flat); $('#cfgBig').classList.toggle('on', !!CFG.big); $('#cfg3d').classList.toggle('on', !CFG.flat);
-    setRes(CFG.res || 'auto'); V.mode = CFG.visMode; $('#visMode').value = CFG.visMode; V.sync = +CFG.visSync || 1; $('#visSync').value = String(V.sync); }
+    setRes(CFG.res || 'auto'); V.mode = CFG.visMode; $('#visMode').value = CFG.visMode; V.sync = +CFG.visSync || 1; $('#visSync').value = String(V.sync); V.holo = CFG.holo !== false; V.holoAmt = CFG.holoAmt == null ? .7 : +CFG.holoAmt; $('#holoBtn').classList.toggle('on', V.holo); $('#holoAmt').value = V.holoAmt; }
   $('#cfgBig').addEventListener('click', function () { CFG.big = !CFG.big; saveCfg(); applyCfg(); });
   $('#cfg3d').addEventListener('click', function () { CFG.flat = !CFG.flat; saveCfg(); applyCfg(); });
-  $('#cfgReset').addEventListener('click', function () { localStorage.removeItem('ddj3'); CFG = { res: 'auto', big: false, flat: false, visMode: '7+13', visSync: 1 }; applyCfg(); toast('↺ Ustawienia zresetowane'); });
+  $('#cfgReset').addEventListener('click', function () { localStorage.removeItem('ddj3'); CFG = { res: 'auto', big: false, flat: false, visMode: '7+13', visSync: 1, holo: true, holoAmt: .7 }; applyCfg(); toast('↺ Ustawienia zresetowane'); });
   $('#cfgTest').addEventListener('click', runTest);
   function runTest() { var r = U.selfTest(); $('#cfgOut').textContent = r.lines.join('\n'); return r; }
   U.selfTest = function () { var L = [], ok = 0, n = 0; function chk(name, c) { n++; if (c) ok++; L.push((c ? '✅ ' : '❌ ') + name); }
     chk('AudioContext ' + (A.ctx ? A.ctx.state + ' · ' + A.ctx.sampleRate + ' Hz' : 'brak'), A.ctx && A.ctx.state !== 'closed');
-    chk('Master: 5 busów + sidechain + glue + warm sat + limiter −0.5 dB', !!(A.glue && A.sat && A.limiter && A.ceiling));
+    chk('Master: 5 busów + isolator + Color FX + mono sub + glue + limiter −0.5 dB', !!(A.glue && A.sat && A.limiter && A.ceiling && A.isoSum && A.cfOut && A.monoSub));
     chk('Style: ' + ST.LIST.length + ' (7×7 + ' + (ST.LIST.length - 49) + ' Magic)', ST.LIST.length >= 53 && ST.CATS.slice(0, 7).every(function (c) { return ST.LIST.filter(function (s) { return s.cat === c[0]; }).length === 7; }));
-    chk('Space X Visuals WebGL ' + (V.gl ? 'OK ' + V.size : 'fallback 2D'), !!V.gl && !V.err);
+    chk('Space X Visuals WebGL ' + (V.gl ? 'OK ' + V.size + ' · ' + V.scenes.length + ' scen · 3DFX Holo ' + (V.holo ? (V.postOk ? 'ON' : 'fallback') : 'OFF') : 'fallback 2D'), !!V.gl && !V.err);
     chk('Recorder: ' + (REC.pick(true) || 'brak MediaRecorder'), !!window.MediaRecorder);
     chk('Pady DJ DaX: ' + PADS.length + ' (' + PADS.filter(function (p) { return p.buf; }).length + ' w pamięci)', PADS.length === 26);
-    chk('Okna: ' + $$('.win').length + ', otwarte: ' + (WM.cur || 'brak'), $$('.win').length === 9);
+    chk('Okna: ' + $$('.win').length + ', otwarte: ' + (WM.cur || 'brak'), $$('.win').length === 10);
     chk('Zegar: Web Worker ' + (A.stats.worker ? 'ON' : 'fallback') + ' · lookahead ' + A.LOOK + ' s · spóźnione kroki ' + A.stats.late, A.stats.worker);
     chk('Specials 777: ' + SP.TYPES.length + ' typów · odpalone ' + SP.fired, SP.TYPES.length >= 16);
     chk('Głosy: aktywne ' + A.active + ' / limit ' + A.CAP + ' (szczyt ' + A.peakVoices + ')', A.active <= A.CAP);
     chk('Set 77: ' + SET.plan.length + ' segmentów', SET.plan.length > 8);
+    chk('Club Pro: isolator+kill · Color FX · loop/roll · hot cues · blend · sync/MT', !!(window.DDClub && A.setIso && A.setColor && A.blend && A.setSync && A.decks && A.decks[0].loadUrl));
     L.push('— ' + ok + '/' + n + ' OK · FPS ' + V.fps + ' · auto-fix ' + AU.fixes); return { ok: ok, n: n, lines: L }; };
   A.on('autolog', function (l) { $('#autoLog').textContent = l.join('\n'); });
   // ---------- boot ----------
-  V.init($('#vis')); applyCfg(); V.go(0, 7, false, .1);
+  V.init($('#vis')); applyCfg(); V.go(12, 77, false, .1); // default: 3DFX Magic Hologram 👽
   if ('serviceWorker' in navigator && location.protocol === 'https:' && !/androidplatform/.test(location.host)) navigator.serviceWorker.register('sw.js').catch(function () {});
   if (/autostart=1/.test(location.search)) setTimeout(start, 300);
   window.DDUI = U;

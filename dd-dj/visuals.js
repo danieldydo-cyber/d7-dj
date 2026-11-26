@@ -1,4 +1,4 @@
-/* DD DJ 3.0 · Space X Visuals Engine (Grok X Visuals) — WebGL 3D shaders reactive to bass/mid/high + beat,
+/* DD DJ 3.0.2 · Space X Visuals Engine + 3DFX Magic Holographic (16 scenes, holo post-FX pass) — WebGL 3D shaders reactive to bass/mid/high + beat,
    12 scenes × 777 variants, 7 s / 13 s / magic / 2-beat / 4-beat transitions, custom image layer, resolution scaling. Original code. */
 (function () {
   'use strict';
@@ -6,7 +6,7 @@
   var VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
   var FS = [
     '#ifdef GL_FRAGMENT_PRECISION_HIGH', 'precision highp float;', '#else', 'precision mediump float;', '#endif',
-    'uniform vec2 R;uniform float T,B,M,H,P,E,SA,SB,X,VA,VB,TM,UI,IM;uniform sampler2D IMG;',
+    'uniform vec2 R;uniform float T,B,M,H,P,E,SA,SB,X,VA,VB,TM,UI,IM,A2;uniform sampler2D IMG;',
     'float h1(float n){return fract(sin(n)*43758.5453);}float h2(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
     'float nz(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h2(i),h2(i+vec2(1,0)),f.x),mix(h2(i+vec2(0,1)),h2(i+vec2(1,1)),f.x),f.y);}',
     'float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*nz(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return v;}',
@@ -37,7 +37,35 @@
     'vec3 s10(vec2 p,float t,float v){float r=length(p),a=atan(p.y,p.x);float rays=pow(abs(sin(a*12.+fbm(vec2(a*3.,t))*4.)),8.)*exp(-r*1.5);float core=.06/(r+.02)*(1.+B*2.);float shock=smoothstep(.05,0.,abs(r-fract(t*.25+P*.1)*1.8))*(1.-fract(t*.25));vec3 c=pal(.1+r*.4,v)*core+pal(.5+a*.05,v)*rays*(1.+M*2.)+pal(.8,v)*shock*2.;c+=pal(.3,v)*fbm(p*4.-t*.2)*.25*exp(-r);return c;}',
     // 11 hex hyperspace
     'vec3 s11(vec2 p,float t,float v){float r=length(p),a=atan(p.y,p.x);vec2 q=vec2(a*3./3.1416*2.,.4/(r+.03)+t*(1.5+B*3.));q.x+=floor(q.y)*.5;vec2 f=fract(q)-.5;float hx=max(abs(f.x)*1.1547+abs(f.y)*.5774,abs(f.y)*1.1547);float e=smoothstep(.04,.0,abs(hx-.42));float fill=h2(floor(q))>.8?(.5+P):0.;vec3 c=pal(floor(q.y)*.05+t*.05,v)*(e*1.5+fill*.4);return c*smoothstep(0.,.3,r)*(1.+B);}',
-    'vec3 sc(float id,vec2 p,float t,float v){if(id<.5)return s0(p,t,v);if(id<1.5)return s1(p,t,v);if(id<2.5)return s2(p,t,v);if(id<3.5)return s3(p,t,v);if(id<4.5)return s4(p,t,v);if(id<5.5)return s5(p,t,v);if(id<6.5)return s6(p,t,v);if(id<7.5)return s7(p,t,v);if(id<8.5)return s8(p,t,v);if(id<9.5)return s9(p,t,v);if(id<10.5)return s10(p,t,v);return s11(p,t,v);}',
+    // 12 3DFX Magic Hologram: iridescent faceted crystal torus + alien energy core + volumetric scanlines
+    'float m12(vec3 q,float t){q.xz*=rot(t*.35);q.xy*=rot(t*.23+B*.3);vec2 tq=vec2(length(q.xz)-1.05,q.y);tq*=rot(atan(q.z,q.x)*1.5+t*.5);vec2 d=abs(tq);return (d.x+d.y)*.7071-.26-B*.08;}',
+    'vec3 s12(vec2 p,float t,float v){vec3 ro=vec3(0.,0.,-3.4),rd=normalize(vec3(p,1.55));float d=0.,g=0.,gc=0.,h=1.;for(int i=0;i<40;i++){vec3 q=ro+rd*d;h=m12(q,t);float cs=length(q)-.28-B*.22;gc+=.006/(.012+cs*cs);g+=.012/(.05+abs(h));if(h<.003||d>7.)break;d+=h*.8;}',
+    'vec3 c=pal(.55+p.y*.2,v)*.04;if(h<.003){vec3 q=ro+rd*d;vec2 e=vec2(.004,0.);vec3 n=normalize(vec3(m12(q+e.xyy,t)-m12(q-e.xyy,t),m12(q+e.yxy,t)-m12(q-e.yxy,t),m12(q+e.yyx,t)-m12(q-e.yyx,t)));float fr=pow(1.-abs(dot(n,rd)),2.5);',
+    'vec3 ir=.5+.5*cos(6.2832*(fr*1.3+dot(n,vec3(.4,.7,.2))+t*.08+vec3(0.,.33,.67)));c=ir*(.25+fr*1.6)*(1.+P*.6)+pow(max(dot(reflect(rd,n),normalize(vec3(.5,.8,-.4))),0.),24.)*1.5;}',
+    'c+=vec3(.25,1.,.65)*gc*(.6+B*1.4+P*.6)+pal(.6,v)*g*.025;float sl=.75+.25*sin(p.y*220.-t*14.);c*=sl;c+=vec3(.1,.5,.6)*smoothstep(.01,0.,abs(fract(p.y*3.-t*.4)-.5)-.47)*.4;return c;}',
+    // 13 Alien Portal 3D: wormhole + holographic rings + plasma arcs + beat shockwaves + alien hologram silhouette
+    'vec3 s13(vec2 p,float t,float v){float r=length(p),a=atan(p.y,p.x);float z=.5/(r+.03)+t*(1.4+B*3.);vec3 c=vec3(0.);',
+    'float rg=smoothstep(.12,0.,abs(fract(z*.7)-.5)-.38);c+=(.5+.5*cos(6.2832*(z*.05+a*.16+vec3(0.,.33,.67))))*rg*(.5+P)*smoothstep(.0,.5,r);',
+    'float wall=fbm(vec2(a*2.5,z*.6));c+=pal(wall+.4,v)*wall*.55*smoothstep(0.,.6,r);',
+    'for(int i=0;i<3;i++){float fi=float(i);float arc=.012/abs(sin(a*2.+fi*2.1+fbm(vec2(z*.4,t+fi))*5.)*r+.002);c+=vec3(.3,.9,1.)*arc*.05*(.4+M*2.)*smoothstep(.05,.4,r);}',
+    'float sw=smoothstep(.04,0.,abs(r-fract(t*A2+P*.2)*1.6));c+=vec3(.5,1.,.7)*sw*(1.-fract(t*A2))*1.6;',
+    'vec2 q=p*vec2(1.,1.)-vec2(0.,.02);float head=length(q*vec2(1.25,1.)+vec2(0.,q.y*q.y*.6))-.2-B*.03;vec2 ey=vec2(abs(q.x)-.075,q.y+.01)*rot(.5*sign(q.x)*.0+.55);float eye=length(ey*vec2(1.,2.2))-.045;',
+    'float holo=smoothstep(.01,0.,abs(head))*1.2+smoothstep(0.,-.2,head)*.18*(.6+.4*sin(q.y*180.-t*20.));c+=vec3(.25,1.,.6)*holo*(1.+P)*(1.-step(eye,0.));c+=vec3(0.,.05,.03)*step(eye,0.);',
+    'return c*(1.+B*.5);}',
+    // 14 Holo Cyber Prism: raymarched refractive prism grid + neon laser beams on kick (B) / hats (H)
+    'float pr14(vec3 q,vec2 h){vec3 a=abs(q);return max(a.z-h.y,max(a.x*.866+q.y*.5,-q.y)-h.x*.5);}',
+    'float m14(vec3 q,float t){q.z+=t*(2.+B*2.5);vec3 r=mod(q+1.5,3.)-1.5;r.xy*=rot(t*.6+floor((q.z+1.5)/3.));r.yz*=rot(t*.4);return pr14(r,vec2(.55+B*.15,.2));}',
+    'vec3 s14(vec2 p,float t,float v){vec3 ro=vec3(0.,0.,0.),rd=normalize(vec3(p,1.3));rd.xy*=rot(t*.07);float d=0.,g=0.;for(int i=0;i<40;i++){float h=m14(ro+rd*d,t);g+=.014/(.04+abs(h));if(h<.003||d>24.)break;d+=h*.85;}',
+    'vec3 c=(.5+.5*cos(6.2832*(d*.04+t*.05+vec3(0.,.33,.67)+h1(v))))*g*.13*(1.+P*.7)*exp(-d*.05);',
+    'for(int i=0;i<6;i++){float fi=float(i);float an=fi*1.0472+t*(.3+fi*.05)*(mod(fi,2.)<.5?1.:-1.);vec2 dir=vec2(cos(an),sin(an));float ln=abs(dot(p,vec2(-dir.y,dir.x)));float k=mod(fi,2.)<.5?B:H;c+=pal(fi*.15+.1,v)*(.0025+.004*k)/(ln+.002)*(.2+k*1.6);}',
+    'return c;}',
+    // 15 Space Nova 3DFX Nebula: volumetric starfield warp + holographic aura waves + audio frequency halo
+    'vec3 s15(vec2 p,float t,float v){vec3 c=vec3(0.);float sp=.5+B*1.8+P*.6;for(int l=0;l<5;l++){float fl=float(l);float z=fract(t*.09*sp+fl*.2);vec2 q=p*(2.-z*1.8)*rot(fl*1.3+t*.02);vec2 g=floor(q*10.),f=fract(q*10.)-.5;float s=h2(g+fl*13.);if(s>.82){float st=.012/(length(f)+.01)*z*(1.-z)*4.;c+=pal(s+fl*.17,v+3.)*st;}}',
+    'vec2 w=p*1.3;float neb=fbm(w+vec2(fbm(w*1.6+t*.06),fbm(w*1.6-t*.05))*1.8);c+=pal(neb*1.2+.2,v)*neb*neb*(.45+M*.9);',
+    'float r=length(p),a=atan(p.y,p.x);float hr=.45+.07*(B*sin(a*3.+t)+M*sin(a*7.-t*1.3)+H*sin(a*13.+t*2.));float halo=.006/abs(r-hr)+.003/abs(r-hr*1.18);',
+    'c+=(.5+.5*cos(6.2832*(a*.16+t*.1+vec3(0.,.33,.67))))*halo*(.5+P);for(int k=0;k<3;k++){float fk=float(k);c+=vec3(.2,.8,1.)*smoothstep(.02,0.,abs(r-fract(t*.18+fk*.33)*1.6))*.25*(1.+B);}',
+    'return c;}',
+    'vec3 sc(float id,vec2 p,float t,float v){if(id<.5)return s0(p,t,v);if(id<1.5)return s1(p,t,v);if(id<2.5)return s2(p,t,v);if(id<3.5)return s3(p,t,v);if(id<4.5)return s4(p,t,v);if(id<5.5)return s5(p,t,v);if(id<6.5)return s6(p,t,v);if(id<7.5)return s7(p,t,v);if(id<8.5)return s8(p,t,v);if(id<9.5)return s9(p,t,v);if(id<10.5)return s10(p,t,v);if(id<11.5)return s11(p,t,v);if(id<12.5)return s12(p,t,v);if(id<13.5)return s13(p,t,v);if(id<14.5)return s14(p,t,v);return s15(p,t,v);}',
     'void main(){vec2 uv=gl_FragCoord.xy/R;vec2 p=(gl_FragCoord.xy*2.-R)/min(R.x,R.y);p*=1.-P*.04;',
     'float k=X*(1.-X);vec2 pa=p,pb=p;if(TM>.5){pa=p*rot(k*6.)*(1.+k*2.);pb=p*rot(-k*6.)*(1.+k*1.5);}',
     'vec3 c;if(X<.001)c=sc(SA,pa,T,VA);else if(X>.999)c=sc(SB,pb,T,VB);else c=mix(sc(SA,pa,T,VA),sc(SB,pb,T,VB),smoothstep(0.,1.,X));',
@@ -45,9 +73,15 @@
     'if(UI>.5){vec2 iu=vec2(uv.x,1.-uv.y)+(p*B*.02);vec3 ic=texture2D(IMG,iu).rgb;c=mix(c,1.-(1.-c)*(1.-ic*(.7+B*.6)),IM);}',
     'c*=1.+P*.35;c=c/(1.+c*.35);c*=1.-.35*dot(uv-.5,uv-.5)*2.;c=pow(max(c,0.),vec3(.95));gl_FragColor=vec4(c,1.);}'
   ].join('\n');
-  var SCN = ['Tunel Warp', 'Mgławica Nova', 'Cyber Grid 3D', 'Raymarch Orbs', 'Święta Geometria', 'Pierścienie Planety', 'Laser Dome', 'Hyperspace Stars', 'Kalejdo Fraktal', 'Rasta Dub Waves', 'Supernova', 'Hex Hyperdrive'];
-  var V = { scenes: SCN, a: 0, b: 1, va: 7, vb: 77, x: 0, mode: '7+13', tmode: 0, res: 'auto', pulse: 0, lost: false, gl: null, img: false, imgMix: .55, auto: true, fps: 0, sync: 1, lock: false };
-  var cv, gl, prog, U = {}, tex, lastSwitch = 0, nextIsMagic = false, trans = null, t0 = performance.now(), avgB = .2;
+  var PFS = ['precision mediump float;uniform sampler2D S;uniform vec2 R;uniform float HF,P,T,B;',
+    'void main(){vec2 uv=gl_FragCoord.xy/R;vec2 d=uv-.5;float k=HF*(.006+.014*P+.008*B);',
+    'vec3 c=vec3(texture2D(S,uv+d*k).r,texture2D(S,uv).g,texture2D(S,uv-d*k).b);',
+    'vec3 bl=vec3(0.);float rr=.01+.006*HF;for(int i=0;i<8;i++){float a=float(i)*.7854+T*.25;bl+=max(texture2D(S,uv+vec2(cos(a)*R.y/R.x,sin(a))*rr).rgb-.42,0.);}c+=bl*.2*HF;',
+    'c*=mix(1.,.9+.1*sin(gl_FragCoord.y*1.6+T*24.),HF*.7);c+=vec3(.12,.4,.5)*P*P*HF*.22;',
+    'float ir=sin((uv.x+uv.y)*9.+T*.7)*.5+.5;c=mix(c,c*(.85+.3*vec3(ir,1.-ir,.6+.4*ir)),HF*.35);gl_FragColor=vec4(c,1.);}'].join('\n');
+  var SCN = ['Tunel Warp', 'Mgławica Nova', 'Cyber Grid 3D', 'Raymarch Orbs', 'Święta Geometria', 'Pierścienie Planety', 'Laser Dome', 'Hyperspace Stars', 'Kalejdo Fraktal', 'Rasta Dub Waves', 'Supernova', 'Hex Hyperdrive', '3DFX Magic Hologram 👽', 'Alien Portal 3D 👽', 'Holo Cyber Prism', 'Space Nova 3DFX Nebula'];
+  var V = { scenes: SCN, holo: true, holoAmt: .7, postOk: false, a: 12, b: 12, va: 7, vb: 77, x: 0, mode: '7+13', tmode: 0, res: 'auto', pulse: 0, lost: false, gl: null, img: false, imgMix: .55, auto: true, fps: 0, sync: 1, lock: false };
+  var cv, gl, prog, post, PU = {}, fbo, fbt, fbW = 0, fbH = 0, U = {}, tex, lastSwitch = 0, nextIsMagic = false, trans = null, t0 = performance.now(), avgB = .2;
   V.init = function (canvas) {
     cv = canvas; V.cv = cv;
     cv.addEventListener('webglcontextlost', function (e) { e.preventDefault(); V.lost = true; gl = null; }, false);
@@ -58,12 +92,16 @@
     gl = cv.getContext('webgl', { antialias: false, preserveDrawingBuffer: false, powerPreference: 'high-performance' }) || cv.getContext('experimental-webgl');
     V.gl = gl; if (!gl) { V.fallback = cv.getContext('2d'); return; }
     function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { V.err = gl.getShaderInfoLog(s); console.error(V.err); } return s; }
-    prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(prog);
+    prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS)); gl.bindAttribLocation(prog, 0, 'p'); gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { V.err = gl.getProgramInfoLog(prog); console.error('link', V.err); }
+    // 3DFX holo post pass (chromatic dispersion, bloom, scanlines, beat flash) — optional, falls back to direct render
+    V.postOk = false; try { var pe = null, ps = gl.createShader(gl.FRAGMENT_SHADER); gl.shaderSource(ps, PFS); gl.compileShader(ps); if (!gl.getShaderParameter(ps, gl.COMPILE_STATUS)) pe = gl.getShaderInfoLog(ps);
+      if (!pe) { post = gl.createProgram(); gl.attachShader(post, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(post, ps); gl.bindAttribLocation(post, 0, 'p'); gl.linkProgram(post); if (!gl.getProgramParameter(post, gl.LINK_STATUS)) pe = gl.getProgramInfoLog(post); }
+      if (pe) { V.postErr = pe; post = null; } else { 'S R HF P T B'.split(' ').forEach(function (n) { PU[n] = gl.getUniformLocation(post, n); }); fbt = gl.createTexture(); fbo = gl.createFramebuffer(); fbW = fbH = 0; V.postOk = true; } } catch (e) { V.postErr = String(e); post = null; }
     gl.useProgram(prog);
     var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
     var loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-    'R T B M H P E SA SB X VA VB TM UI IM IMG'.split(' ').forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
+    'R T B M H P E SA SB X VA VB TM UI IM IMG A2'.split(' ').forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
     tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 255]));
     texParams(); if (V._imgEl) V.setImage(V._imgEl);
     V.ok = !V.err;
@@ -108,8 +146,15 @@
     gl.viewport(0, 0, cv.width, cv.height);
     gl.uniform2f(U.R, cv.width, cv.height); gl.uniform1f(U.T, t); gl.uniform1f(U.B, bd.b); gl.uniform1f(U.M, bd.m); gl.uniform1f(U.H, bd.h); gl.uniform1f(U.P, Math.min(1.4, V.pulse)); gl.uniform1f(U.E, window.DDGen ? DDGen.energy : .5);
     gl.uniform1f(U.SA, V.a); gl.uniform1f(U.SB, V.b); gl.uniform1f(U.X, V.x); gl.uniform1f(U.VA, V.va); gl.uniform1f(U.VB, V.vb); gl.uniform1f(U.TM, V.tmode); gl.uniform1f(U.UI, V.img ? 1 : 0); gl.uniform1f(U.IM, V.imgMix); gl.uniform1i(U.IMG, 0);
+    gl.uniform1f(U.A2, A.bpm / 240);
     gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    var hf = V.holo ? V.holoAmt : 0, usePost = hf > .01 && post && V.postOk;
+    if (usePost && (fbW !== cv.width || fbH !== cv.height)) { gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, fbt); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, cv.width, cv.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null); texParams();
+      gl.bindFramebuffer(gl.FRAMEBUFFER, fbo); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, fbt, 0); if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) { V.postOk = false; usePost = false; } gl.bindFramebuffer(gl.FRAMEBUFFER, null); fbW = cv.width; fbH = cv.height; gl.activeTexture(gl.TEXTURE0); }
+    if (usePost) { gl.bindFramebuffer(gl.FRAMEBUFFER, fbo); gl.drawArrays(gl.TRIANGLES, 0, 3); gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.useProgram(post); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, fbt); gl.uniform1i(PU.S, 1); gl.uniform2f(PU.R, cv.width, cv.height); gl.uniform1f(PU.HF, hf); gl.uniform1f(PU.P, Math.min(1.4, V.pulse)); gl.uniform1f(PU.T, t); gl.uniform1f(PU.B, bd.b);
+      gl.drawArrays(gl.TRIANGLES, 0, 3); gl.bindTexture(gl.TEXTURE_2D, null); gl.activeTexture(gl.TEXTURE0); gl.useProgram(prog); }
+    else gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
   function draw2d(t, bd) { var x = V.fallback; if (!x) return; var w = cv.width, h = cv.height; x.fillStyle = 'rgba(5,1,13,.25)'; x.fillRect(0, 0, w, h); var n = 64; for (var i = 0; i < n; i++) { var a = i / n * Math.PI * 2 + t * .2, r = h * (.15 + bd.b * .25 + (A.fd ? A.fd[i * 4] / 255 : 0) * .2); x.strokeStyle = 'hsl(' + (i * 6 + t * 40) + ',90%,60%)'; x.beginPath(); x.moveTo(w / 2, h / 2); x.lineTo(w / 2 + Math.cos(a) * r, h / 2 + Math.sin(a) * r); x.stroke(); } }
   window.DDVis = V;
