@@ -1,38 +1,12 @@
 {
- "generated": "2026-11-26 21:04 CET",
- "bots": {
-  "count": 22,
-  "online": [
-   "supergrok",
-   "d",
-   "superbotd",
-   "autofix",
-   "dragon",
-   "77",
-   "dargonmoon",
-   "supercharger",
-   "superd",
-   "megabot",
-   "superg",
-   "mrdfluid",
-   "botpamiec",
-   "botd",
-   "supergrok-web",
-   "djmix",
-   "radiokali",
-   "visualizer",
-   "builderweb",
-   "builderapk",
-   "builderpromo",
-   "paysupport"
-  ]
- },
+ "generated": "2026-11-26 21:22 CET",
+ "bots": null,
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://drain-floral-gravity-belle.trycloudflare.com",
+ "liveUrl": null,
  "liveCandidates": [
   "https://drain-floral-gravity-belle.trycloudflare.com"
  ],
- "liveSource": "ntfy",
+ "liveSource": "offline",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
