@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26 20:31 CET",
+ "generated": "2026-11-26 20:48 CET",
  "bots": {
   "count": 22,
   "online": [
@@ -30,10 +30,9 @@
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
  "liveUrl": "https://acute-smithsonian-minute-bureau.trycloudflare.com",
  "liveCandidates": [
-  "https://leg-enrolled-station-announced.trycloudflare.com",
   "https://acute-smithsonian-minute-bureau.trycloudflare.com"
  ],
- "liveSource": "sync-manifest",
+ "liveSource": "ntfy",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
