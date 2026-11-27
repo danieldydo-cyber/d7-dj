@@ -1,12 +1,38 @@
 {
- "generated": "2026-11-28 00:30 CET",
- "bots": null,
+ "generated": "2026-11-28 00:45 CET",
+ "bots": {
+  "count": 22,
+  "online": [
+   "supergrok",
+   "d",
+   "superbotd",
+   "autofix",
+   "dragon",
+   "77",
+   "dargonmoon",
+   "supercharger",
+   "superd",
+   "megabot",
+   "superg",
+   "mrdfluid",
+   "botpamiec",
+   "botd",
+   "supergrok-web",
+   "djmix",
+   "radiokali",
+   "visualizer",
+   "builderweb",
+   "builderapk",
+   "builderpromo",
+   "paysupport"
+  ]
+ },
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": null,
+ "liveUrl": "https://arguments-appearing-rights-consumer.trycloudflare.com",
  "liveCandidates": [
-  "https://anaheim-fought-geo-porcelain.trycloudflare.com"
+  "https://arguments-appearing-rights-consumer.trycloudflare.com"
  ],
- "liveSource": "offline",
+ "liveSource": "ntfy",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
