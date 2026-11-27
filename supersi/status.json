@@ -1,38 +1,12 @@
 {
- "generated": "2026-11-27 10:36 CET",
- "bots": {
-  "count": 22,
-  "online": [
-   "supergrok",
-   "d",
-   "superbotd",
-   "autofix",
-   "dragon",
-   "77",
-   "dargonmoon",
-   "supercharger",
-   "superd",
-   "megabot",
-   "superg",
-   "mrdfluid",
-   "botpamiec",
-   "botd",
-   "supergrok-web",
-   "djmix",
-   "radiokali",
-   "visualizer",
-   "builderweb",
-   "builderapk",
-   "builderpromo",
-   "paysupport"
-  ]
- },
+ "generated": "2026-11-27 10:53 CET",
+ "bots": null,
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://virgin-owned-moore-cash.trycloudflare.com",
+ "liveUrl": null,
  "liveCandidates": [
-  "https://virgin-owned-moore-cash.trycloudflare.com"
+  "https://newer-cosmetic-serum-semi.trycloudflare.com"
  ],
- "liveSource": "ntfy",
+ "liveSource": "offline",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
