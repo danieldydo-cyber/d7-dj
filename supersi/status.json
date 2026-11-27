@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-27 19:48 CET",
+ "generated": "2026-11-27 20:18 CET",
  "bots": {
   "count": 22,
   "online": [
@@ -28,11 +28,12 @@
   ]
  },
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://wallpapers-tasks-dsl-cove.trycloudflare.com",
+ "liveUrl": "https://simpson-duck-nextel-segment.trycloudflare.com",
  "liveCandidates": [
-  "https://wallpapers-tasks-dsl-cove.trycloudflare.com"
+  "https://wallpapers-tasks-dsl-cove.trycloudflare.com",
+  "https://simpson-duck-nextel-segment.trycloudflare.com"
  ],
- "liveSource": "ntfy",
+ "liveSource": "sync-manifest",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
