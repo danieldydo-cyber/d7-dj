@@ -1,12 +1,38 @@
 {
- "generated": "2026-11-27 17:38 CET",
- "bots": null,
+ "generated": "2026-11-27 17:58 CET",
+ "bots": {
+  "count": 22,
+  "online": [
+   "supergrok",
+   "d",
+   "superbotd",
+   "autofix",
+   "dragon",
+   "77",
+   "dargonmoon",
+   "supercharger",
+   "superd",
+   "megabot",
+   "superg",
+   "mrdfluid",
+   "botpamiec",
+   "botd",
+   "supergrok-web",
+   "djmix",
+   "radiokali",
+   "visualizer",
+   "builderweb",
+   "builderapk",
+   "builderpromo",
+   "paysupport"
+  ]
+ },
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": null,
+ "liveUrl": "https://grown-ireland-bulk-bibliography.trycloudflare.com",
  "liveCandidates": [
-  "https://gen-eden-rhythm-detected.trycloudflare.com"
+  "https://grown-ireland-bulk-bibliography.trycloudflare.com"
  ],
- "liveSource": "offline",
+ "liveSource": "ntfy",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
