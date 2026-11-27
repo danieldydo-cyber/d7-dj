@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-27 05:06 CET",
+ "generated": "2026-11-27 05:23 CET",
  "bots": null,
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
  "liveUrl": null,
@@ -7,7 +7,9 @@
   "https://bios-assets-leaf-settings.trycloudflare.com"
  ],
  "liveSource": "offline",
- "pagesOk": 59,
+ "pagesOk": 58,
  "pagesTotal": 59,
- "broken": []
+ "broken": [
+  "https://danieldydo-cyber.github.io/d7-dj/supersi/"
+ ]
 }

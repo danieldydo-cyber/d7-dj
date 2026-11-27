@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-26 16:08 CET",
+ "generated": "2026-11-27 05:23 CET",
  "apps": [
   {
    "file": "agents.html",
@@ -370,7 +370,7 @@
    "url": "https://danieldydo-cyber.github.io/d7-dj/supersi/",
    "title": "D7 Super SI · hub botów, aplikacji i 7 silników muzyki · DJ DaX",
    "cat": "Boty i SI",
-   "http": 200
+   "http": 503
   },
   {
    "file": "hub/",
