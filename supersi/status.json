@@ -1,12 +1,38 @@
 {
- "generated": "2026-11-27 10:53 CET",
- "bots": null,
+ "generated": "2026-11-27 11:15 CET",
+ "bots": {
+  "count": 22,
+  "online": [
+   "supergrok",
+   "d",
+   "superbotd",
+   "autofix",
+   "dragon",
+   "77",
+   "dargonmoon",
+   "supercharger",
+   "superd",
+   "megabot",
+   "superg",
+   "mrdfluid",
+   "botpamiec",
+   "botd",
+   "supergrok-web",
+   "djmix",
+   "radiokali",
+   "visualizer",
+   "builderweb",
+   "builderapk",
+   "builderpromo",
+   "paysupport"
+  ]
+ },
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": null,
+ "liveUrl": "https://saves-amazing-understand-exciting.trycloudflare.com",
  "liveCandidates": [
-  "https://newer-cosmetic-serum-semi.trycloudflare.com"
+  "https://saves-amazing-understand-exciting.trycloudflare.com"
  ],
- "liveSource": "offline",
+ "liveSource": "ntfy",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
