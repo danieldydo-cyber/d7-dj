@@ -1,15 +1,39 @@
 {
- "generated": "2026-11-27 05:23 CET",
- "bots": null,
+ "generated": "2026-11-27 05:48 CET",
+ "bots": {
+  "count": 22,
+  "online": [
+   "supergrok",
+   "d",
+   "superbotd",
+   "autofix",
+   "dragon",
+   "77",
+   "dargonmoon",
+   "supercharger",
+   "superd",
+   "megabot",
+   "superg",
+   "mrdfluid",
+   "botpamiec",
+   "botd",
+   "supergrok-web",
+   "djmix",
+   "radiokali",
+   "visualizer",
+   "builderweb",
+   "builderapk",
+   "builderpromo",
+   "paysupport"
+  ]
+ },
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": null,
+ "liveUrl": "https://responding-recipient-particular-francisco.trycloudflare.com",
  "liveCandidates": [
-  "https://bios-assets-leaf-settings.trycloudflare.com"
+  "https://responding-recipient-particular-francisco.trycloudflare.com"
  ],
- "liveSource": "offline",
- "pagesOk": 58,
+ "liveSource": "ntfy",
+ "pagesOk": 59,
  "pagesTotal": 59,
- "broken": [
-  "https://danieldydo-cyber.github.io/d7-dj/supersi/"
- ]
+ "broken": []
 }
