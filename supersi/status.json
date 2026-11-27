@@ -1,38 +1,13 @@
 {
- "generated": "2026-11-27 22:35 CET",
- "bots": {
-  "count": 22,
-  "online": [
-   "supergrok",
-   "d",
-   "superbotd",
-   "autofix",
-   "dragon",
-   "77",
-   "dargonmoon",
-   "supercharger",
-   "superd",
-   "megabot",
-   "superg",
-   "mrdfluid",
-   "botpamiec",
-   "botd",
-   "supergrok-web",
-   "djmix",
-   "radiokali",
-   "visualizer",
-   "builderweb",
-   "builderapk",
-   "builderpromo",
-   "paysupport"
-  ]
- },
+ "generated": "2026-11-27 23:01 CET",
+ "bots": null,
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://discounted-project-rating-dancing.trycloudflare.com",
+ "liveUrl": null,
  "liveCandidates": [
-  "https://discounted-project-rating-dancing.trycloudflare.com"
+  "https://trained-marshall-former-pilot.trycloudflare.com",
+  "https://winston-registrar-backup-conservative.trycloudflare.com"
  ],
- "liveSource": "ntfy",
+ "liveSource": "offline",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
