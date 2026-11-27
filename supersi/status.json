@@ -1,38 +1,12 @@
 {
- "generated": "2026-11-27 12:51 CET",
- "bots": {
-  "count": 22,
-  "online": [
-   "supergrok",
-   "d",
-   "superbotd",
-   "autofix",
-   "dragon",
-   "77",
-   "dargonmoon",
-   "supercharger",
-   "superd",
-   "megabot",
-   "superg",
-   "mrdfluid",
-   "botpamiec",
-   "botd",
-   "supergrok-web",
-   "djmix",
-   "radiokali",
-   "visualizer",
-   "builderweb",
-   "builderapk",
-   "builderpromo",
-   "paysupport"
-  ]
- },
+ "generated": "2026-11-27 13:14 CET",
+ "bots": null,
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://metres-doug-webcams-reload.trycloudflare.com",
+ "liveUrl": null,
  "liveCandidates": [
-  "https://metres-doug-webcams-reload.trycloudflare.com"
+  "https://large-track-installing-travelers.trycloudflare.com"
  ],
- "liveSource": "ntfy",
+ "liveSource": "offline",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
