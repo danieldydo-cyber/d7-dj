@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-28 00:45 CET",
+ "generated": "2026-11-28 01:48 CET",
  "bots": {
   "count": 22,
   "online": [
@@ -28,11 +28,12 @@
   ]
  },
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://arguments-appearing-rights-consumer.trycloudflare.com",
+ "liveUrl": "https://karma-debug-experiences-positive.trycloudflare.com",
  "liveCandidates": [
-  "https://arguments-appearing-rights-consumer.trycloudflare.com"
+  "https://arguments-appearing-rights-consumer.trycloudflare.com",
+  "https://karma-debug-experiences-positive.trycloudflare.com"
  ],
- "liveSource": "ntfy",
+ "liveSource": "sync-manifest",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
