@@ -1,12 +1,38 @@
 {
- "generated": "2026-11-28 09:46 CET",
- "bots": null,
+ "generated": "2026-11-28 10:04 CET",
+ "bots": {
+  "count": 22,
+  "online": [
+   "supergrok",
+   "d",
+   "superbotd",
+   "autofix",
+   "dragon",
+   "77",
+   "dargonmoon",
+   "supercharger",
+   "superd",
+   "megabot",
+   "superg",
+   "mrdfluid",
+   "botpamiec",
+   "botd",
+   "supergrok-web",
+   "djmix",
+   "radiokali",
+   "visualizer",
+   "builderweb",
+   "builderapk",
+   "builderpromo",
+   "paysupport"
+  ]
+ },
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": null,
+ "liveUrl": "https://contractors-mistress-clock-mixing.trycloudflare.com",
  "liveCandidates": [
-  "https://riders-phillips-delight-pictures.trycloudflare.com"
+  "https://contractors-mistress-clock-mixing.trycloudflare.com"
  ],
- "liveSource": "offline",
+ "liveSource": "ntfy",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
