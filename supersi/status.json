@@ -1,38 +1,12 @@
 {
- "generated": "2026-11-28 09:44 CET",
- "bots": {
-  "count": 22,
-  "online": [
-   "supergrok",
-   "d",
-   "superbotd",
-   "autofix",
-   "dragon",
-   "77",
-   "dargonmoon",
-   "supercharger",
-   "superd",
-   "megabot",
-   "superg",
-   "mrdfluid",
-   "botpamiec",
-   "botd",
-   "supergrok-web",
-   "djmix",
-   "radiokali",
-   "visualizer",
-   "builderweb",
-   "builderapk",
-   "builderpromo",
-   "paysupport"
-  ]
- },
+ "generated": "2026-11-28 09:46 CET",
+ "bots": null,
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://riders-phillips-delight-pictures.trycloudflare.com",
+ "liveUrl": null,
  "liveCandidates": [
   "https://riders-phillips-delight-pictures.trycloudflare.com"
  ],
- "liveSource": "ntfy",
+ "liveSource": "offline",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
