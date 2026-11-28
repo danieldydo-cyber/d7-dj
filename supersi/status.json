@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-28 01:48 CET",
+ "generated": "2026-11-28 02:06 CET",
  "bots": {
   "count": 22,
   "online": [
@@ -30,10 +30,9 @@
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
  "liveUrl": "https://karma-debug-experiences-positive.trycloudflare.com",
  "liveCandidates": [
-  "https://arguments-appearing-rights-consumer.trycloudflare.com",
   "https://karma-debug-experiences-positive.trycloudflare.com"
  ],
- "liveSource": "sync-manifest",
+ "liveSource": "ntfy",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
