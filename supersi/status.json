@@ -1,39 +1,12 @@
 {
- "generated": "2026-11-28 04:18 CET",
- "bots": {
-  "count": 22,
-  "online": [
-   "supergrok",
-   "d",
-   "superbotd",
-   "autofix",
-   "dragon",
-   "77",
-   "dargonmoon",
-   "supercharger",
-   "superd",
-   "megabot",
-   "superg",
-   "mrdfluid",
-   "botpamiec",
-   "botd",
-   "supergrok-web",
-   "djmix",
-   "radiokali",
-   "visualizer",
-   "builderweb",
-   "builderapk",
-   "builderpromo",
-   "paysupport"
-  ]
- },
+ "generated": "2026-11-28 04:38 CET",
+ "bots": null,
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://sandwich-toward-chevy-terminology.trycloudflare.com",
+ "liveUrl": null,
  "liveCandidates": [
-  "https://submitted-tumor-bill-classroom.trycloudflare.com",
-  "https://sandwich-toward-chevy-terminology.trycloudflare.com"
+  "https://radios-eligible-shares-months.trycloudflare.com"
  ],
- "liveSource": "sync-manifest",
+ "liveSource": "offline",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
