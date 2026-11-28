@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-28 09:10 CET",
+ "generated": "2026-11-28 09:27 CET",
  "bots": {
   "count": 22,
   "online": [
@@ -28,12 +28,11 @@
   ]
  },
  "pagesBase": "https://danieldydo-cyber.github.io/d7-dj/",
- "liveUrl": "https://tmp-ultram-eleven-candle.trycloudflare.com",
+ "liveUrl": "https://bug-gloves-seek-enhancements.trycloudflare.com",
  "liveCandidates": [
-  "https://roll-totals-carry-ideas.trycloudflare.com",
-  "https://tmp-ultram-eleven-candle.trycloudflare.com"
+  "https://bug-gloves-seek-enhancements.trycloudflare.com"
  ],
- "liveSource": "sync-manifest",
+ "liveSource": "ntfy",
  "pagesOk": 59,
  "pagesTotal": 59,
  "broken": []
